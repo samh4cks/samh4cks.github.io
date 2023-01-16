@@ -1,2 +1,3 @@
-# rkmsh.github.io
-Information Security Write ups
+# samh4cks.github.io
+
+Security Researcher's Zone
