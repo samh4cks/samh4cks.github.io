@@ -16,13 +16,13 @@ minimal_mistakes_skin    : "dark" # "air", "aqua", "contrast", "dark", "dirt", "
 
 # Site Settings
 locale                   : "en-US"
-title                    : "Information Security Writeups"
+title                    : "Security Researcher's Zone"
 title_separator          : "-"
-name                     : "Th3_Postm4n"
-description              : "Information Security Writeups"
-url                      : "https://rkmsh.github.io" # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
+name                     : "Samh4cks"
+description              : "Security Researcher's Zone"
+url                      : "https://samh4cks.github.io" # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
 baseurl                  : # the subpath of your site, e.g. "/blog"
-repository               : "rkmsh" # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
+repository               : "samh4cks" # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
 teaser                   : # path of fallback teaser image, e.g. "/assets/images/500x300.png"
 logo                     : # path of logo image to display in the masthead, e.g. "/assets/images/88x88.png"
 masthead_title           : # overrides the website title displayed in the masthead, use " " for no title
@@ -31,7 +31,7 @@ words_per_minute         : 200
 comments:
   provider               : "disqus" # false (default), "disqus", "discourse", "facebook", "google-plus", "staticman", "staticman_v2", "utterances", "custom"
   disqus:
-    shortname            : "rkmsh-github-io" # https://help.disqus.com/customer/portal/articles/466208-what-s-a-shortname-
+    shortname            : "samh4cks-github-io" # https://help.disqus.com/customer/portal/articles/466208-what-s-a-shortname-
   discourse:
     server               : # https://meta.discourse.org/t/embedding-discourse-comments-via-javascript/31963 , e.g.: meta.discourse.org
   facebook:
@@ -106,10 +106,10 @@ analytics:
 
 # Site Author
 author:
-  name             : "Th3_Postm4n"
+  name             : "samh4cks"
   avatar           : "/assets/images/PortFolio.jpeg" # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
-  bio              : "CTF Player | HackTheBox PRO | DevSecOps"
-  location         : "Out of Universe"
+  bio              : "Security Researcher | CTF Player"
+  location         : "/dev/null"
   # email            : ""
   links:
     - label: "Email"
@@ -117,23 +117,23 @@ author:
       # url: mailto:admin@gmail.com
     - label: "Website"
       icon: "fas fa-fw fa-link"
-      url: "https://rkmsh.github.io"
+      url: "https://samh4cks.github.io"
     - label: "Twitter"
       icon: "fab fa-fw fa-twitter-square"
-      url: "https://twitter.com/Th3_Postm4n"
+      url: "https://twitter.com/h4xplo1t"
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
-      url: "https://github.com/rkmsh"
+      url: "https://github.com/samh4cks"
     - label: "Linkedin"
       icon: "fab fa-fw fa-linkedin"
-      url: "#"
+      url: "https://www.linkedin.com/in/samarth-dad/"
 
 # Site Footer
 footer:
   links:
     - label: "Twitter"
       icon: "fab fa-fw fa-twitter-square"
-      url: "https://twitter.com/Th3_Postm4n"
+      url: "https://twitter.com/h4xplo1t"
 
     - label: "Facebook"
       icon: "fab fa-fw fa-facebook-square"
@@ -141,11 +141,12 @@ footer:
       
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
-      url: "https://github.com/rkmsh"
+      url: "https://github.com/samh4cks"
       
-    - label: "GitLab"
-      icon: "fab fa-fw fa-gitlab"
-      # url:
+    - label: "LinkedIn"
+      icon: "fab fa-fw fa-linkedin"
+      url: "https://www.linkedin.com/in/samarth-dad/"
+      
     - label: "Bitbucket"
       icon: "fab fa-fw fa-bitbucket"
       # url:
