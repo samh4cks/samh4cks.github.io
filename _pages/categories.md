@@ -3,7 +3,7 @@ layout: single
 author_profile: true
 title: Categories
 header:
-  overlay_image: /assets/images/category.png
+  overlay_image: /assets/images/category_sample.png
 permalink: /categories/
 ---
 
