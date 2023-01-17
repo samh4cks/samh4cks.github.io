@@ -2,7 +2,7 @@
 title: "About"
 permalink: /about/
 header:
-    overlay_image: "/assets/images/wall2.png"
+    overlay_image: "/assets/images/about_sample.png"
 ---
 
 Security Researcher \| CTF Player 
