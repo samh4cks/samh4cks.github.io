@@ -107,7 +107,7 @@ analytics:
 # Site Author
 author:
   name             : "samh4cks"
-  avatar           : "/assets/images/PortFolio.jpeg" # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
+  avatar           : "/assets/images/avatar.png" # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
   bio              : "Security Researcher | CTF Player"
   location         : "/dev/null"
   # email            : ""
