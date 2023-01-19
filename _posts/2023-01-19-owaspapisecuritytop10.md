@@ -1,7 +1,7 @@
 ---
 layout: single
 date: 2023-01-19
-title: "OWASP API Security Top 10\n(Part 1)"
+title: "OWASP API Security Top 10"
 author_profile: true
 header:
     overlay_image: /assets/images/owasp_api_cover.png
