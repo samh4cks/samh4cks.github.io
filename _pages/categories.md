@@ -16,5 +16,5 @@ permalink: /categories/
 
 <h2>TryHackMe</h2>
 <ul>
-  <li><a href="https://samh4cks.github.io/owaspapisecuritytop10">OWASP API Security Top 10 (Part 1)</a></li>
+  <li><a href="https://samh4cks.github.io/owasptop10">OWASP Top 10</a></li>
 </ul>
