@@ -8,7 +8,7 @@ header:
 Security Researcher \| CTF Player 
 
 
-You can find me as h4xplo1t on twitter.
+You can find me as samh4cks on twitter.
 
 Keep Learning :sunglasses: :blue_heart:<br>
 Happy Hacking!! :boom: :smiling_imp:
