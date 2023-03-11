@@ -19,7 +19,7 @@ locale                   : "en-US"
 title                    : "Security Researcher's Zone"
 title_separator          : "-"
 name                     : "samh4cks"
-description              : "Security Researcher's Zone"
+description              : #
 url                      : "https://samh4cks.github.io" # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
 baseurl                  : # the subpath of your site, e.g. "/blog"
 repository               : "samh4cks" # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
