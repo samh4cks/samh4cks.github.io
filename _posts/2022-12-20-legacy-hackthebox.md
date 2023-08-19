@@ -13,7 +13,7 @@ mermaid: true
 
 This writeup is based on Legacy on Hack the box.
 
-# TL;DR
+## TL;DR
 
 This writeup is based on [__Legacy__](https://app.hackthebox.com/machines/Legacy) on Hack the box. It was a windows box. It starts with Samba.
 In this machine, Samba has two bugs, which are SMB vulnerability(Eternal Blue or MS17-010) and 
@@ -21,7 +21,7 @@ Remote Code Execution vulnerability (MS08-067). We have both ways to exploit the
 and get the shell. In this write-up, we will see both ways of exploitation. There is no 
 privilege escalation needed for the user flag and root flag.
 
-# Scanning Network
+## Scanning Network
 
 I started with a Nmap scan, I found ports 139, 445 as NetBIOS-ssn and Microsoft-ds, respectively. 
 Let’s do an intense scan ( -sV -A -T4 -vv) and with vulnerability script to identify more 
@@ -75,9 +75,9 @@ In the Nmap scan we got Samba’s version which is “Windows XP Microsoft-ds”
 scripts, we identified that the target is vulnerable to MS08-067 and MS17-010. Since we have Remote
 Code Execution and Samba SMBv1 exploitation. Now, let’s move to exploitation phase.
 
-# Exploitation
+## Exploitation
 
-## MS08-067 (Using Metasploit)
+### MS08-067 (Using Metasploit)
 
 Let’s find the exploit using [__Metasploit__](https://www.metasploit.com/).
 
@@ -127,7 +127,7 @@ Payload options (windows/meterpreter/reverse_tcp):
 To know about RHOSTS, LHOST, RPORT, and LPORT take reference from my [__Lame__](https://samh4cks.github.io/lame/#) writeup. With this exploit, 
 we get the shell. Now, let’s move to another exploit (MS17-010).
 
-## MS017-010 (Using Metasploit)
+### MS017-010 (Using Metasploit)
 
 ```bash
  msf6 > search ms17-010
@@ -190,7 +190,7 @@ Payload options (windows/meterpreter/reverse_tcp):
  (C) Copyright 1985-2001 Microsoft Corp.
  C:\WINDOWS\system32>
 ```
-## MS08-067 (Without Metasploit)
+### MS08-067 (Without Metasploit)
 
 For exploiting the Samba manually, there is an exploit available on GitHub [__here__](https://raw.githubusercontent.com/jivoi/pentest/master/exploit_win/ms08-067.py). It’s a python script that
 requires Impacket (you can install it on Kali from [__here__](https://github.com/CoreSecurity/impacket/)) and have to implement some of my own code with 
@@ -295,7 +295,7 @@ I get a callback on my listener.
  (C) Copyright 1985-2001 Microsoft Corp.
  C:\WINDOWS\system32>
 ```
-## MS17-010 (Without Metasploit)
+### MS17-010 (Without Metasploit)
 
 There are few MS17-010 code available on GitHub, but I like to go with this one by Helviojunior. The 
 name of code is send_and_execute.py, so we can upload the payload file using this exploit and run it.

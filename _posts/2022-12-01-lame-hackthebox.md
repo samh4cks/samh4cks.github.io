@@ -13,7 +13,7 @@ mermaid: true
 
 This writeup is based on Lame on Hack the box.
 
-# TL:DR
+## TL:DR
 
 This writeup is based on [__Lame__](https://app.hackthebox.com/machines/Lame) on Hack the box. It was a Linux box. It starts with two
 major services, vsftpd, and Samba. We tried FTP logon but didn’t get anything interesting.
@@ -21,7 +21,7 @@ Then try to exploit Samba service via command injection in the username field. U
 service exploitation, we got a shell, then later using directory listing, we got the user
 flag and the root flag.
 
-# Scanning Network
+## Scanning Network
 
 I started with a Nmap scan, I found ports 21, 22, 139, and 445 as FTP, SSH, NetBIOS-ssn,
 and Microsoft-ds respectively. I got FTP login allowed via anonymous user and Samba service. 
@@ -78,7 +78,7 @@ get the login information of the FTP. As per the version of both services, it lo
 have exploits available for both. With this information of both services now moves towards to
 next phase.
 
-# Enumeration
+## Enumeration
 
 In the enumeration phase, we will first enumerate the FTP via anonymous user.
 
@@ -161,9 +161,9 @@ Now, we can do a recursive scan to identify more information about it.
 By doing a recursive scan, we get to know what content is stored in the tmp directory. Now,
 we will first move toward the FTP exploitation and try to exploit it.
  
-# Exploitation
+## Exploitation
 
-## FTP Exploitation
+### FTP Exploitation
 
 Here, we can use [__searchsploit__](https://www.exploit-db.com/searchsploit) to find the exploit.
 
@@ -192,7 +192,7 @@ and our local IP address(tun0) as an LHOST(Local Host Computer or tun0). So, we 
 using a backdoor but we didn’t get a shell. So, now let’s move to smb exploitation manually as well
 as using the [__Metasploit__](https://www.metasploit.com/).
 
-## Samba Exploitation (Using Metasploit)
+### Samba Exploitation (Using Metasploit)
 
 We can search samba with version on metasploit and find a suitable exploit for it.
 
@@ -223,7 +223,7 @@ I will use exploit/multi/samba/usermap_script to exploit the service (use 2).
  python -c 'import pty;pty.spawn("/bin/bash")'                      
  root@lame:/#
 ```
-## Samba Exploiation (Manual)
+### Samba Exploiation (Manual)
 
 ### Command Injection
 
