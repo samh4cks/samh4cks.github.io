@@ -15,7 +15,7 @@ This writeup is based on Keeper on Hack the box.
 
 ## TL:DR
 
-"This write-up is based on the [__Keeper__](https://app.hackthebox.com/machines/Keeper) machine, which is an easy-rated Linux box on Hack the Box. The machine hosts a Best Practical open-source ticketing system accessible via an HTTP service. By utilizing default credentials, unauthorized access to the Admin panel was achieved. Additionally, a privileged user's password was discovered, allowing for user-level SSH login.
+This write-up is based on the [__Keeper__](https://app.hackthebox.com/machines/Keeper) machine, which is an easy-rated Linux box on Hack the Box. The machine hosts a Best Practical open-source ticketing system accessible via an HTTP service. By utilizing default credentials, unauthorized access to the Admin panel was achieved. Additionally, a privileged user's password was discovered, allowing for user-level SSH login.
 
 Within the compromised environment, a memory dump and database file of KeePass were found. Exploiting the `CVE-2023-32784` vulnerability in KeePass provided the master password necessary to access the database dump. With this database dump, a Putty Private Key was extracted, subsequently converted into OpenSSH format. This key was then used to escalate privileges and gain root access.
 
