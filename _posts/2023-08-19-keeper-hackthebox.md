@@ -170,7 +170,7 @@ We will use this `id_rsa` to login as root via SSH.
 
 That's all in this writeup.
 
-Thanks for reading this far. Hope you liked it.If you enjoyed the writeup, do support me [__here__](https://www.buymeacoffee.com/h4xplo1t).
+Thanks for reading this far. If you enjoyed the writeup, do support me [__here__](https://www.buymeacoffee.com/h4xplo1t).
 
 
 
