@@ -11,8 +11,6 @@ mermaid: true
 
 ![](/assets/images/writeups/Keeper-HTB/banner.png)
 
-This writeup is based on Keeper on Hack the box.
-
 ## TL:DR
 
 This write-up is based on the [__Keeper__](https://app.hackthebox.com/machines/Keeper) machine, which is an easy-rated Linux box on Hack the Box. The machine hosts a Best Practical open-source ticketing system accessible via an HTTP service. By utilizing default credentials, unauthorized access to the Admin panel was achieved. Additionally, a privileged user's password was discovered, allowing for user-level SSH login.
@@ -21,9 +19,9 @@ Within the compromised environment, a memory dump and database file of KeePass w
 
 ## Scanning Network
 
-I began with an Nmap scan and identified ports 22 and 80 for SSH and nginx, respectively. By extracting banners using Nmap, we determined that the nginx version is 1.18.0. Let's review the Nmap results.
+I began with an Nmap scan and identified open ports 22 and 80 for SSH and nginx, respectively. By extracting banners using Nmap, we determined that the nginx version is 1.18.0. Let's review the Nmap results.
 
-```javascript
+```bash
 Command - nmap -sV -sC -A <ip address>
 ```
 
@@ -50,9 +48,9 @@ Let's see the IP on the browser.
 
 ![](/assets/images/writeups/Keeper-HTB/1.png)
 
-We have observed that IP address redirects us on the domain `tickets.keeper.htb`. So, we have to add this domain to `"/etc/hosts"` file.
+We have observed that IP address gives us a reference to a domain name `tickets.keeper.htb`. So, we have to add this domain to `"/etc/hosts"` file.
 
-We will try to open [http://tickets.keeper.htb/rt/](http://tickets.keeper.htb/rt/).
+Let's open [http://tickets.keeper.htb/rt/](http://tickets.keeper.htb/rt/).
 
 ![](/assets/images/writeups/Keeper-HTB/2.png)
 
@@ -110,7 +108,7 @@ We will search for available exploit to recover the master password from a memor
 
 I have found a github based tool which can be used to find the master password. 
 
-```html
+```plaintext
 https://github.com/CMEPW/keepass-dump-masterkey
 ```
 

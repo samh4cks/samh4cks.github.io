@@ -11,8 +11,6 @@ mermaid: true
 
 ![](/assets/images/writeups/Devel-HTB/banner.png)
 
-This writeup is based on Devel on Hack the box.
-
 ## TL;DR
 
 This writeup is based on [__Devel__](https://www.hackthebox.eu/home/machines/profile/3) which is an easy-rated machine on HackTheBox. It starts with FTP and HTTP. I will use FTP anonymous login to upload a webshell to get shell on the machine. Later on, I’ll use one of many Windows kernel exploit to gain system shell. It requires some basic privilege escalation for the root flag.
