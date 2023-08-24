@@ -15,11 +15,13 @@ This writeup is based on Keeper on Hack the box.
 
 ## TL:DR
 
-This writeup is based on [__Keeper__](https://app.hackthebox.com/machines/Keeper) which is an easy-rated machine on Hack the box. It was a Linux box.  There is a Best Practical open-source ticketing system running on HTTP service. By using default credentials, it leads to access of Admin panel. Found one privileged user's password to logged in as a user via SSH. There is a KeePass memory dump and database file available and the KeePass is vulnerable of `CVE-2023-32784` which gaves the master password to access the database dump. Using the database dump, we got Putty Private Key which is converted into OpenSSH format to login as a root.
+"This write-up is based on the [__Keeper__](https://app.hackthebox.com/machines/Keeper) machine, which is an easy-rated Linux box on Hack the Box. The machine hosts a Best Practical open-source ticketing system accessible via an HTTP service. By utilizing default credentials, unauthorized access to the Admin panel was achieved. Additionally, a privileged user's password was discovered, allowing for user-level SSH login.
+
+Within the compromised environment, a memory dump and database file of KeePass were found. Exploiting the `CVE-2023-32784` vulnerability in KeePass provided the master password necessary to access the database dump. With this database dump, a Putty Private Key was extracted, subsequently converted into OpenSSH format. This key was then used to escalate privileges and gain root access.
 
 ## Scanning Network
 
-I started with a Nmap scan, I found ports 22, 80 as SSH, nginx respectively. By Nmap’s banner grabbing, we got the nginx version that is 1.18.0. Let’s see the Nmap result.
+I began with an Nmap scan and identified ports 22 and 80 for SSH and nginx, respectively. By extracting banners using Nmap, we determined that the nginx version is 1.18.0. Let's review the Nmap results.
 
 ```javascript
 Command - nmap -sV -sC -A <ip address>
@@ -39,7 +41,8 @@ PORT   STATE SERVICE VERSION
 |_http-server-header: nginx/1.18.0 (Ubuntu)
 Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
 ```
-We have found two services, SSH and HTTP. First, we will enumerate HTTP. Let's jump into it in enumeration phase.
+
+We have discovered two services: SSH and HTTP. Let's begin by enumerating the HTTP service. Allow us to delve into the enumeration phase.
 
 ## Enumeration
 
@@ -125,7 +128,7 @@ We were not able to login. Let's try to search this password on Google.
 
 ![](/assets/images/writeups/Keeper-HTB/12.png)
 
-The password we found using the tool leads to `rødgrød med fløde` which is a Danish dessert. If we remember, user we found on ticket system, `lnorgaard` use to speak Danish Language. `NOTE - It's an unusal way to obtain a password`.
+TThe password we obtained using the tool leads to `rødgrød med fløde`, which is a Danish dessert. It's worth noting that the user we discovered on the ticket system, `lnorgaard`, is known to speak Danish.`NOTE - It's an unusal way to obtain a password`.
 
 We will use this password to login as a root.
 
