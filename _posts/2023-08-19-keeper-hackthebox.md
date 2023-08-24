@@ -3,7 +3,7 @@ title: Keeper - HackTheBox
 authors: Samarth
 date: 2023-08-19 16:00:00 +0530
 categories: [HackTheBox]
-tags: [KeePass, Linux, Samba]
+tags: [KeePass, Linux, CVE-2023-32784]
 pin: true
 math: true
 mermaid: true
