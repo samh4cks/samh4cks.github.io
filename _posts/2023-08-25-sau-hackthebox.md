@@ -20,7 +20,7 @@ This write-up is based on the [__Sau__](https://app.hackthebox.com/machines/Sau)
 I began with an Nmap scan and identified open ports 22 and 55555 for SSH and `Request Baskets` (HTTP requests collector to test webhooks), respectively. By extracting banners using Nmap, we determined that the Request Baskets version is 1.2.1. Let's review the Nmap results.
 
 ```bash
-Command - nmap -sC -sV -A <ip address>
+nmap -sC -sV -A <ip address>
 ```
 
 ```bash
@@ -125,7 +125,21 @@ Let's navigate to the website and create a new basket, capturing the request in 
 
 ![](/assets/images/writeups/Sau-HTB/2.png)
 
-We have to add a payload with the API call. 
+I have created a Python based tool called [CVE-2023-27163-InternalProber](https://github.com/samh4cks/CVE-2023-27163-InternalProber) which will perform port scanning on the internal IP and try to find the open ports for us.
+
+The tool will generate a random basket and then configure the basket in a loop for each port, and then determine all the open ports.
+
+Let's begin by executing the tool.
+
+![](/assets/images/writeups/Sau-HTB/14.png)
+
+The tool requires a target URL to perform the actions.
+
+![](/assets/images/writeups/Sau-HTB/15.png)
+
+We've noticed that the tool created the new basket along with authorization token and has identified port 80 as open and provided the internal URL.
+
+Now, we have to add a payload with the API call. 
 
 ```bash
    {
