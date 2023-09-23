@@ -4,7 +4,6 @@ authors: Samarth
 date: 2022-12-23 15:15:00 +0530
 categories: [HackTheBox]
 tags: [Kernal Exploit, FTPd, Windows]
-pin: true
 math: true
 mermaid: true
 ---
