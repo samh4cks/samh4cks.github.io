@@ -8,7 +8,7 @@ Hey there! I'm **Samarth Dad**. I studied Computer Science, with a focus on **Cy
 
 I spent 6 months as a **Security Analyst** at **Network Intelligence Pvt. Ltd.**, where I learned how to protect digital information from bad actors. But my passion really comes alive in friendly competitions called **Capture The Flag** (`CTF`). I ranked `1st` in **WiCyS SANS Bootup CTF**, `7th` in **CyVIT CTF**, and `15th` in **Hacker Hour CTF**. These challenges test my skills and make security fun!
 
-I'm a bit of a hacker, but for good reasons! I've earned titles like **Pro Hacker** at **HackTheBox**, **God** rank at **TryHackMe**, and even got the `#2` spot in **PwnTillDawn** in India. I also earned certifications like **eJPT** and **eWPT** that show I'm skilled in finding and fixing security holes in websites and apps.
+I'm a bit of a hacker, but for good reasons! I've earned titles like **Hacker** at **HackTheBox**, **God** rank at **TryHackMe**, and even got the `#2` spot in **PwnTillDawn** in India. I also earned certifications like **eJPT** and **eWPT** that show I'm skilled in finding and fixing security holes in websites and apps.
 
 When I'm not cracking codes, I'm part of the teams **Synack Red Team** (`SRT`) and **Yogosha**. We work together to make the online world safer for everyone.
 
