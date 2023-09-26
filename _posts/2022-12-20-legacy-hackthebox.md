@@ -26,9 +26,7 @@ information about the machine. Let’s see the Nmap results.
 
 ```bash
  Command - nmap -sV -A -T4 -vv --script vuln 10.129.1.111
-```
 
-```bash
  Nmap scan report for 10.129.1.111
  Host is up (0.57s latency).
  Not shown: 996 filtered ports

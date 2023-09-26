@@ -19,10 +19,8 @@ This write-up is based on the [__Sau__](https://app.hackthebox.com/machines/Sau)
 I began with an Nmap scan and identified open ports 22 and 55555 for SSH and `Request Baskets` (HTTP requests collector to test webhooks), respectively. By extracting banners using Nmap, we determined that the Request Baskets version is 1.2.1. Let's review the Nmap results.
 
 ```bash
-nmap -sC -sV -A <ip address>
-```
+Command - nmap -sC -sV -A <ip address>
 
-```bash
 Nmap scan report for 10.10.11.224
 Host is up (0.17s latency).
 Not shown: 997 closed tcp ports (conn-refused)

@@ -26,9 +26,7 @@ By Nmap’s banner grabbing, we got the Samba version that is 3.0.20. Let’s se
 
 ```bash
  Command - nmap -sV -A <ip address>
-```
 
-```bash
  Nmap scan report for 10.129.127.33
  Host is up (0.57s latency).
  Not shown: 996 filtered ports
@@ -79,11 +77,9 @@ next phase.
 
 In the enumeration phase, we will first enumerate the FTP via anonymous user.
 
-```bash
- Command - ftp 10.129.127.33
-```
-
 ```bash 
+ Command - ftp 10.129.127.33
+
  Connected to 10.129.127.33.
  220 (vsFTPd 2.3.4)
  Name (<ip address>:root): anonymous
@@ -113,9 +109,7 @@ Here, we can enumerate Samba using [__smbmap__](https://www.kali.org/tools/smbma
 
 ```bash
  Command - smbmap -H 10.129.127.33
-```
 
-```bash
  [+] IP: 10.129.127.33:445       Name: 10.129.127.33 
  Disk                                                    Permissions     Comment
  ----                                                    -----------     -------
@@ -130,9 +124,7 @@ Now, we can do a recursive scan to identify more information about it.
 
 ```bash
  Command - smbmap -H 10.129.127.33 -R
-```
 
-```bash
  [+] IP: 10.129.127.33:445       Name: 10.129.127.33 
  Disk                                                    Permissions     Comment
  ----                                                    -----------     -------

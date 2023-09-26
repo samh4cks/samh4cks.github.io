@@ -22,9 +22,7 @@ I began with an Nmap scan and identified open ports 22 and 80 for SSH and nginx,
 
 ```bash
 Command - nmap -sV -sC -A <ip address>
-```
 
-```bash
 Nmap scan report for 10.10.11.227
 Host is up (0.15s latency).
 Not shown: 998 closed tcp ports (conn-refused)

@@ -19,8 +19,9 @@ This writeup is based on [__Devel__](https://www.hackthebox.eu/home/machines/pro
 I will start with Nmap scan to find the open ports and services active on machine. I found FTP and HTTP open on 21 and 80 respectively. By using Banner Grabbing, we will able to get the version of FTP and HTTP. Let’s see the nmap result.
 
 ```bash
-nmap -sC -sV -oA intense 10.129.152.23
- Starting Nmap 7.91 ( https://nmap.org ) at 2021-05-27 19:04 UTC
+ Command - nmap -sC -sV -oA intense 10.129.152.23
+
+
  Nmap scan report for 10.129.152.23
  Host is up (0.069s latency).
  Not shown: 998 filtered ports
@@ -58,6 +59,7 @@ We will login to FTP via anonymous user.
 
 ```bash
 ftp 10.129.152.23
+
 Connected to 10.129.152.23.
 220 Microsoft FTP Service
 Name (10.129.118.104:root): Anonymous
