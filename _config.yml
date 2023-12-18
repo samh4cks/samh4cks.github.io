@@ -20,7 +20,7 @@ timezone: Asia/Kolkata
 
 title: Samarth Dad # the main title
 
-tagline: Researcher @ <b>Synack</b> & <b>Yogosha</b> # it will display as the sub-title
+tagline: Researcher @ <b>Yogosha</b> # it will display as the sub-title
 
 description: >- # used by seo meta and the atom feed
   Security Researcher who shares his findings with the digital world, uncovering crucial vulnerabilities.
@@ -74,10 +74,10 @@ theme_mode: # [dark|light]
 # will be added to all image (site avatar & posts' images) paths starting with '/'
 #
 # e.g. 'https://cdn.com'
-img_cdn:
+img_cdn: "https://chirpy-img.netlify.app"
 
 # the avatar on sidebar, support local or CORS resources
-avatar: 
+avatar: "/commons/avatar.jpg"
 
 # boolean type, the global switch for TOC in posts.
 toc: true
