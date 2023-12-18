@@ -47,7 +47,7 @@ Let's see the IP on the browser.
 
 We have observed that IP address gives us a reference to a domain name `tickets.keeper.htb`. So, we have to add this domain to `"/etc/hosts"` file.
 
-Let's open [http://tickets.keeper.htb/rt/](http://tickets.keeper.htb/rt/).
+Let's open [http://tickets.keeper.htb/rt/](https://tickets.keeper.htb/rt/).
 
 ![](/assets/images/writeups/Keeper-HTB/2.png)
 

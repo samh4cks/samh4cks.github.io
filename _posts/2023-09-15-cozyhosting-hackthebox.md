@@ -47,7 +47,7 @@ We have discovered two services: SSH and HTTP. Let's begin by enumerating the HT
 
 We have observed that in Nmap scan, IP address gives us a reference to a domain name `cozyhosting.htb`. So, we have to add this domain to `"/etc/hosts"` file.
 
-Let's open [http://cozyhosting.htb/](http://cozyhosting.htb).
+Let's open [http://cozyhosting.htb/](https://cozyhosting.htb).
 
 ![](/assets/images/writeups/CozyHosting-HTB/1.png)
 

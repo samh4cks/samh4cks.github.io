@@ -164,7 +164,7 @@ Let's view the basket we created.
 
 ![](/assets/images/writeups/Sau-HTB/5.png)
 
-We can observe that all request will be collected by basket on [http://10.10.11.224:55555/samh4cks](http://10.10.11.224:55555/samh4cks)
+We can observe that all request will be collected by basket on [http://10.10.11.224:55555/samh4cks](https://10.10.11.224:55555/samh4cks)
 
 Let's visit the website of our own basket.
 
