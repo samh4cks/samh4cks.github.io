@@ -8,7 +8,7 @@ math: true
 mermaid: true
 ---
 
-![](/assets/images/writeups/Devel-HTB/banner.png)
+![Devel - HTB](/assets/images/writeups/Devel-HTB/banner.png)
 
 ## TL;DR
 
@@ -47,11 +47,11 @@ As we found the version of FTP and HTTP. First, we will enumerate HTTP. Let’s 
 
 Let’s see the IP on the browser.
 
-![](/assets/images/writeups/Devel-HTB/1.png)
+![Browser View](/assets/images/writeups/Devel-HTB/1.png)
 
 The above image reveals that the website is running on IIS 7 Server. We have an option to do directory brute-force but I want to skip this process because we didn’t have anything interesting on the website. But we can see the source of the website.
 
-![](/assets/images/writeups/Devel-HTB/2.png)
+![Welcome Page](/assets/images/writeups/Devel-HTB/2.png)
 
 We can see that the image on the website is having the source “welcome.png”. Now, we have only this much information for HTTP. Let’s move to enumeration of FTP.
 
@@ -78,7 +78,7 @@ ftp> ls
 
 In the FTP login, we are able to see some uploaded file and it includes the `welcome.png` which correlates us to the source which we saw on the source of the website. So now, let’s check <b>welcome.png</b> on the website.
 
-![](/assets/images/writeups/Devel-HTB/3.png)
+![View Source](/assets/images/writeups/Devel-HTB/3.png)
 
 We can see the `welcome.png` on the website which is uploaded on the machine via ftp. It indicates that we can able to upload files to trigger RCE (Remote Code Execution) on the machine. Remote Code Execution is a vulnerability when an attacker puts some input to a file and executes it. It leads to full compromise of target machine.
 
@@ -125,15 +125,15 @@ ftp 10.129.152.23
 
 Now I will visit http://10.129.152.23/cmd.aspx. and I get a form.
 
-![](/assets/images/writeups/Devel-HTB/4.png)
+![Web Shell](/assets/images/writeups/Devel-HTB/4.png)
 
 Now we can run `whoami` to print the current user of machine.
 
-![](/assets/images/writeups/Devel-HTB/5.png)
+![Web Shell](/assets/images/writeups/Devel-HTB/5.png)
 
 As also we can run `dir` to see the files, we get to know the directory path of the target machine.
 
-![](/assets/images/writeups/Devel-HTB/6.png)
+![Directory path of the machine](/assets/images/writeups/Devel-HTB/6.png)
 
 As we can see that the user is `iis appool\web`, we have some ways to get shell by using nc.exe, [__Nishang__](https://github.com/samratashok/nishang) and Meterpreter. I will use nc.exe to get the shell.
 

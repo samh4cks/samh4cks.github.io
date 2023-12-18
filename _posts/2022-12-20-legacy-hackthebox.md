@@ -8,7 +8,7 @@ math: true
 mermaid: true
 ---
 
-![](/assets/images/writeups/Legacy-HTB/banner.png)
+![Legacy - HTB](/assets/images/writeups/Legacy-HTB/banner.png)
 
 ## TL;DR
 

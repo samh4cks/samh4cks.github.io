@@ -8,7 +8,7 @@ math: true
 mermaid: true
 ---
 
-![](/assets/images/writeups/Sau-HTB/banner.png)
+![Sau - HTB](/assets/images/writeups/Sau-HTB/banner.png)
 
 ## TL:DR
 
@@ -98,7 +98,7 @@ We have discovered two services: SSH and Request Baskets. Let's begin by enumera
 
 Let's see IP on the browser.
 
-![](/assets/images/writeups/Sau-HTB/1.png)
+![Browser View](/assets/images/writeups/Sau-HTB/1.png)
 
 We have noticed the usage of `Request Baskets`. [__Request Baskets__](https://rbaskets.in/) is a web service designed to gather arbitrary HTTP requests and allow inspection via a RESTful API or a simple web UI.
 
@@ -120,7 +120,7 @@ You can find the details here about [__CVE-2023-27163__](https://gist.github.com
 
 Let's navigate to the website and create a new basket, capturing the request in Burp Suite.
 
-![](/assets/images/writeups/Sau-HTB/2.png)
+![Creating new basket](/assets/images/writeups/Sau-HTB/2.png)
 
 I have created a Python based tool called [CVE-2023-27163-InternalProber](https://github.com/samh4cks/CVE-2023-27163-InternalProber) which will perform port scanning on the internal IP and try to find the open ports for us.
 
@@ -128,11 +128,11 @@ The tool will generate a random basket and then configure the basket in a loop f
 
 Let's begin by executing the tool.
 
-![](/assets/images/writeups/Sau-HTB/14.png)
+![Using automation tool](/assets/images/writeups/Sau-HTB/14.png)
 
 The tool requires a target URL to perform the actions.
 
-![](/assets/images/writeups/Sau-HTB/15.png)
+![Provided target URL](/assets/images/writeups/Sau-HTB/15.png)
 
 We've noticed that the tool created the new basket along with authorization token and has identified port 80 as open and provided the internal URL.
 
@@ -152,23 +152,23 @@ The provided payload indicates that whenever a user requests the desired basket,
 
 We need to edit `proxy_response` as `true`. I will explain why I set `proxy_response` to `true`. After reading the docs for request-baskets, I got a general concept of what it is and how it's supposed to work. If you set a Forward URL, it catches your request in a basket and forwards it to the URL you set. And if you set Proxy response to true, when you request basket URL, not only will it forward your request to Forward URL, but it will show you response in the browser. 
 
-![](/assets/images/writeups/Sau-HTB/3.png)
+![Proxy setting](/assets/images/writeups/Sau-HTB/3.png)
 
 Let's send this request and wait for the response.
 
-![](/assets/images/writeups/Sau-HTB/4.png)
+![Found response](/assets/images/writeups/Sau-HTB/4.png)
 
 We obtain an authentication token in the response. When someone wishes to access the basket, they will be prompted to input the token for authentication purposes. 
 
 Let's view the basket we created.
 
-![](/assets/images/writeups/Sau-HTB/5.png)
+![Viewing basket](/assets/images/writeups/Sau-HTB/5.png)
 
 We can observe that all request will be collected by basket on [http://10.10.11.224:55555/samh4cks](https://10.10.11.224:55555/samh4cks)
 
 Let's visit the website of our own basket.
 
-![](/assets/images/writeups/Sau-HTB/6.png)
+![Visiting basket](/assets/images/writeups/Sau-HTB/6.png)
 
 We have observed that we got forwarded on the localhost of the system and we found `Maltrail` hosted on the localhost. Its version is disclosed as `v0.53`. 
 
@@ -188,33 +188,33 @@ I have found an exploit available on [ExploitDB](https://www.exploit-db.com/expl
 
 I am going to use the above exploit but before that I have to change the `forward URL` in our basket configuration.
 
-![](/assets/images/writeups/Sau-HTB/7.png)
+![Changing parameter](/assets/images/writeups/Sau-HTB/7.png)
 
 We have used the `login` page because `username` parameter in the login page is vulnerable to `OS command Injection`.
 
 Now, I have to modify the exploit by removing the `/login` parameter because we already implemented it in our forward URL.
 
-![](/assets/images/writeups/Sau-HTB/8.png)
+![Removing parameter](/assets/images/writeups/Sau-HTB/8.png)
 
 Now, we are ready to use the exploit to perform `OS Command Injection`. The usage of exploit is to provide `listening IP`, `listening port` and `target URL`.
 
 Let's setup a listener to capture the response.
 
-![](/assets/images/writeups/Sau-HTB/9.png)
+![Setup listener](/assets/images/writeups/Sau-HTB/9.png)
 
 Let's use the exploit and wait for the response on the listener.
 
-![](/assets/images/writeups/Sau-HTB/10.png)
+![Response](/assets/images/writeups/Sau-HTB/10.png)
 
 We have observed that the exploit is running successfully so let's check the listener.
 
-![](/assets/images/writeups/Sau-HTB/11.png)
+![We got shell](/assets/images/writeups/Sau-HTB/11.png)
 
 We successfully performed `OS Command Injection` and got the user shell.
 
 Let's list the allowed commands to invoking the user using `sudo -l`.
 
-![](/assets/images/writeups/Sau-HTB/12.png)
+![Listing all allowed commands](/assets/images/writeups/Sau-HTB/12.png)
 
 We noted that the ability to access the status of `trail.service` using `systemctl` is permitted. Let's search for information on `sudo systemctl privilege escalation` on Google.
 
@@ -222,7 +222,7 @@ I have found a great resource for privilege escalation of sudo systemctl [Exploi
 
 I have found a way to spawn shell in the pager using the above resource. 
 
-![](/assets/images/writeups/Sau-HTB/13.png)
+![Spawn shell](/assets/images/writeups/Sau-HTB/13.png)
 
 That's all in this writeup.
 

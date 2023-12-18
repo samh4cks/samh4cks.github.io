@@ -8,7 +8,7 @@ math: true
 mermaid: true
 ---
 
-![](/assets/images/writeups/Keeper-HTB/banner.png)
+![Keeper - HTB](/assets/images/writeups/Keeper-HTB/banner.png)
 
 ## TL:DR
 
@@ -43,13 +43,13 @@ We have discovered two services: SSH and HTTP. Let's begin by enumerating the HT
 
 Let's see the IP on the browser.
 
-![](/assets/images/writeups/Keeper-HTB/1.png)
+![Browser](/assets/images/writeups/Keeper-HTB/1.png)
 
 We have observed that IP address gives us a reference to a domain name `tickets.keeper.htb`. So, we have to add this domain to `"/etc/hosts"` file.
 
 Let's open [http://tickets.keeper.htb/rt/](https://tickets.keeper.htb/rt/).
 
-![](/assets/images/writeups/Keeper-HTB/2.png)
+![Ticket System](/assets/images/writeups/Keeper-HTB/2.png)
 
 There is a login page which redirects you to ticket system on successful login.
 
@@ -63,19 +63,19 @@ We have found some exploits but that are non-exploitable in our situation becaus
 
 Let's try to search for default credentials for this ticket system.
 
-![](/assets/images/writeups/Keeper-HTB/3.png)
+![Default Creds](/assets/images/writeups/Keeper-HTB/3.png)
 
 We got the default credentials as `root:password`. Let's try to login.
 
-![](/assets/images/writeups/Keeper-HTB/4.png)
+![Successful login](/assets/images/writeups/Keeper-HTB/4.png)
 
 We have successfully logged in ticket system as `root`, it means we can browse the ticket system and try to find information. We have access to view privileged users and their information.
 
-![](/assets/images/writeups/Keeper-HTB/5.png)
+![Viewing information](/assets/images/writeups/Keeper-HTB/5.png)
 
 We have found a user named `Lise Nørgaard`. Let's select this user and view the information.
 
-![](/assets/images/writeups/Keeper-HTB/6.png)
+![Found user details](/assets/images/writeups/Keeper-HTB/6.png)
 
 We have found many information about the user. We have found the `username`, `email`, `language` and `password` (in comment section).
 
@@ -83,15 +83,15 @@ It seems admin created this user recently and assigned with a initial password. 
 
 We will try to use this password (`Welcome2023!`) to login into system as `lnorgaard` via SSH.
 
-![](/assets/images/writeups/Keeper-HTB/7.png)
+![Got password](/assets/images/writeups/Keeper-HTB/7.png)
 
 We have successfully logged into the system as `lnorgaard`. Let's perform listing of directory.
 
-![](/assets/images/writeups/Keeper-HTB/8.png)
+![Logged in as user](/assets/images/writeups/Keeper-HTB/8.png)
 
 We found a compressed file. Let's try to compress it.
 
-![](/assets/images/writeups/Keeper-HTB/9.png)
+![Found compressed file](/assets/images/writeups/Keeper-HTB/9.png)
 
 We have observed that compressed file contains a memory dump of KeePass process as well as KeePass database. Now, we need a master password to unlock the KeePass password database. We will get those file to our local system. Let's try to search for KeePass vulnerability which is related to cracking master password.
 
@@ -113,21 +113,21 @@ Let's use the tool which is made by [@CMEPW](https://github.com/CMEPW).
 
 I have used the available exploit using the available KeePass memory dump. I have found a pattern of password.
 
-![](/assets/images/writeups/Keeper-HTB/10.png)
+![KeePass memory dump](/assets/images/writeups/Keeper-HTB/10.png)
 
 We will use this password to login as `root` via SSH.
 
-![](/assets/images/writeups/Keeper-HTB/11.png)
+![Tried root login](/assets/images/writeups/Keeper-HTB/11.png)
 
 We were not able to login. Let's try to search this password on Google.
 
-![](/assets/images/writeups/Keeper-HTB/12.png)
+![Searched on Google](/assets/images/writeups/Keeper-HTB/12.png)
 
 TThe password we obtained using the tool leads to `rødgrød med fløde`, which is a Danish dessert. It's worth noting that the user we discovered on the ticket system, `lnorgaard`, is known to speak Danish.`NOTE - It's an unusal way to obtain a password`.
 
 We will use this password to login as a root.
 
-![](/assets/images/writeups/Keeper-HTB/13.png)
+![Found password](/assets/images/writeups/Keeper-HTB/13.png)
 
 We have to find a way to use this password to login. Let's search on Google to use master password to access `passcodes.kbdx`.
 
@@ -139,19 +139,19 @@ To instal `kpcli`, use the below command -
 sudo apt-get install kpcli libterm-readline-gnu-perl libdata-password-perl
 ```
 
-![](/assets/images/writeups/Keeper-HTB/14.png)
+![KeePass CLI](/assets/images/writeups/Keeper-HTB/14.png)
 
 We have option to open database file and we can use the found master password to access it.
 
-![](/assets/images/writeups/Keeper-HTB/15.png)
+![Opening database file](/assets/images/writeups/Keeper-HTB/15.png)
 
 We have successfully able to access database file. Let's access each directory.
 
-![](/assets/images/writeups/Keeper-HTB/16.png)
+![Accessed database file](/assets/images/writeups/Keeper-HTB/16.png)
 
 We have found Putty-User-Key-File-3 of `root` user. We need to convert PuTTY private key format t an OpenSSH format. We have to save the key in `key.ppk`.
 
-![](/assets/images/writeups/Keeper-HTB/17.png)
+![Found PPK file](/assets/images/writeups/Keeper-HTB/17.png)
 
 Let's use `puttygen` to convert `key.ppk`OpenSSH format.
 
@@ -161,7 +161,7 @@ puttygen key.ppk -O private-openssh -o id_rsa
 ```
 We will use this `id_rsa` to login as root via SSH.
 
-![](/assets/images/writeups/Keeper-HTB/18.png)
+![Logged in as a root user](/assets/images/writeups/Keeper-HTB/18.png)
 
 That's all in this writeup.
 
