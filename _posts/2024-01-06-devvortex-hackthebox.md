@@ -264,7 +264,7 @@ We successfully got the reverse shell but we got webshell instead of a specific 
 But the webshell we got was broken, so we performed below steps to get working shell 
 
 `script /dev/null -c /bin/bash
-Ctrl+Z
+Ctrl+Z`
 stty raw -echo; fg
 Press Enter twice`
 
