@@ -287,7 +287,3 @@ We have permission to run `apport-cli`. Let's run it and find version.
 This version of apport-cli `2.20.11` seems to be vulnerable. Let's search exploit for it.
 
 
-
-
-
-
