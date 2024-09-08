@@ -2,7 +2,7 @@
 title: Legacy - HackTheBox
 authors: Samarth
 date: 2022-12-20 20:15:00 +0530
-categories: [HackTheBox]
+categories: [HackTheBox Machines]
 tags: [Samba , Eternal Blue, Windows]
 math: true
 mermaid: true

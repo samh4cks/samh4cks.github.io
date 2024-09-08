@@ -10,7 +10,7 @@ I spent 6 months as a **Security Analyst** at **Network Intelligence Pvt. Ltd.**
 
 I'm a bit of a hacker, but for good reasons! I've earned titles like **Hacker** at **HackTheBox**, **God** rank at **TryHackMe**, and even got the `#2` spot in **PwnTillDawn** in India. I also earned certifications like **eJPT** and **eWPT** that show I'm skilled in finding and fixing security holes in websites and apps.
 
-When I'm not cracking codes, I'm part of the teams **Synack Red Team** (`SRT`) and **Yogosha**. We work together to make the online world safer for everyone.
+When I'm not cracking codes, I'm part of the **Yogosha**. We work together to make the online world safer for everyone.
 
 Finding web security issues like `SQL Injection`, `XSS`, and others is like solving puzzles for me. And my efforts got noticed by the **Indian government** too! They appreciated me for spotting serious problems and helping to keep our digital world secure.
                                                                                                     

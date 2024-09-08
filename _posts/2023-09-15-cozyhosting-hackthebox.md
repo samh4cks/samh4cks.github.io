@@ -2,7 +2,7 @@
 title: CozyHosting - HackTheBox
 authors: Samarth
 date: 2023-09-15 08:00:00 +0530
-categories: [HackTheBox]
+categories: [HackTheBox Machines]
 tags: [Linux, Session Hijacking, Blind Command Injection]
 math: true
 mermaid: true
