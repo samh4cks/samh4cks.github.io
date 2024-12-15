@@ -114,6 +114,47 @@ Once the exploit sent to the server, let's check netcat listener if the shell is
 ![Netcat Listener](/assets/images/writeups/Sightless-HTB/4.png)
 
 
+It's surprising to see the direct root access to the system. But while browsing directories, I have found `.dockerenv` which confirms that the application is running in a docker container.
+
+![Docker Container](/assets/images/writeups/Sightless-HTB/5.png)
+
+While inspecting system's user, I got two usernames `michael` and `node`. It seems that the application is running under some user contexts, which could provide opportunity to carry further exploitation.
+
+### User Flag
+
+As now I have access to some user, let's check `/etc/passwd` and `/etc/shadow` files and will crack the hash using `unshadow`.
+
+Accessing `/etc/passwd`
+
+![/etc/passwd](/assets/images/writeups/Sightless-HTB/6.png)
+
+Accessing `/etc/shadow`
+
+![/etc/shadow](/assets/images/writeups/Sightless-HTB/7.png)
+
+I will be using `unshadow` tool to combine content of `/etc/passwd` and `/etc/shadow`.
+
+```bash
+unshadow passwd shadow > passwd_shadow_combined
+```
+
+![unshadow](/assets/images/writeups/Sightless-HTB/8.png)
+
+Let's use `john` to crack the hash and find the password.
+
+![Root's and Michael's Password](/assets/images/writeups/Sightless-HTB/9.png)
+
+It's interesting to see that using `john`, I have cracked password for `root` as well as `michael`. I'm pretty sure that the password of root itself indicates that it's not that easy. 
+
+Let's utilise the username as `michael` and use the above password to login using SSH.
+
+![Michael shell](/assets/images/writeups/Sightless-HTB/10.png)
+
+
+### Root Flag (Post Exploitation)
+
+To be continued......
+
 
 
 
