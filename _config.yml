@@ -20,13 +20,13 @@ timezone: Asia/Kolkata
 
 title: Samarth Dad # the main title
 
-tagline: Researcher @ <b>Yogosha</b> # it will display as the sub-title
+tagline: Security Researcher @ <b>Yogosha</b> # it will display as the sub-title
 
 description: >- # used by seo meta and the atom feed
   Security Researcher who shares his findings with the digital world, uncovering crucial vulnerabilities.
 
 # fill in the protocol & hostname for your site, e.g., 'https://username.github.io'
-url: "https://samh4cks.github.io"
+url: "https://samarthdad.com"
 
 github:
   username: samh4cks # change to your github username
