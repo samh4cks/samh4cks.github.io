@@ -10,13 +10,13 @@ mermaid: true
 
 ![Cicada - HTB](/assets/images/writeups/Cicada-HTB/banner.png)
 
-## TL:DR
+## TL;DR
 
 This writeup is based on [__Cicada__](https://app.hackthebox.com/machines/Cicada) machine, which is an easy-rated Windows box on Hack the Box. It starts with several services, such as DNS, Kerberos, MSRPC, NetBIOS-SSN, LDAP, Microsoft-DS, RPC over HTTP, SSL/LDAP, and Active Directory services. While enumerating SMB shares, the `HR` share contains a text file that reveals a default password. Later, by using the default password, we enumerated the username using `CrackMapExec`. It turns out that the default password belongs to a user called `michael.wrightson`. With Michael's credentials, we dumped domain information using `ldapdomaindump`. Through the domain_users enumeration, we discovered another password belonging to a user named `david.orelious` from the description. We used David's credentials to access the `DEV` share and found a PowerShell script that reveals another credential belonging to `emily.oscars`. Using Emily's credentials, we gained access to a shell, where we found the user flag. While elevating privileges, we found `SeBackupPrivilege`, which allowed us to download the SAM and SYSTEM files. Later, we used `pypykatz` to extract hashes with the help of the SAM and SYSTEM files. Using the administrator hash, we logged in as the administrator user and found the root flag.
 
 ## Scanning Network
 
-We started with an Nmap scan and found ports 53, 88, 135, 139, 389, 445, 593, 636, 3268, and 3269 open, corresponding to DNS, Kerberos, MSRPC, NetBIOS-SSN, LDAP, Microsoft-DS, RPC over HTTP, SSL/LDAP, and Active Directory services. The host appears to be a Windows domain controller (`CICADA-DC`) with Active Directory services, including LDAP and SMB, potentially offering attack vectors. Let's see the Nmap results.
+I started with an Nmap scan and found ports 53, 88, 135, 139, 389, 445, 593, 636, 3268, and 3269 open, corresponding to DNS, Kerberos, MSRPC, NetBIOS-SSN, LDAP, Microsoft-DS, RPC over HTTP, SSL/LDAP, and Active Directory services. The host appears to be a Windows domain controller (`CICADA-DC`) with Active Directory services, including LDAP and SMB, potentially offering attack vectors. Let's see the Nmap results.
 
 ```bash
 nmap -sC -sV -A -T4 -Pn 10.10.11.35 -oN scan/normal.scan 
