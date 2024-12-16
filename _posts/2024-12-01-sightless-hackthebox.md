@@ -153,7 +153,29 @@ Let's utilise the username as `michael` and use the above password to login usin
 
 ### Root Flag (Post Exploitation)
 
-To be continued......
+I tried checking current user's privilege by running `sudo -l` but `michael` doesn't belongs to sudeors group.
+
+Let's find SUID files execute with the permission of their owner.
+
+```bash
+find / -perm /4000 2>/dev/null
+```
+
+![Files with permission](/assets/images/writeups/Sightless-HTB/11.png)
+
+I have tried to misconfigure executables to see if it's exploitable but no success. So, here I will be using Linpeas to find interesting files, directories, processes,etc.
+
+While running Linpeas, I came across to VirtualHost which is using `127.0.0.1:8080` to run Froxlor service.
+
+`Froxlor` is a lightweight, open-source web hosting control panel designed to manage hosting environments efficiently. It provides an intuitive graphical interface for users, resellers, and administrators to manage their web hosting accounts, domains, email, FTP, and more. Froxlor is often used as an alternative to popular control panels like cPanel and Plesk.
+
+Let's find active TCP network connections, listening ports, and the corresponding process information using `telnet -tnlp`.
+
+![netstat -tnlp](/assets/images/writeups/Sightless-HTB/12.png)
+
+I have found `127.0.0.1:8080` might be used by Froxlor service. Let's do port forwarding into my machine's ip.
+
+![Froxlor](/assets/images/writeups/Sightless-HTB/13.png)
 
 
 
