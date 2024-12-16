@@ -12,7 +12,7 @@ mermaid: true
 
 ## TL;DR
 
-
+This writeup is based on the [__Sightless__](https://app.hackthebox.com/machines/Sightless) machine, which is an easy-rated Linux box on Hack the Box. It starts with several open ports: FTP (21), SSH (22), and HTTP (80). While enumerating the HTTP service, we discovered the `sqlpad.sightless.htb` subdomain running an outdated version of SQLPad (6.10.0), which is vulnerable to [CVE-2022-0944](https://github.com/0xRoqeeb/sqlpad-rce-exploit-CVE-2022-0944). We exploited this RCE vulnerability to gain remote code execution (RCE) on the server. After gaining access, we found a `.dockerenv` file, indicating the presence of a Docker container. We enumerated system files, cracked passwords, and obtained user `michael`'s SSH credentials. With these, we logged in via SSH and found the user flag. During privilege escalation, we discovered that an `Froxlor` application was running on a VirtualHost, so I accessed it and found the login panel. Further investigation led me to the `remote-debugging-port`, which pointed me toward the use of the `Google Chrome Debugger` to debug the web application. After debugging the application, I found the admin credentials, which gave me access to the admin dashboard. I came across `PHP-FPM`, which was vulnerable to an [RCE vulnerability](https://sarperavci.com/Froxlor-Authenticated-RCE/) via arbitrary command execution in the `php-fpm restart command` parameter in the `Froxlor` web panel. This allowed us to execute a reverse shell and escalate to root. We successfully gained root access and obtained the root flag. 
 
 ## Scanning Network
 
