@@ -178,11 +178,11 @@ I have found `127.0.0.1:8080` might be used by Froxlor service. Let's do port fo
 ![Froxlor](/assets/images/writeups/Sightless-HTB/13.png)
 
 
-While browsing for sometime and reviewing running processes in the system. I came across remote debugging port. I realised that Google Chrome Debugger can help me to debug the web application. Google Chrome Debugger is a tool that debug web application if the running Google Chrom debugger at specific port `--remote-debugging-port=<port>`.
+While browsing for sometime and reviewing running processes in the system. I came across remote debugging port. I realised that `Google Chrome Debugger` can help me to debug the web application. `Google Chrome Debugger` is a tool that debug web application if the running Google Chrom debugger at specific port `--remote-debugging-port=<port>`. Let's use [__Chrome Remote Debugger Pentesting__](https://exploit-notes.hdks.org/exploit/linux/privilege-escalation/chrome-remote-debugger-pentesting/) methodology to debug web applications.
 
 ![Remote Debugging Port](/assets/images/writeups/Sightless-HTB/14.png)
 
-`remote-debugging-port=0`, it means that the remote debugging feature of Google Chrome (or any Chromium-based browser) will not have a fixed port. Instead, Chrome will dynamically assign an available port for remote debugging.
+`remote-debugging-port=0`, it means that the remote debugging feature of Google Chrome (or any Chromium-based browser) will not have a fixed port. Instead, Chrome will dynamically assign an available port for remote debugging. 
 
 For identifying all the active TCP connections, I will use `netstat -tnlp`.
 
