@@ -10,7 +10,7 @@ mermaid: true
 
 ![LinkVortex - HTB](/assets/images/writeups/LinkVortex-HTB/banner.png)
 
-Writeup will be upload soon...
+Writeup will be uploaded soon...
 
 Thanks for reading this far. If you enjoyed the writeup, do support me [__here__](https://www.buymeacoffee.com/h4xplo1t).
 
