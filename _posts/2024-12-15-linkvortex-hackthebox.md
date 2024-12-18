@@ -3,7 +3,7 @@ title: LinkVortex - HackTheBox
 authors: Samarth
 date: 2024-12-15 09:30:00 +0530
 categories: [HackTheBox Machines]
-tags: [Linux]
+tags: [Linux, Ghost CMS, CVE-2023-40028]
 math: true
 mermaid: true
 ---
