@@ -102,7 +102,7 @@ While performing directory listing on `http://linkvortex.htb`, I didn't find any
 
 ### Subdomain Enumeration
 
-Before browsing further, let's start subdomain enumeration for `linkvortex.htb`.
+Before browsing further, I started subdomain enumeration for `linkvortex.htb`.
 
 I found one subdomain `dev.linkvortex.htb` during subdomain enumeration. Let's add this subdomain to `/etc/hosts` file.
 
@@ -160,7 +160,7 @@ I found one interesting directory that is `.git`. Let's visit `http://dev.linkvo
 
 ![.git directory](/assets/images/writeups/LinkVortex-HTB/3.png)
 
-While Googling for sometime to see how I could make use of `.git` directory to find interesting information. I came across a tool called `git-dumper`. 
+While Googling for some time to see how I could make use of `.git` directory to find interesting information. I came across a tool called `git-dumper`. 
 
 [__`git-dumper`__](https://github.com/arthaud/git-dumper) - A tool to dump a git repository from a website.
 
@@ -187,7 +187,7 @@ python3 git_dumper.py http://dev.linkvortex.htb/.git ~/dev_linkvortex_git_dump
 [-] Fetching http://dev.linkvortex.htb/.git/logs/ [200]
 ```
 
-I have successfully dumped the git repository. Let’s check the output directory to find something interesting.
+I successfully dumped the git repository. Let’s check the output directory to find something interesting.
 
 While browsing through each of the files and directories, I discovered that this could be the configuration of the `Ghost` CMS. So, I used the `find` method to check if any authentication files existed.
 
@@ -223,11 +223,11 @@ cat ghost/core/test/regression/api/admin/authentication.test.js | grep pass
 ```
 In the above `authentication.test.js` file, I found password that is `OctopiFociPilfer45`.
 
-I have found the password, but now I need to locate the login panel for the admin. I think I haven't checked for the `robots.txt` file yet. Let's check `robots.txt` to find some information.
+I found the password, but now I needed to locate the login panel for the admin. I think I hadn't checked for the `robots.txt` file yet. Let's check `robots.txt` to find some information.
 
 ![Robots.txt](/assets/images/writeups/LinkVortex-HTB/4.png)
 
-`robots.txt` revealed some directories marked as `disallow`, but `/ghost` seems interesting, especially since I have found credentials as well.
+`robots.txt` revealed some directories marked as `disallow`, but `/ghost` seemed  interesting, especially since I had already found credentials.
 
 Let's visit [__http://linkvortex.htb/ghost__]() and see if we can access it.
 
@@ -235,7 +235,7 @@ Let's visit [__http://linkvortex.htb/ghost__]() and see if we can access it.
 
 ![Ghost Admin Panel](/assets/images/writeups/LinkVortex-HTB/5.png)
 
-I have successfully found the login panel. Let's use the combination of admin mail and the password I found.
+I successfully found the login panel. Let's use the combination of admin mail and the password I found.
 
 ```bash
 Username - admin@linkvortex.htb
@@ -245,7 +245,7 @@ I have successfully logged into Ghost Dashboard.
 
 ![Ghost Dashboard](/assets/images/writeups/LinkVortex-HTB/6.png)
 
-Now that I have valid credentials for the admin user and know that `Ghost 5.58` version is running on the system, let's use this information to check if any vulnerability exist in this version.
+Now that I have valid credentials for the admin user and know that `Ghost 5.58` version is running on the system, I used this information to check if any vulnerability existed in this version.
 
 I came across `CVE-2023-40028`, which is responsible for arbitrary file read.
 
@@ -259,7 +259,7 @@ Let's understand the vulnerability -
 
 3. Once the attacker uploads a `symlink` file, improper input validation checks in the upload functionality allow the attacker to perform arbitrary file read operations.
 
-I will be using public [__exploit__](https://github.com/0xyassine/CVE-2023-40028).
+I used the public [__exploit__](https://github.com/0xyassine/CVE-2023-40028).
 
 Make sure to modify `GHOST_URL` value to `http://linkvortex.htb` in the script before executing it.
 
@@ -271,7 +271,7 @@ While browsing the `.git` dump, I came across a file named `Dockerfile.ghost`, w
 
 ![Dockerfile.ghost](/assets/images/writeups/LinkVortex-HTB/8.png)
 
-I have obtained the file path, let's use arbitrary file read vulnerability to read the content.
+I obtained the file path. Let's use arbitrary file read vulnerability to read the content.
 
 ![Configuration file](/assets/images/writeups/LinkVortex-HTB/9.png)
 
@@ -279,7 +279,7 @@ Surprisingly, I found user credential for the `bob` user. Let's use these creden
 
 ![User Access](/assets/images/writeups/LinkVortex-HTB/10.png)
 
-Success! I have logged in as the bob user and obtained the user flag.
+Success! I logged in as the bob user and obtained the user flag.
 
 ## Post Exploitation
 
