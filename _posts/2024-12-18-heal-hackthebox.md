@@ -1,7 +1,7 @@
 ---
 title: Heal - HackTheBox
 authors: Samarth
-date: 2024-12-18 18:15:00 +0530
+date: 2024-12-18 09:15:00 +0530
 categories: [HackTheBox Machines]
 tags: [Linux]
 math: true
