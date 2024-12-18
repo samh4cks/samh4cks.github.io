@@ -12,7 +12,7 @@ mermaid: true
 
 ## TL;DR
 
-
+This writeup is based on the [__LinkVortex__](https://app.hackthebox.com/machines/LinkVortex) machine, which is an easy-rated Linux box on Hack the Box. I began by scanning the target and found open ports for SSH and HTTP. After enumerating the web server, I discovered it was running the Ghost CMS. Through subdomain enumeration, I found a `dev.linkvortex.htb` subdomain and performed directory fuzzing, which led to the discovery of a `.git` directory. Using the `git-dumper` tool, I successfully dumped the repository and found admin credentials in a file. With these credentials, I accessed the Ghost CMS admin panel and identified a vulnerability (CVE-2023-40028) that allowed me to exploit arbitrary file read via symlinks. This led to discovering a configuration file with the `bob` user’s SSH credentials, which I used to log in and capture the user flag. I then used a script (`clean_symlink.sh`) to escalate privileges, ultimately gaining root access and capturing the root flag.
 
 ## Scanning Network
 
