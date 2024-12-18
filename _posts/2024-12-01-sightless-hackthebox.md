@@ -8,7 +8,7 @@ math: true
 mermaid: true
 ---
 
-![Cicada - HTB](/assets/images/writeups/Sightless-HTB/banner.png)
+![Sightless - HTB](/assets/images/writeups/Sightless-HTB/banner.png)
 
 ## TL;DR
 
