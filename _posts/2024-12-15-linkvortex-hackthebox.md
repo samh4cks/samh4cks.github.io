@@ -41,13 +41,13 @@ Two services, SSH and HTTP, were detected. Let’s proceed with enumerating the 
 
 ## Enumeration
 
-The Nmap scan reveals that the IP address is linked to the domain name `linkvortex.htb`. Therefore, we need to add this domain to the `"/etc/hosts"` file.
+The Nmap scan revealed that the IP address is linked to the domain name `linkvortex.htb`. Therefore, we need to add this domain to the `"/etc/hosts"` file.
 
-Now, let's visit [__http://linkvortex.htb/__]().
+Then, I visited [__http://linkvortex.htb/__]().
 
 ![Browser View](/assets/images/writeups/LinkVortex-HTB/1.png)
 
-Using `whatweb` web application technology analyzer, I have found that the website uses `Ghost` CMS. `Ghost` CMS is running it's `5.58` version.
+Using `whatweb` web application technology analyzer, I found that the website uses `Ghost` CMS. `Ghost` CMS is running `5.58` version.
 
 ```bash
 whatweb -v http://linkvortex.htb/                                           
@@ -98,13 +98,13 @@ Detected Plugins:
 
 `Ghost` is an open source content management system platform written in JavaScript and distributed under the MIT License, designed to simplify the process of online publishing for individual bloggers as well as online publications. 
 
-While performing directory listing on `http://linkvortex.htb`, I haven't found anything interesting.
+While performing directory listing on `http://linkvortex.htb`, I didn't find anything interesting.
 
 ### Subdomain Enumeration
 
 Before browsing further, let's start subdomain enumeration for `linkvortex.htb`.
 
-I have found one subdomain `dev.linkvortex.htb` during subdomain enumeration. Let's add this subdomain to `/etc/hosts` file.
+I found one subdomain `dev.linkvortex.htb` during subdomain enumeration. Let's add this subdomain to `/etc/hosts` file.
 
 ```bash
 wfuzz -c -f subdomains.txt -w /usr/share/wordlists/seclists/Discovery/DNS/subdomains-top1million-5000.txt -u 'http://linkvortex.htb' -H "Host:FUZZ.linkvortex.htb" --hc 301
@@ -127,13 +127,13 @@ Filtered Requests: 4988
 Requests/sec.: 0
 ```
 
-Let's visit [__http://dev.linkvortex.htb__]().
+Then, I visited [__http://dev.linkvortex.htb__]().
 
 ![Dev subdomain](/assets/images/writeups/LinkVortex-HTB/2.png)
 
-This website didn't showed any relevant information.
+This website didn't show any relevant information.
 
-Let's perform directory fuzzing on `http://dev.linkvortex.htb` to find files and directories.
+Let's perform directory fuzzing on `http://dev.linkvortex.htb` to discover files and directories.
 
 ```bash
 wfuzz -c -w /usr/share/wordlists/seclists/Discovery/Web-Content/big.txt -u http://dev.linkvortex.htb/FUZZ --hc 404,403 -f dev.linkvortex.fuzzing
@@ -156,15 +156,15 @@ Filtered Requests: 20475
 Requests/sec.: 0
 ```
 
-I have found one interesting directory that is `.git`. Let's visit on `http://dev.linkvortex.htb/.git`.
+I found one interesting directory that is `.git`. Let's visit `http://dev.linkvortex.htb/.git`.
 
 ![.git directory](/assets/images/writeups/LinkVortex-HTB/3.png)
 
-While Googling for sometime to see how I can take use of `.git` to find some interesting information. I came across one tool called `git-dumper`. 
+While Googling for sometime to see how I could make use of `.git` directory to find interesting information. I came across a tool called `git-dumper`. 
 
 [__`git-dumper`__](https://github.com/arthaud/git-dumper) - A tool to dump a git repository from a website.
 
-It requires the url and the output directory. Let's utilise this tool.
+It requires the url and the output directory. Let'	s utilise this tool.
 
 ```bash
 python3 git_dumper.py http://dev.linkvortex.htb/.git ~/dev_linkvortex_git_dump
@@ -187,9 +187,9 @@ python3 git_dumper.py http://dev.linkvortex.htb/.git ~/dev_linkvortex_git_dump
 [-] Fetching http://dev.linkvortex.htb/.git/logs/ [200]
 ```
 
-Now, I have succesfully dumped the git repository. Let's check output directory to find something interesting.
+I have successfully dumped the git repository. Let’s check the output directory to find something interesting.
 
-While surfing through each of the files and directories, I got to know that this can be the configuration of `Ghost` CMS. So, I used `find` method to identify any `authentication` file exists or not.
+While browsing through each of the files and directories, I discovered that this could be the configuration of the `Ghost` CMS. So, I used the `find` method to check if any authentication files existed.
 
 ```bash
  find . -iname '*authentication*' 
@@ -204,7 +204,7 @@ While surfing through each of the files and directories, I got to know that this
 ./ghost/core/core/server/api/endpoints/utils/serializers/output/authentication.js
 ```
 
-I came across multiple authentication.js. While reading all these files, I have found some credentials that seems from an administrator user.
+I came across multiple authentication.js. While reading through them, I found some credentials that seemed to belong to an administrator user.
 
 ```bash
 cat ghost/core/test/regression/api/admin/authentication.test.js | grep pass
@@ -221,13 +221,13 @@ cat ghost/core/test/regression/api/admin/authentication.test.js | grep pass
                         password: '12345678910',
                         password: '12345678910',
 ```
-In the above `authentication.test.js` file, I have found password that is `OctopiFociPilfer45`.
+In the above `authentication.test.js` file, I found password that is `OctopiFociPilfer45`.
 
-I have found the password but now I have to find the login panel for the admin. I think I haven't checked for `robots.txt` file. 
+I have found the password, but now I need to locate the login panel for the admin. I think I haven't checked for the `robots.txt` file yet. Let's check `robots.txt` to find some information.
 
 ![Robots.txt](/assets/images/writeups/LinkVortex-HTB/4.png)
 
-`robots.txt` reveals some directories which considered as `disallow`, but `/ghost` seems interesting as we have found credentials too.
+`robots.txt` revealed some directories marked as `disallow`, but `/ghost` seems interesting, especially since I have found credentials as well.
 
 Let's visit [__http://linkvortex.htb/ghost__]() and see if we can access it.
 
@@ -235,7 +235,7 @@ Let's visit [__http://linkvortex.htb/ghost__]() and see if we can access it.
 
 ![Ghost Admin Panel](/assets/images/writeups/LinkVortex-HTB/5.png)
 
-We have successfully found the login panel. Let's utilise the combination of admin mail and the password I have found.
+I have successfully found the login panel. Let's use the combination of admin mail and the password I found.
 
 ```bash
 Username - admin@linkvortex.htb
@@ -245,41 +245,41 @@ I have successfully logged into Ghost Dashboard.
 
 ![Ghost Dashboard](/assets/images/writeups/LinkVortex-HTB/6.png)
 
-Now, I have valid credentials of admin user as well as I know that `Ghost 5.58` version is running on the system. Let's use this information and search if any vulnerability exist in this version.
+Now that I have valid credentials for the admin user and know that `Ghost 5.58` version is running on the system, let's use this information to check if any vulnerability exist in this version.
 
-I came across `CVE-2023-40028` which is responsible for arbitrary file read.
+I came across `CVE-2023-40028`, which is responsible for arbitrary file read.
 
 [__`CVE-2023-40028`__](https://github.com/0xDTC/Ghost-5.58-Arbitrary-File-Read-CVE-2023-40028) affects Ghost, an open source content management system, where versions prior to 5.59.1 allow authenticated users to upload files that are symlinks. This can be exploited to perform an arbitrary file read of any file on the host operating system.
 
 Let's understand the vulnerability -
 
-1. `Ghost CMS API` (`/ghost/api/v3/admin`) allows attacker to login via valid credentials and gave access to upload `symlink` file to the web server.
+1. `Ghost CMS API` (`/ghost/api/v3/admin`) allows an attacker to log in with valid credentials and provide access to upload a `symlink` file to the web server.
 
-2. `Symlink` - It is a type of file that points to another file or directory in a file system. It is essentially a shortcut or reference that allows you to access files or directories in different locations on your system, without having to move or copy the actual data.
+2. `Symlink` - A symlink is a type of file that points to another file or directory in a file system. It acts as a shortcut or reference, allowing access to files or directories in different locations on the system without having to move or copy the actual data.
 
-3. Once the attacker will upload `symlink` file, because of improper input validation check on upload functionality, attacker can perform arbitrary file read.
+3. Once the attacker uploads a `symlink` file, improper input validation checks in the upload functionality allow the attacker to perform arbitrary file read operations.
 
 I will be using public [__exploit__](https://github.com/0xyassine/CVE-2023-40028).
 
-You have to modify `GHOST_URL` value to `http://linkvortex.htb` in the script before executing it.
+Make sure to modify `GHOST_URL` value to `http://linkvortex.htb` in the script before executing it.
 
 ![Arbitrary File Read](/assets/images/writeups/LinkVortex-HTB/7.png)
 
-I have successfully able to perform arbitrary file read to read the content of `/etc/passwd`.
+I was successfully able to perform arbitrary file read and read the content of `/etc/passwd`.
 
-While browsing `.git` dump, I came across to one `Dockerfile.ghost`, which contains configuration file of production. Let's check the file path of the configuration file.
+While browsing the `.git` dump, I came across a file named `Dockerfile.ghost`, which contains configuration file for production. Let's check the file path of the configuration file.
 
 ![Dockerfile.ghost](/assets/images/writeups/LinkVortex-HTB/8.png)
 
-I have got the file path, let's use arbitrary file read vulnerability to read the content.
+I have obtained the file path, let's use arbitrary file read vulnerability to read the content.
 
 ![Configuration file](/assets/images/writeups/LinkVortex-HTB/9.png)
 
-Surprisingly, I have found user credential of `bob` user. Let's utilise the credential to login into SSH, as it was open port.
+Surprisingly, I found user credential for the `bob` user. Let's use these credential to log in via SSH, as the port is open.
 
 ![User Access](/assets/images/writeups/LinkVortex-HTB/10.png)
 
-Successfully! I have logged in as a bob user and I have got the user flag.
+Success! I have logged in as the bob user and obtained the user flag.
 
 ## Post Exploitation
 
@@ -287,19 +287,19 @@ Let's run `sudo -l` to check which list of commands that the current user can ru
 
 ![sudo -l](/assets/images/writeups/LinkVortex-HTB/11.png)
 
-Let's first read the `clean_symlink.sh` file to understand what does the script do.
+I first read the `clean_symlink.sh` file to understand what the script does.
 
-The script is designed to check if a file (passed as an argument) is a symbolic link pointing to a PNG file. If it is, it checks the target of the symbolic link and decides whether to remove it or quarantine it. Specifically, if the symbolic link points to sensitive files or directories (like `/etc` or `/root`), it removes the link. Otherwise, it quarantines the link in a designated directory (/var/quarantined). It may also print the content of the quarantined file if the `CHECK_CONTENT` variable is set to true.
+The script is designed to check if a file (passed as an argument) is a symbolic link pointing to a PNG file. If it is, it checks the target of the symbolic link and decides whether to remove it or quarantine it. Specifically, if the symbolic link points to sensitive files or directories (like `/etc` or `/root`), it removes the link. Otherwise, it quarantines the link in a designated directory (/var/quarantined). It may also print the content of the quarantined file if the `CHECK_CONTENT` variable is set to `true`.
 
 ![clean_symlink.sh](/assets/images/writeups/LinkVortex-HTB/12.png)
 
-Let's create two symlinks using `ln`. `ln` command in Linux is used to create links to files and directories. According to script if `CHECK_CONTENT` is set to `true` then only content of quarantined file will be printed.
+I created two symlinks using the `ln` command. The `ln` command in Linux is used to create links to files and directories. According to the script, the content of the quarantined file was only printed if the `CHECK_CONTENT` variable was set to `true`.
 
 ```bash
 export CHECK_CONTENT=true
 ```
 
-By collecting all the information, I will be creating two symlink.
+After collecting all the information, I created two symlinks.
 
 ```bash
 touch link1.png
@@ -309,9 +309,9 @@ touch link2.png
 ```
 
 In the first symlink, `link1.png` is points to `/root/root.txt`.
-In the second symlink, the `link1.png` is stored at `/home/bob` file path so I have used `link2.png` which points to `/home/bob/link1.png`.
+In the second symlink, the `link1.png` was stored at `/home/bob`, so I used `link2.png`, which pointed to `/home/bob/link1.png`.
 
-I have used `link2.png` for the `clean_symlink.sh` script because it will consider `/home/bob/link1.png` as the valid symlink.
+I used `link2.png` for the `clean_symlink.sh` script because it would consider `/home/bob/link1.png` as the valid symlink.
 
 ```bash
 sudo bash /opt/ghost/clean_symlink.sh link2.png
