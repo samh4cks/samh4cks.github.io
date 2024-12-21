@@ -1,5 +1,5 @@
 ---
-title: LinkVortex - HackTheBox
+title: HackTheBox LinkVortex Writeup
 authors: Samarth
 date: 2024-12-15 09:30:00 +0530
 categories: [HackTheBox Machines]

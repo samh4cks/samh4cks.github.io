@@ -1,5 +1,5 @@
 ---
-title: Heal - HackTheBox
+title: HackTheBox Heal Writeup
 authors: Samarth
 date: 2024-12-18 09:15:00 +0530
 categories: [HackTheBox Machines]
@@ -194,7 +194,9 @@ I used `john` to crack the bcrypt hash and I found the `ralph's` password.
 
 ![Ralph's password](/assets/images/writeups/Heal-HTB/20.png)
 
-I used the combination of `ralph's` credential on `Resume Builder` as well as `LimeSurvey`. Both the login was successfull but interestingly I got logged into `LimeSurvey's` admin panel.
+I used the combination of `ralph's` credential on `Resume Builder` as well as `LimeSurvey`. Both the login was successfull but interestingly I got logged into `LimeSurvey's` admin panel. 
+
+`ralph:147258369`
 
 ![LimeSurvey Admin Panel](/assets/images/writeups/Heal-HTB/21.png)
 
@@ -206,7 +208,40 @@ I Googled for a while and came across `LimeSurvey RCE` but that was vulnerable t
 
 `LimeSurvey RCE` allows attacker to upload php reverse shell in the form of plugin which can be created by the administrator.
 
-I found one [__exploit __](https://github.com/Y1LD1R1M-1337/Limesurvey-RCE) which I used and it worked for me.
+I found one [exploit](https://github.com/Y1LD1R1M-1337/Limesurvey-RCE) which I used and it worked for me.
+
+Let's clone the exploit and unzip `Y1LD1R1M.zip`
+
+![unzip](/assets/images/writeups/Heal-HTB/23.png)
+
+It contains `config.xml` and `php-rev.php`. I have changed version as `6.6.4` in `config.xml`.
+
+![config.xml change](/assets/images/writeups/Heal-HTB/24.png)
+
+I have changed listener IP and port in `php-rev.php`.
+
+![Change in rev shell](/assets/images/writeups/Heal-HTB/25.png)
+
+Now remove old `Y1LD1R1M.zip` and create new zip consisting `config.xml` and `php-rev.php`.
+
+Let's browse `http://take-survey.heal.htb/index.php/admin/pluginmanager/sa/index` and upload the zip file.
+
+![Plugin upload](/assets/images/writeups/Heal-HTB/26.png)
+
+Once the plugin uploaded then install it.
+
+![Install plugin](/assets/images/writeups/Heal-HTB/27.png)
+
+To use this plugin, it has to be activated. That would be done by the exploit script provided in the challenge files.
+
+Before proceeding with the exploitation, we need to find the plugin id. Locate the uploaded plugin:
+
+![Plugin ID](/assets/images/writeups/Heal-HTB/28.png)
+
+I have to use this plugin id in the exploit.
+
+![exploit plugin id](/assets/images/writeups/Heal-HTB/29.png)
+
 
 
 

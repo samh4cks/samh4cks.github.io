@@ -1,5 +1,5 @@
 ---
-title: Cicada - HackTheBox
+title: HackTheBox Cicada Writeup
 authors: Samarth
 date: 2024-10-20 14:00:00 +0530
 categories: [HackTheBox Machines]

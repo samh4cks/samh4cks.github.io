@@ -1,5 +1,5 @@
 ---
-title: Legacy - HackTheBox
+title: HackTheBox Legacy Writeup
 authors: Samarth
 date: 2022-12-20 20:15:00 +0530
 categories: [HackTheBox Machines]
