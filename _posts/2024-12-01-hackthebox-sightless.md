@@ -52,7 +52,7 @@ Two services, SSH and HTTP, were detected. Let’s proceed with enumerating the 
 
 The Nmap scan reveals that the IP address is linked to the domain name `sightless.htb`. Therefore, we need to add this domain to the `"/etc/hosts"` file.
 
-Now, let's visit [__http://slightless.htb/__](http://slightless.htb/).
+Now, let's visit `http://slightless.htb/`.
 
 ![Browser View](/assets/images/writeups/Sightless-HTB/1.png)
 
