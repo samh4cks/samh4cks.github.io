@@ -1,43 +1,47 @@
-# Chirpy Starter
+# Samarth Dad's Security Research Blog
 
-[![Gem Version](https://img.shields.io/gem/v/jekyll-theme-chirpy)][gem]&nbsp;
-[![GitHub license](https://img.shields.io/github/license/cotes2020/chirpy-starter.svg?color=blue)][mit]
+Welcome to [samarthdad.com](https://samarthdad.com/), a blog dedicated to cybersecurity research, vulnerability disclosures, and write-ups on various security challenges.
 
-When installing the [**Chirpy**][chirpy] theme through [RubyGems.org][gem], Jekyll can only read files in the folders
-`_data`, `_layouts`, `_includes`, `_sass` and `assets`, as well as a small part of options of the `_config.yml` file
-from the theme's gem. If you have ever installed this theme gem, you can use the command
-`bundle info --path jekyll-theme-chirpy` to locate these files.
+## 🛡️ About the Author
 
-The Jekyll team claims that this is to leave the ball in the user’s court, but this also results in users not being
-able to enjoy the out-of-the-box experience when using feature-rich themes.
+I'm Samarth Dad, a Security Researcher at [Yogosha](https://yogosha.com/). My work focuses on identifying and analyzing security vulnerabilities, as well as participating in Capture The Flag (CTF) competitions.
 
-To fully use all the features of **Chirpy**, you need to copy the other critical files from the theme's gem to your
-Jekyll site. The following is a list of targets:
+## 📚 Blog Content
 
-```shell
-.
-├── _config.yml
-├── _plugins
-├── _tabs
-└── index.html
-```
+The blog features:
 
-To save you time, and also in case you lose some files while copying, we extract those files/configurations of the
-latest version of the **Chirpy** theme and the [CD][CD] workflow to here, so that you can start writing in minutes.
+- **Hack The Box Write-ups**: Detailed walkthroughs of various Hack The Box machines, including:
+  - [Heal](https://samarthdad.com/hackthebox-heal-writeup/)
+  - [LinkVortex](https://samarthdad.com/hackthebox-linkvortex-writeup/)
+  - [Sightless](https://samarthdad.com/hackthebox-sightless-writeup/)
+  - [Cicada](https://samarthdad.com/hackthebox-cicada-writeup/)
 
-## Usage
+- **Vulnerability Disclosures**: In-depth analyses of identified vulnerabilities, such as:
+  - [CVE-2023-43458 - Stored Cross-Site Scripting (XSS)](https://samarthdad.com/cve-2023-43458/)
+  - [CVE-2023-43457 - Broken Access Control (BAC)](https://samarthdad.com/cve-2023-43457/)
 
-Check out the [theme's docs](https://github.com/cotes2020/jekyll-theme-chirpy/wiki).
+## 🏷️ Categories and Tags
 
-## Contributing
+Explore posts by categories and tags to find content on specific topics of interest.
 
-This repository is automatically updated with new releases from the theme repository. If you encounter any issues or want to contribute to its improvement, please visit the [theme repository][chirpy] to provide feedback.
+## 📅 Archives
 
-## License
+Access the archives to browse posts by date and discover older content.
 
-This work is published under [MIT][mit] License.
+## 🛠️ Technologies Used
 
-[gem]: https://rubygems.org/gems/jekyll-theme-chirpy
-[chirpy]: https://github.com/cotes2020/jekyll-theme-chirpy/
-[CD]: https://en.wikipedia.org/wiki/Continuous_deployment
-[mit]: https://github.com/cotes2020/chirpy-starter/blob/master/LICENSE
+- **Static Site Generator**: [Jekyll](https://jekyllrb.com/)
+- **Theme**: [Chirpy](https://github.com/cotes2020/jekyll-theme-chirpy)
+
+## 📬 Contact
+
+Connect with me on:
+
+- GitHub: [github.com/samarthdad](https://github.com/samarthdad)
+- Twitter: [twitter.com/samarthdad](https://twitter.com/samarthdad)
+
+Feel free to reach out for collaborations, discussions, or any inquiries related to cybersecurity.
+
+---
+
+*Note: This website is continually updated with new content. Check back regularly for the latest posts and research findings.*
