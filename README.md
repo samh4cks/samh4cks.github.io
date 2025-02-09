@@ -15,10 +15,12 @@ The blog features:
   - [LinkVortex](https://samarthdad.com/hackthebox-linkvortex-writeup/)
   - [Sightless](https://samarthdad.com/hackthebox-sightless-writeup/)
   - [Cicada](https://samarthdad.com/hackthebox-cicada-writeup/)
+  - and many more.
 
 - **Vulnerability Disclosures**: In-depth analyses of identified vulnerabilities, such as:
   - [CVE-2023-43458 - Stored Cross-Site Scripting (XSS)](https://samarthdad.com/cve-2023-43458/)
   - [CVE-2023-43457 - Broken Access Control (BAC)](https://samarthdad.com/cve-2023-43457/)
+  - [CVE-2023-43456 - Stored Cross-Site Scripting (XSS)](https://samarthdad.com/posts/cve-2023-43456/)
 
 ## 🏷️ Categories and Tags
 
@@ -37,6 +39,7 @@ Access the archives to browse posts by date and discover older content.
 
 Connect with me on:
 
+- LinkedIn: [linkedin.com/in/samarth-dad](https://www.linkedin.com/in/samarth-dad)
 - GitHub: [github.com/samarthdad](https://github.com/samarthdad)
 - Twitter: [twitter.com/samarthdad](https://twitter.com/samarthdad)
 
