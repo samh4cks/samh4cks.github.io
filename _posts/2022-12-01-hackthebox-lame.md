@@ -12,7 +12,7 @@ mermaid: true
 
 ## TL:DR
 
-This writeup is based on [__Lame__](https://app.hackthebox.com/machines/Lame) on Hack the box. It was a Linux box. It starts with two
+This writeup is based on [__Lame__](https://app.hackthebox.com/machines/Lame){:target="_blank"} on Hack the box. It was a Linux box. It starts with two
 major services, vsftpd, and Samba. We tried FTP logon but didn’t get anything interesting.
 Then try to exploit Samba service via command injection in the username field. Using samba
 service exploitation, we got a shell, then later using directory listing, we got the user
@@ -105,7 +105,7 @@ In the enumeration phase, we will first enumerate the FTP via anonymous user.
 As we enumerated FTP, we didn’t anything interesting, but we know that FTP is vulnerable so
 we can try to exploit it in the exploitation phase. Now, let’s move to Samba service.
 
-Here, we can enumerate Samba using [__smbmap__](https://www.kali.org/tools/smbmap/) to get more information about the machine.
+Here, we can enumerate Samba using [__smbmap__](https://www.kali.org/tools/smbmap/){:target="_blank"} to get more information about the machine.
 
 ```bash
  Command - smbmap -H 10.129.127.33
@@ -154,7 +154,7 @@ we will first move toward the FTP exploitation and try to exploit it.
 
 ### FTP Exploitation
 
-Here, we can use [__searchsploit__](https://www.exploit-db.com/searchsploit) to find the exploit.
+Here, we can use [__searchsploit__](https://www.exploit-db.com/searchsploit){:target="_blank"} to find the exploit.
 
 ```bash
  msf6 > search vsftpd 2.3.4
@@ -164,7 +164,7 @@ Here, we can use [__searchsploit__](https://www.exploit-db.com/searchsploit) to 
  0  exploit/unix/ftp/vsftpd_234_backdoor  2011-07-03       excellent  No     VSFTPD v2.3.4 Backdoor Command Execution 
 ```
 As we get vsftpd 2.3.4 – Backdoor Command Execution (Metasploit). Let’s exploit it using 
-[__Metasploit__](https://www.metasploit.com/).
+[__Metasploit__](https://www.metasploit.com/){:target="_blank"}.
 
 ```bash
  msf6 exploit(unix/ftp/vsftpd_234_backdoor) > set RHOSTS 10.129.127.33
@@ -179,7 +179,7 @@ As we get vsftpd 2.3.4 – Backdoor Command Execution (Metasploit). Let’s expl
 As you are able to see above, we provided the machine IP address as an RHOSTS(Remote Host Computer)
 and our local IP address(tun0) as an LHOST(Local Host Computer or tun0). So, we can exploit the FTP
 using a backdoor but we didn’t get a shell. So, now let’s move to smb exploitation manually as well
-as using the [__Metasploit__](https://www.metasploit.com/).
+as using the [__Metasploit__](https://www.metasploit.com/){:target="_blank"}.
 
 ### Samba Exploitation (Using Metasploit)
 
@@ -216,7 +216,7 @@ I will use exploit/multi/samba/usermap_script to exploit the service (use 2).
 
 ### Command Injection
 
-We can try to login into tmp folder in the samba service using [__smbclient__](https://www.samba.org/samba/docs/current/man-html/smbclient.1.html). We got an error in
+We can try to login into tmp folder in the samba service using [__smbclient__](https://www.samba.org/samba/docs/current/man-html/smbclient.1.html){:target="_blank"}. We got an error in
 connection because this machine is of the older version, so we can provide that same version
 using options.
 
@@ -265,4 +265,4 @@ the machine.
 As mentioned above, I used python -c ‘import pty; pty.spawn(“/bin/bash”)’, to get a
 interactive shell.
 
-Thanks for reading this far. If you enjoyed the writeup, do support me [__here__](https://www.buymeacoffee.com/h4xplo1t).
+Thanks for reading this far. If you enjoyed the writeup, do support me [__here__](https://www.buymeacoffee.com/h4xplo1t){:target="_blank"}.
