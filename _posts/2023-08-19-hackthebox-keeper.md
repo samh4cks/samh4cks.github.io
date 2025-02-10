@@ -12,7 +12,7 @@ mermaid: true
 
 ## TL:DR
 
-This write-up is based on the [__Keeper__](https://app.hackthebox.com/machines/Keeper) machine, which is an easy-rated Linux box on Hack the Box. The machine hosts a Best Practical open-source ticketing system accessible via an HTTP service. By utilizing default credentials, unauthorized access to the Admin panel was achieved. Additionally, a privileged user's password was discovered, allowing for user-level SSH login.
+This write-up is based on the [__Keeper__](https://app.hackthebox.com/machines/Keeper){:target="_blank"} machine, which is an easy-rated Linux box on Hack the Box. The machine hosts a Best Practical open-source ticketing system accessible via an HTTP service. By utilizing default credentials, unauthorized access to the Admin panel was achieved. Additionally, a privileged user's password was discovered, allowing for user-level SSH login.
 
 Within the compromised environment, a memory dump and database file of KeePass were found. Exploiting the `CVE-2023-32784` vulnerability in KeePass provided the master password necessary to access the database dump. With this database dump, a Putty Private Key was extracted, subsequently converted into OpenSSH format. This key was then used to escalate privileges and gain root access.
 
@@ -47,7 +47,7 @@ Let's see the IP on the browser.
 
 We have observed that IP address gives us a reference to a domain name `tickets.keeper.htb`. So, we have to add this domain to `"/etc/hosts"` file.
 
-Let's open [http://tickets.keeper.htb/rt/](https://tickets.keeper.htb/rt/).
+Let's open [http://tickets.keeper.htb/rt/](https://tickets.keeper.htb/rt/){:target="_blank"}.
 
 ![Ticket System](/assets/images/writeups/Keeper-HTB/2.png)
 
@@ -109,7 +109,7 @@ I have found a github based tool which can be used to find the master password.
 https://github.com/CMEPW/keepass-dump-masterkey
 ```
 
-Let's use the tool which is made by [@CMEPW](https://github.com/CMEPW).
+Let's use the tool which is made by [@CMEPW](https://github.com/CMEPW){:target="_blank"}.
 
 I have used the available exploit using the available KeePass memory dump. I have found a pattern of password.
 
@@ -165,4 +165,4 @@ We will use this `id_rsa` to login as root via SSH.
 
 That's all in this writeup.
 
-Thanks for reading this far. If you enjoyed the writeup, do support me [__here__](https://www.buymeacoffee.com/h4xplo1t).
+Thanks for reading this far. If you enjoyed the writeup, do support me [__here__](https://www.buymeacoffee.com/h4xplo1t){:target="_blank"}.
