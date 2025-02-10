@@ -12,7 +12,7 @@ mermaid: true
 
 ## TL;DR
 
-This writeup is based on [__Legacy__](https://app.hackthebox.com/machines/Legacy) on Hack the box. It was a windows box. It starts with Samba.
+This writeup is based on [__Legacy__](https://app.hackthebox.com/machines/Legacy){:target="_blank"} on Hack the box. It was a windows box. It starts with Samba.
 In this machine, Samba has two bugs, which are SMB vulnerability(Eternal Blue or MS17-010) and 
 Remote Code Execution vulnerability (MS08-067). We have both ways to exploit the vulnerability 
 and get the shell. In this write-up, we will see both ways of exploitation. There is no 
@@ -74,7 +74,7 @@ Code Execution and Samba SMBv1 exploitation. Now, let’s move to exploitation p
 
 ### MS08-067 (Using Metasploit)
 
-Let’s find the exploit using [__Metasploit__](https://www.metasploit.com/).
+Let’s find the exploit using [__Metasploit__](https://www.metasploit.com/){:target="_blank"}.
 
 ```bash
  msf6 > search ms08-067
@@ -85,7 +85,7 @@ Let’s find the exploit using [__Metasploit__](https://www.metasploit.com/).
                                                                         Relative Path Stack Corruption
 ```
 
-[__MS08-067__](https://www.rapid7.com/db/modules/exploit/windows/smb/ms08_067_netapi/) is a remote code execution vulnerability that allows attackers to take complete control of an 
+[__MS08-067__](https://www.rapid7.com/db/modules/exploit/windows/smb/ms08_067_netapi/){:target="_blank"} is a remote code execution vulnerability that allows attackers to take complete control of an 
 affected system remotely. On Microsoft Windows 2000-based, Windows XP-based, and Windows Server 2003-based 
 systems, an attacker could exploit this vulnerability over RPC without authentication and could run 
 arbitrary code. So we will use “use 0” to select the exploit and change the options into it.
@@ -119,7 +119,7 @@ Payload options (windows/meterpreter/reverse_tcp):
  (C) Copyright 1985-2001 Microsoft Corp.
  C:\WINDOWS\system32>
 ```
-To know about RHOSTS, LHOST, RPORT, and LPORT take reference from my [__Lame__](https://samh4cks.github.io/lame/#) writeup. With this exploit, 
+To know about RHOSTS, LHOST, RPORT, and LPORT take reference from my [__Lame__](https://samh4cks.github.io/lame/#){:target="_blank"} writeup. With this exploit, 
 we get the shell. Now, let’s move to another exploit (MS17-010).
 
 ### MS017-010 (Using Metasploit)
@@ -136,7 +136,7 @@ we get the shell. Now, let’s move to another exploit (MS17-010).
  4  exploit/windows/smb/ms17_010_psexec            2017-03-14       normal   Yes    MS17-010 EternalRomance/EternalSynergy/EternalChampion SMB Remote Windows Code Execution
  5  exploit/windows/smb/smb_doublepulsar_rce       2017-04-14       great    Yes    SMB DOUBLEPULSAR Remote Code Execution 
 ```
-[__MS17-010__](https://www.rapid7.com/db/modules/exploit/windows/smb/ms17_010_eternalblue/) is also known as EternalBlue exploit by Microsoft, that affects only Windows Operating System which
+[__MS17-010__](https://www.rapid7.com/db/modules/exploit/windows/smb/ms17_010_eternalblue/){:target="_blank"} is also known as EternalBlue exploit by Microsoft, that affects only Windows Operating System which
 uses the SMBv1 (Server Message Block version 1). SMBv1 is a network communication protocol which enable 
 shared access to files, printers and ports. Later on, it is very risky of being targeted by ransomware and 
 other attacks.
@@ -187,8 +187,8 @@ Payload options (windows/meterpreter/reverse_tcp):
 ```
 ### MS08-067 (Without Metasploit)
 
-For exploiting the Samba manually, there is an exploit available on GitHub [__here__](https://raw.githubusercontent.com/jivoi/pentest/master/exploit_win/ms08-067.py). It’s a python script that
-requires Impacket (you can install it on Kali from [__here__](https://github.com/CoreSecurity/impacket/)) and have to implement some of my own code with 
+For exploiting the Samba manually, there is an exploit available on GitHub [__here__](https://raw.githubusercontent.com/jivoi/pentest/master/exploit_win/ms08-067.py){:target="_blank"}. It’s a python script that
+requires Impacket (you can install it on Kali from [__here__](https://github.com/CoreSecurity/impacket/)){:target="_blank"} and have to implement some of my own code with 
 the default shellcode. Let’s make the custom exploit for exploitation. I will use msfvenom to make the 
 shellcode.
 
@@ -354,4 +354,4 @@ Also, I will open the netcat for listening.
  zsh: parse error near `Copyright'
 ```
 
-Thanks for reading this far. If you enjoyed the writeup, do support me [__here__](https://www.buymeacoffee.com/h4xplo1t).
+Thanks for reading this far. If you enjoyed the writeup, do support me [__here__](https://www.buymeacoffee.com/h4xplo1t){:target="_blank"}.
