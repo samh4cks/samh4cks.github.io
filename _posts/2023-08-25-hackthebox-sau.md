@@ -12,7 +12,7 @@ mermaid: true
 
 ## TL:DR
 
-This write-up is based on the [__Sau__](https://app.hackthebox.com/machines/Sau) machine, which is an easy-rated Linux box on Hack the Box. The machine hosts a service called `Request Baskets` accessible on port 55555. The version of Request Baskets used by the machine is vulnerable to `CVE-2023-27163` via `Server-Side Request Forgery (SSRF)`, enabling access to the Maltrail system running on the localhost. The Maltrail system used by the machine is outdated and susceptible to `Unauthenticated OS Command Injection`, leading to the acquisition of a user shell. By exploiting the privilege escalation of the `sudo systemctl` service manager, we were able to attain root access on the machine.
+This write-up is based on the [__Sau__](https://app.hackthebox.com/machines/Sau){:target="_blank"} machine, which is an easy-rated Linux box on Hack the Box. The machine hosts a service called `Request Baskets` accessible on port 55555. The version of Request Baskets used by the machine is vulnerable to `CVE-2023-27163` via `Server-Side Request Forgery (SSRF)`, enabling access to the Maltrail system running on the localhost. The Maltrail system used by the machine is outdated and susceptible to `Unauthenticated OS Command Injection`, leading to the acquisition of a user shell. By exploiting the privilege escalation of the `sudo systemctl` service manager, we were able to attain root access on the machine.
 
 ## Scanning Network
 
@@ -100,7 +100,7 @@ Let's see IP on the browser.
 
 ![Browser View](/assets/images/writeups/Sau-HTB/1.png)
 
-We have noticed the usage of `Request Baskets`. [__Request Baskets__](https://rbaskets.in/) is a web service designed to gather arbitrary HTTP requests and allow inspection via a RESTful API or a simple web UI.
+We have noticed the usage of `Request Baskets`. [__Request Baskets__](https://rbaskets.in/){:target="_blank"} is a web service designed to gather arbitrary HTTP requests and allow inspection via a RESTful API or a simple web UI.
 
 Upon further enumeration, we found that the version of `Request Baskets` in use is `1.2.1`.
 
@@ -108,7 +108,7 @@ However, the most recent version of `Request Baskets` is `1.2.3`. Given the usag
 
 ## Exploitation
 
-We have found one exploit that uses Request Baskets's version 1.2.1 and it is vulnerable to [__CVE-2023-27163__](https://nvd.nist.gov/vuln/detail/CVE-2023-27163) via `Server-Side Request Forgery (SSRF)`.
+We have found one exploit that uses Request Baskets's version 1.2.1 and it is vulnerable to [__CVE-2023-27163__](https://nvd.nist.gov/vuln/detail/CVE-2023-27163){:target="_blank"} via `Server-Side Request Forgery (SSRF)`.
 
 We will look for the available exploit for this CVE. 
 
@@ -116,13 +116,13 @@ We will look for the available exploit for this CVE.
 
 `CVE-2023-27163` - Request-Baskets upto v1.2.1 was discovered to contain a Server-Side Request Forgery (SSRF) via the component `/api/baskets/{name}`. This vulnerability allows attackers to access network resources and sensitive information via a crafted API request.
 
-You can find the details here about [__CVE-2023-27163__](https://gist.github.com/b33t1e/3079c10c88cad379fb166c389ce3b7b3)
+You can find the details here about [__CVE-2023-27163__](https://gist.github.com/b33t1e/3079c10c88cad379fb166c389ce3b7b3){:target="_blank"}.
 
 Let's navigate to the website and create a new basket, capturing the request in Burp Suite.
 
 ![Creating new basket](/assets/images/writeups/Sau-HTB/2.png)
 
-I have created a Python based tool called [CVE-2023-27163-InternalProber](https://github.com/samh4cks/CVE-2023-27163-InternalProber) which will perform port scanning on the internal IP and try to find the open ports for us.
+I have created a Python based tool called [CVE-2023-27163-InternalProber](https://github.com/samh4cks/CVE-2023-27163-InternalProber){:target="_blank"} which will perform port scanning on the internal IP and try to find the open ports for us.
 
 The tool will generate a random basket and then configure the basket in a loop for each port, and then determine all the open ports.
 
@@ -164,7 +164,7 @@ Let's view the basket we created.
 
 ![Viewing basket](/assets/images/writeups/Sau-HTB/5.png)
 
-We can observe that all request will be collected by basket on [http://10.10.11.224:55555/samh4cks](https://10.10.11.224:55555/samh4cks)
+We can observe that all request will be collected by basket on [http://10.10.11.224:55555/samh4cks](https://10.10.11.224:55555/samh4cks){:target="_blank"}.
 
 Let's visit the website of our own basket.
 
@@ -184,7 +184,7 @@ The username parameter of the login page doesn't properly sanitize the input, al
 
 The service uses the subprocess.check_output() function to execute a shell command that logs the username provided by the user. If an attacker provides a specially crafted username, they can inject arbitrary shell commands that will be executed on the server.
 
-I have found an exploit available on [ExploitDB](https://www.exploit-db.com/exploits/51676).
+I have found an exploit available on [ExploitDB](https://www.exploit-db.com/exploits/51676){:target="_blank"}.
 
 I am going to use the above exploit but before that I have to change the `forward URL` in our basket configuration.
 
@@ -218,7 +218,7 @@ Let's list the allowed commands to invoking the user using `sudo -l`.
 
 We noted that the ability to access the status of `trail.service` using `systemctl` is permitted. Let's search for information on `sudo systemctl privilege escalation` on Google.
 
-I have found a great resource for privilege escalation of sudo systemctl [Exploit Notes](https://exploit-notes.hdks.org/exploit/linux/privilege-escalation/sudo/sudo-systemctl-privilege-escalation/)
+I have found a great resource for privilege escalation of sudo systemctl [Exploit Notes](https://exploit-notes.hdks.org/exploit/linux/privilege-escalation/sudo/sudo-systemctl-privilege-escalation/){:target="_blank"}.
 
 I have found a way to spawn shell in the pager using the above resource. 
 
@@ -226,4 +226,4 @@ I have found a way to spawn shell in the pager using the above resource.
 
 That's all in this writeup.
 
-Thanks for reading this far. If you enjoyed the writeup, do support me [__here__](https://www.buymeacoffee.com/h4xplo1t).
+Thanks for reading this far. If you enjoyed the writeup, do support me [__here__](https://www.buymeacoffee.com/h4xplo1t){:target="_blank"}.
