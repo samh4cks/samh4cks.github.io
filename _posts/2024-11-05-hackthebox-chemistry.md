@@ -138,7 +138,7 @@ constraints).
 
 ## Exploitation
 
-After understanding `Crystallographic Information File (CIF)`, let's do some research for exploits against CIF file. I came across an exploit as [CVE-2024-23346 - Arbitrary Code Execution in pymatgen](https://github.com/materialsproject/pymatgen/security/advisories/GHSA-vgv8-5cpj-qj2f).
+After understanding `Crystallographic Information File (CIF)`, let's do some research for exploits against CIF file. I came across an exploit as [CVE-2024-23346 - Arbitrary Code Execution in pymatgen](https://github.com/materialsproject/pymatgen/security/advisories/GHSA-vgv8-5cpj-qj2f){:target="_blank"}.
 
 <b>CVE-2024-23346</b>
 
@@ -241,7 +241,7 @@ I have found `aiohttp/3.9.1` is being used to build async web servers. `aiohttp`
 
 `aiohttp` is running on it's outdated version as `3.9.1`. Let's search for vulnerability exists for this outdated version.
 
-While researching I found [`CVE-2024-23334 - Path Traversal Vulnerability`](https://github.com/z3rObyte/CVE-2024-23334-PoC/tree/main) vulnerable to `aiohttp 3.9.1` version.
+While researching I found [`CVE-2024-23334 - Path Traversal Vulnerability`](https://github.com/z3rObyte/CVE-2024-23334-PoC/tree/main){:target="_blank"} vulnerable to `aiohttp 3.9.1` version.
 
 <b>CVE-2024-23334</b>
 
@@ -279,4 +279,4 @@ Let's use `id_rsa` to login as a `root` user.
 
 ![Machine Pwned](/assets/images/writeups/Chemistry-HTB/Pwned.png)
 
-Thanks for reading this far. If you enjoyed the writeup, do support me here.
+Thanks for reading this far. If you enjoyed the writeup, do support me [__here__](https://www.buymeacoffee.com/h4xplo1t){:target="_blank"}.
