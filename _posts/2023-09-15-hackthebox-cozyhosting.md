@@ -12,7 +12,7 @@ mermaid: true
 
 ## TL:DR
  
-This write-up is based on the [__CozyHosting__](https://app.hackthebox.com/machines/CozyHosting) machine, which is an easy-rated Linux box on HacktheBox. The machine hosts a website that enables users to host multiple projects using `Spring Boot Actuator`, which is accessible via an HTTP service. By utilizing `session hijacking`, we achieved unauthorized access to the Admin panel.
+This write-up is based on the [__CozyHosting__](https://app.hackthebox.com/machines/CozyHosting){:target="_blank"} machine, which is an easy-rated Linux box on HacktheBox. The machine hosts a website that enables users to host multiple projects using `Spring Boot Actuator`, which is accessible via an HTTP service. By utilizing `session hijacking`, we achieved unauthorized access to the Admin panel.
 
 Furthermore, the Admin panel allows us to connect to any SSH server by providing a `hostname` and `username`. The `username` field is vulnerable to `blind command injection`, leading to access to the `app` user on the system. Later on, a compressed JAR file leaked the credentials of PostgreSQL, allowing us to obtain the password of the user `Josh`. Within the compromised environment, we gained room access by escalating privileges using ProxyCommand.
 
@@ -47,7 +47,7 @@ We have discovered two services: SSH and HTTP. Let's begin by enumerating the HT
 
 We have observed that in Nmap scan, IP address gives us a reference to a domain name `cozyhosting.htb`. So, we have to add this domain to `"/etc/hosts"` file.
 
-Let's open [http://cozyhosting.htb/](https://cozyhosting.htb).
+Let's open [http://cozyhosting.htb/](https://cozyhosting.htb){:target="_blank"}.
 
 ![Browser View](/assets/images/writeups/CozyHosting-HTB/1.png)
 
@@ -193,7 +193,7 @@ Let's list the allowed commands to invoking the user using `sudo -l`.
 
 ![Listing allowed commands](/assets/images/writeups/CozyHosting-HTB/14.png)
 
-Let's check the [gtfobins](https://gtfobins.github.io) for privilege escalation.
+Let's check the [gtfobins](https://gtfobins.github.io){:target="_blank"} for privilege escalation.
 
 Found payload - `sudo ssh -o ProxyCommand=';sh 0<&2 1>&2' x`
 
@@ -203,4 +203,4 @@ If the binary is allowed to run as superuser by sudo, it does not drop the eleva
 
 That's all in this writeup.
 
-Thanks for reading this far. If you enjoyed the writeup, do support me [__here__](https://www.buymeacoffee.com/h4xplo1t).
+Thanks for reading this far. If you enjoyed the writeup, do support me [__here__](https://www.buymeacoffee.com/h4xplo1t){:target="_blank"}.
