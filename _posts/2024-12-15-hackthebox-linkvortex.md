@@ -12,7 +12,7 @@ mermaid: true
 
 ## TL;DR
 
-This writeup is based on the [__LinkVortex__](https://app.hackthebox.com/machines/LinkVortex) machine, which is an easy-rated Linux box on Hack the Box. I began by scanning the target and found open ports for SSH and HTTP. After enumerating the web server, I discovered it was running the Ghost CMS. Through subdomain enumeration, I found a `dev.linkvortex.htb` subdomain and performed directory fuzzing, which led to the discovery of a `.git` directory. Using the `git-dumper` tool, I successfully dumped the repository and found admin credentials in a file. With these credentials, I accessed the Ghost CMS admin panel and identified a vulnerability (CVE-2023-40028) that allowed me to exploit arbitrary file read via symlinks. This led to discovering a configuration file with the `bob` user’s SSH credentials, which I used to log in and capture the user flag. I then used a script (`clean_symlink.sh`) to escalate privileges, ultimately gaining root access and capturing the root flag.
+This writeup is based on the [__LinkVortex__](https://app.hackthebox.com/machines/LinkVortex){:target="_blank"} machine, which is an easy-rated Linux box on Hack the Box. I began by scanning the target and found open ports for SSH and HTTP. After enumerating the web server, I discovered it was running the Ghost CMS. Through subdomain enumeration, I found a `dev.linkvortex.htb` subdomain and performed directory fuzzing, which led to the discovery of a `.git` directory. Using the `git-dumper` tool, I successfully dumped the repository and found admin credentials in a file. With these credentials, I accessed the Ghost CMS admin panel and identified a vulnerability (CVE-2023-40028) that allowed me to exploit arbitrary file read via symlinks. This led to discovering a configuration file with the `bob` user’s SSH credentials, which I used to log in and capture the user flag. I then used a script (`clean_symlink.sh`) to escalate privileges, ultimately gaining root access and capturing the root flag.
 
 ## Scanning Network
 
@@ -162,7 +162,7 @@ I found one interesting directory that is `.git`. Let's visit `http://dev.linkvo
 
 While Googling for some time to see how I could make use of `.git` directory to find interesting information. I came across a tool called `git-dumper`. 
 
-[__`git-dumper`__](https://github.com/arthaud/git-dumper) - A tool to dump a git repository from a website.
+[__`git-dumper`__](https://github.com/arthaud/git-dumper){:target="_blank"} - A tool to dump a git repository from a website.
 
 It requires the url and the output directory. Let'	s utilise this tool.
 
@@ -249,7 +249,7 @@ Now that I have valid credentials for the admin user and know that `Ghost 5.58` 
 
 I came across `CVE-2023-40028`, which is responsible for arbitrary file read.
 
-[__`CVE-2023-40028`__](https://github.com/0xDTC/Ghost-5.58-Arbitrary-File-Read-CVE-2023-40028) affects Ghost, an open source content management system, where versions prior to 5.59.1 allow authenticated users to upload files that are symlinks. This can be exploited to perform an arbitrary file read of any file on the host operating system.
+[__`CVE-2023-40028`__](https://github.com/0xDTC/Ghost-5.58-Arbitrary-File-Read-CVE-2023-40028){:target="_blank"} affects Ghost, an open source content management system, where versions prior to 5.59.1 allow authenticated users to upload files that are symlinks. This can be exploited to perform an arbitrary file read of any file on the host operating system.
 
 Let's understand the vulnerability -
 
@@ -259,7 +259,7 @@ Let's understand the vulnerability -
 
 3. Once the attacker uploads a `symlink` file, improper input validation checks in the upload functionality allow the attacker to perform arbitrary file read operations.
 
-I used the public [__exploit__](https://github.com/0xyassine/CVE-2023-40028).
+I used the public [__exploit__](https://github.com/0xyassine/CVE-2023-40028){:target="_blank"}.
 
 Make sure to modify `GHOST_URL` value to `http://linkvortex.htb` in the script before executing it.
 
@@ -323,4 +323,4 @@ sudo bash /opt/ghost/clean_symlink.sh link2.png
 ![Pwned](/assets/images/writeups/LinkVortex-HTB/Pwned.png)
 
 
-Thanks for reading this far. If you enjoyed the writeup, do support me [__here__](https://www.buymeacoffee.com/h4xplo1t).
+Thanks for reading this far. If you enjoyed the writeup, do support me [__here__](https://www.buymeacoffee.com/h4xplo1t){:target="_blank"}.
