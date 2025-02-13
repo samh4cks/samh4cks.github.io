@@ -12,7 +12,7 @@ mermaid: true
 
 ## TL:DR
 
-This writeup is based on the [__UnderPass__](https://app.hackthebox.com/machines/UnderPass){:target="_blank"} machine, an easy-rated Linux box on Hack The Box. I began by scanning the target and found open ports for SSH, HTTP, and SNMP. Enumerating SNMP revealed the hostname `UnderPass.htb`, which led me to the `Daloradius` web interface. Through directory fuzzing, I found the login panel and used default credentials to access the operators dashboard. Inside, I found an MD5-hashed password for `svcMosh`, which I cracked and used to gain SSH access. Checking sudo -l, I discovered that `mosh-server` could be executed as root. By leveraging mosh-server and its session key, I escalated privileges and gained root access.
+This writeup is based on the [__UnderPass__](https://app.hackthebox.com/machines/UnderPass){:target="_blank"} machine, an easy-rated Linux box on Hack The Box. I began by scanning the target and found open ports for SSH, HTTP, and SNMP. Enumerating SNMP revealed the hostname `UnderPass.htb`, which led me to the `Daloradius` management tool. Through directory fuzzing, I found the login panel and used default credentials to access the operators dashboard. Inside, I found an MD5-hashed password for `svcMosh`, which I cracked and used to gain SSH access. Checking sudo -l, I discovered that `mosh-server` could be executed as root. By leveraging mosh-server and its session key, I escalated privileges and gained root access.
 
 ## Scanning Network
 
@@ -90,7 +90,9 @@ I will be using `snmp-check` to extract detailed information about the target.
 
 ![snmp-check](/assets/images/writeups/UnderPass-HTB/2.png)
 
-While analyzing the output, I found the hostname `UnderPass.htb`. Since `Daloradius` is hosted on this server, let's add the hostname to `/etc/hosts` against the target IP address. 
+While analyzing the output, I found the hostname `UnderPass.htb` and `Daloradius` server is being used. Let's add the hostname to `/etc/hosts` against the target IP address. 
+
+`daloRADIUS` is an open-source web-based management tool for FreeRADIUS, one of the most widely used RADIUS (Remote Authentication Dial-In User Service) servers. It provides a graphical interface to manage and monitor user authentication, accounting, and billing in network environments.
 
 While researching `Daloradius`, I found that it is possible to access the `Daloradius` server via `http://<hostname>/daloradius`, and its default credentials are `administrator:radius`. So, I will be performing directory fuzzing on `http://underpass.htb/daloradius`.
 
