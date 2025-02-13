@@ -10,7 +10,7 @@ mermaid: true
 
 ![Chemistry - HTB](/assets/images/writeups/UnderPass-HTB/banner.png)
 
-## TL:DR
+## TL;DR
 
 This writeup is based on the [__UnderPass__](https://app.hackthebox.com/machines/UnderPass){:target="_blank"} machine, an easy-rated Linux box on Hack The Box. I began by scanning the target and found open ports for SSH, HTTP, and SNMP. Enumerating SNMP revealed the hostname `UnderPass.htb`, which led me to the `Daloradius` management tool. Through directory fuzzing, I found the login panel and used default credentials to access the operators dashboard. Inside, I found an MD5-hashed password for `svcMosh`, which I cracked and used to gain SSH access. Checking sudo -l, I discovered that `mosh-server` could be executed as root. By leveraging mosh-server and its session key, I escalated privileges and gained root access.
 
