@@ -3,7 +3,7 @@ title: HackTheBox UnderPass Writeup
 authors: Samarth
 date: 2024-12-27 21:00:00 +0530
 categories: [HackTheBox Machines]
-tags: [Linux ]
+tags: [Linux, Daloradius, Mosh Server ]
 math: true
 mermaid: true
 ---
