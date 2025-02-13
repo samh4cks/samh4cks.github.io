@@ -262,9 +262,9 @@ the machine.
  python -c 'import pty; pty.spawn("/bin/bash")'
  root@lame:/#
 ```
-As mentioned above, I used `python -c ‘import pty; pty.spawn(“/bin/bash”)’`, to get a
+As mentioned above, I used python -c ‘import pty; pty.spawn(“/bin/bash”)’, to get a
 interactive shell.
 
-[![Pwned](/assets/images/writeups/Lame-HTB/pwned.png)](https://www.hackthebox.com/achievement/machine/337503/1)
+[![Pwned](/assets/images/writeups/Lame-HTB/pwned.png)](https://www.hackthebox.com/achievement/machine/337503/1){:target="_blank"}
 
 Thanks for reading this far. If you enjoyed the writeup, do support me [__here__](https://www.buymeacoffee.com/h4xplo1t){:target="_blank"}.
