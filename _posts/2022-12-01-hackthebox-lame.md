@@ -2,7 +2,7 @@
 title: HackTheBox Lame Writeup
 authors: Samarth
 date: 2022-12-01 09:00:00 +0530
-categories: [HackTheBox Machines]
+categories: [HackTheBox, Machines]
 tags: [Command Injection, Linux, SMB]
 math: true
 mermaid: true
