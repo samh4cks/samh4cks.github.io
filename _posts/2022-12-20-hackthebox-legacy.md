@@ -354,4 +354,7 @@ Also, I will open the netcat for listening.
  zsh: parse error near `Copyright'
 ```
 
+[![Pwned](/assets/images/writeups/Legacy-HTB/pwned.png)](https://www.hackthebox.com/achievement/machine/337503/2){:target="_blank"}
+
+
 Thanks for reading this far. If you enjoyed the writeup, do support me [__here__](https://www.buymeacoffee.com/h4xplo1t){:target="_blank"}.
