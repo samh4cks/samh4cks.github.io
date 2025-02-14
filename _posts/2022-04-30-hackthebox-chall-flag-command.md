@@ -46,7 +46,7 @@ I found the value of `secret` so I have used the value of secret as a command an
 
 Flag - 
 ```ruby
-HTB{D3v3l0p3r_t00l5_4r3_b35t__t0015_wh4t_d0_y0u_Th1nk??}`
+HTB{D3v3l0p3r_t00l5_4r3_b35t__t0015_wh4t_d0_y0u_Th1nk??}
 ```
 
 [![Pwned](/assets/images/htb-chall/Flag%20Command/pwned.png)](https://www.hackthebox.com/achievement/challenge/337503/646)
