@@ -208,6 +208,8 @@ I tried connecting to the localhost's Mosh server on port `6002` using the sessi
 
 ![Root user](/assets/images/writeups/UnderPass-HTB/13.png)
 
+[![Pwned](/assets/images/writeups/UnderPass-HTB/pwned.png)](https://www.hackthebox.com/achievement/machine/337503/641){:target="_blank"}
+
 Thanks for reading this far. If you enjoyed the writeup, do support me [__here__](https://www.buymeacoffee.com/h4xplo1t){:target="_blank"}.
 
 
