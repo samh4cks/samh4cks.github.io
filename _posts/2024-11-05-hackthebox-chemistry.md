@@ -2,7 +2,7 @@
 title: HackTheBox Chemistry Writeup
 authors: Samarth
 date: 2024-11-05 18:00:00 +0530
-categories: [HackTheBox Machines]
+categories: [HackTheBox, Machines]
 tags: [Linux, CVE-2024-23346, CVE-2024-23334, RCE, CIF Analyzer, aiohttp ]
 math: true
 mermaid: true

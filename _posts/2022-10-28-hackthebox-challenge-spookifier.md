@@ -2,7 +2,7 @@
 title: HackTheBox Challenge - Spookifier
 authors: Samarth
 date: 2022-10-28 14:00:00 +0530
-categories: [HackTheBox Challenge]
+categories: [HackTheBox, Challenges]
 tags: [Web]
 math: true
 mermaid: true

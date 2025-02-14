@@ -2,7 +2,7 @@
 title: HackTheBox Challenge - Flag Command
 authors: Samarth
 date: 2022-04-30 20:30:00 +0530
-categories: [HackTheBox Challenge]
+categories: [HackTheBox, Challenges]
 tags: [Web]
 math: true
 mermaid: true
