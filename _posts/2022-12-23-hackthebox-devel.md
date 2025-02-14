@@ -387,4 +387,6 @@ c:\Users>cd Administrator/Desktop
  c:\Users\Administrator\Desktop>
 ```
 
+[![Pwned](/assets/images/writeups/Devel-HTB/pwned.png)](https://www.hackthebox.com/achievement/machine/337503/3){:target="_blank"}
+
 Thanks for reading this far. If you enjoyed the writeup, do support me [__here__](https://www.buymeacoffee.com/h4xplo1t){:target="_blank"}.
