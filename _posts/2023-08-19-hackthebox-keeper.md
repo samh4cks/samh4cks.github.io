@@ -163,6 +163,8 @@ We will use this `id_rsa` to login as root via SSH.
 
 ![Logged in as a root user](/assets/images/writeups/Keeper-HTB/18.png)
 
+[![Pwned](/assets/images/writeups/Keeper-HTB/pwned.png)](https://www.hackthebox.com/achievement/machine/337503/556){:target="_blank"}
+
 That's all in this writeup.
 
 Thanks for reading this far. If you enjoyed the writeup, do support me [__here__](https://www.buymeacoffee.com/h4xplo1t){:target="_blank"}.
