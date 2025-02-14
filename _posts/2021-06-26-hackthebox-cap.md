@@ -2,9 +2,8 @@
 title: HackTheBox Cap Writeup
 authors: Samarth
 date: 2021-06-26 17:00:00 +0530
-categories:
-    - HackTheBox Machines
-    - HTB Track - Intro to Red Team
+categories: HackTheBox Machines
+categories: HTB Track - Intro to Red Team
 tags: [Linux]
 math: true
 mermaid: true
