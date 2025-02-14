@@ -2,7 +2,7 @@
 title: HackTheBox Cicada Writeup
 authors: Samarth
 date: 2024-10-20 14:00:00 +0530
-categories: [HackTheBox Machines]
+categories: [HackTheBox , Machines]
 tags: [Windows, Active Directory, SMB, LDAP]
 math: true
 mermaid: true
