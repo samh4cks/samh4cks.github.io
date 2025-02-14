@@ -2,7 +2,7 @@
 title: HackTheBox Sightless Writeup
 authors: Samarth
 date: 2024-12-01 16:30:00 +0530
-categories: [HackTheBox Machines]
+categories: [HackTheBox, Machines]
 tags: [Linux, FTPd, Web, CVE-2022-0944, SQLPad, Froxlor]
 math: true
 mermaid: true
