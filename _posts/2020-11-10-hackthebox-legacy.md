@@ -1,7 +1,7 @@
 ---
 title: HackTheBox Legacy Writeup
 authors: Samarth
-date: 2022-12-20 20:15:00 +0530
+date: 2020-11-10 20:15:00 +0530
 categories: [HackTheBox, Machines]
 tags: [SMB , Eternal Blue, Windows]
 math: true

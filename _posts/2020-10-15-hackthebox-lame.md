@@ -1,7 +1,7 @@
 ---
 title: HackTheBox Lame Writeup
 authors: Samarth
-date: 2022-12-01 09:00:00 +0530
+date: 2020-10-15 09:00:00 +0530
 categories: [HackTheBox, Machines]
 tags: [Command Injection, Linux, SMB]
 math: true
