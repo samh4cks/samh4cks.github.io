@@ -2,7 +2,7 @@
 title: HackTheBox Keeper Writeup
 authors: Samarth
 date: 2023-08-24 16:00:00 +0530
-categories: [HackTheBox Machines]
+categories: [HackTheBox, Machines]
 tags: [KeePass, Linux, CVE-2023-32784]
 math: true
 mermaid: true
