@@ -12,12 +12,7 @@ mermaid: true
 
 ## TL;DR
 
-
-
 ## Scanning Network
-
-
-
 
 
 Writeup will be uploaded soon.
