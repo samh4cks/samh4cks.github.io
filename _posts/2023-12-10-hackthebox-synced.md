@@ -42,13 +42,9 @@ rsync -av --list-only rsync://10.129.228.37/
 public         	Anonymous Share
 ```
 
-The output of the command:
-
-```bash
-rsync -av --list-only rsync://10.129.228.37/
-```
-
 The output indicates that the `rsync` server at `10.129.228.37` has an accessible module named `public`, which is labeled as an "Anonymous Share." This suggests that the `public` directory is likely available for anonymous access, meaning no authentication is required to access its contents. The module name (`public`) suggests it may be used for sharing files without restrictions. You can now explore or interact with this module further if you want to download files from it or check for write permissions.
+
+## Exploitation
 
 Let's try accessing `public` (Anonymous Share).
 
