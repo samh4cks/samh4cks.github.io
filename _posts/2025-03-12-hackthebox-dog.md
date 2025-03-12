@@ -197,7 +197,7 @@ Next, I uploaded the module and opened a Netcat listener to trigger the reverse 
 
 ![Module uploaded](/assets/images/writeups/Dog-HTB/14.png)
 
-Next, I accessed [__http://dog.htb/modules/shell/shell.php__](http://dog.htb/modules/shell/shell.php){:target="_blank"} to trigger the shell.
+Next, I accessed [__http://dog.htb/modules/shell/shell.php__](){:target="_blank"} to trigger the shell.
 
 ![www-data shell](/assets/images/writeups/Dog-HTB/15.png)
 
