@@ -12,10 +12,6 @@ mermaid: true
 
 ## TL;DR
 
-Here's the TL;DR for your `Dog` writeup in the requested format:  
-
----
-
 This writeup covers the [__Dog__](https://app.hackthebox.com/machines/Dog){:target="_blank"} machine, an easy-rated Linux box. Initial enumeration revealed open ports 22 (SSH) and 80 (Apache) hosting a Backdrop CMS website. Adding `dog.htb` to `/etc/hosts` enabled proper domain resolution. A `.git` directory was exposed on the web server, allowing me to dump and analyze the source code using `gitdumper`. Reviewing the extracted files, I found database credentials in `settings.php`, but they didn’t work for the login page. Further enumeration of `.git` revealed additional user emails, leading to successful login with `Tiffany`’s credentials. Backdrop CMS v1.27.1 was outdated and vulnerable to an authenticated RCE exploit, which I leveraged to gain a reverse shell as `www-data`. Enumerating the system, I found credentials for `johncusack`, allowing me to escalate to a user shell. Checking `sudo -l` revealed that `bee`, a Backdrop CLI utility, could be executed as root. Using its `eval` function, I executed arbitrary PHP commands to escalate privileges and gain a root shell, capturing the final flag.
 
 ## Scanning Network
@@ -197,7 +193,6 @@ Next, I uploaded the module and opened a Netcat listener to trigger the reverse 
 
 ![Module uploaded](/assets/images/writeups/Dog-HTB/14.png)
 
-Next, I accessed http://dog.htb/modules/shell/shell.php to trigger the shell.
 
 ![www-data shell](/assets/images/writeups/Dog-HTB/15.png)
 
