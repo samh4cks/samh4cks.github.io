@@ -394,7 +394,7 @@ Now, let's make `tar.gz` by including `.info` & `.php` file.
 ```bash
 tar -cvzf shell.tar.gz shell/
 ```
-## Exploitation via Exploit-DB exploit
+### Exploit-DB exploit
 
 I ran the exploit to generate a sample module ZIP file.
 
