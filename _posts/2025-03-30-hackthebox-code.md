@@ -12,7 +12,7 @@ mermaid: true
 
 ## TL;DR
 
-This writeup covers the [__Code__](https://app.hackthebox.com/machines/Code){:target="_blank"} machine, an easy-rated Linux box. Initial enumeration revealed open ports 22 (SSH) and 5000 (Gunicorn), hosting a Python code editor. Registering an account and testing the editor showed restricted imports and blacklisted built-in functions. However, using `object.__subclasses__()`, I located `subprocess.Popen` and executed a reverse shell payload to gain initial access as app-production. Exploring the system, I found a database file with user hashes, cracked them, and logged in as `martin`. Checking `sudo -l` revealed `backy.sh`, a backup script allowing limited directory archiving. By crafting a path traversal payload in `task.json`, I tricked the script into archiving `/root/`, gaining access to the final flag.
+This writeup covers the [__Code__](https://app.hackthebox.com/machines/Code){:target="_blank"} machine, an easy-rated Linux box. The challenge began with a `Python code editor` running on port 5000, which restricted certain functions. By exploring its limitations, I discovered a way to execute system commands and gain access as app-production. While navigating the system, I found a database containing password hashes, cracked them and logged in as user. Checking for elevated privileges revealed a backup script that only allowed specific directories. By manipulating its configuration file, I tricked the script into giving me access to `/root/`, ultimately leading to the final flag.
 
 ## Scanning Network
 
@@ -71,7 +71,17 @@ I tried to identify the available built-in functions.
 
 ![built-in function](/assets/images/writeups/Code-HTB/5.png)
 
-Built-in functions were also restricted on the backend.  
+Built-in functions were also restricted on the backend.
+
+I tried using `eval()` and `exec()` built-in function.
+
+**eval(expression, globals=None, locals=None)** is a built-in Python function that evaluates a string expression as a Python expression and returns the result.
+
+![eval() function](/assets/images/writeups/Code-HTB/25.png)
+
+**exec()** is a built-in Python function that executes a string or block of Python code dynamically.
+
+![exec() function](/assets/images/writeups/Code-HTB/26.png)
 
 I tried using an indirect import.  
 
@@ -94,6 +104,7 @@ I tried to list all available global variables as well as all loaded modules.
 ![All available global variables](/assets/images/writeups/Code-HTB/7.png)
 
 ![All loaded modules](/assets/images/writeups/Code-HTB/8.png)
+
 
 #### Discovering Preloaded Modules: A False Hope?
 
