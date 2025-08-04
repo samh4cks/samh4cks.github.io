@@ -30,5 +30,5 @@ Hey there! I'm **Samarth Dad**, a cybersecurity enthusiast and software engineer
 
 - **GitHub** - [github.com/samh4cks](https://github.com/samh4cks){:target="_blank"}.
 - **LinkedIn** - [linkedin.com/in/samarth-dad](https://www.linkedin.com/in/samarth-dad/){:target="_blank"}.
-- **Email** - samarth.webappsec@gmail.com
+- **Email** - security@samarthdad.com
 
