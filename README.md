@@ -11,7 +11,6 @@ I'm Samarth Dad, a Security Researcher at [Yogosha](https://yogosha.com/). My wo
 The blog features:
 
 - **Hack The Box Write-ups**: Detailed walkthroughs of various Hack The Box machines, including:
-  - [Heal](https://samarthdad.com/hackthebox-heal-writeup/)
   - [LinkVortex](https://samarthdad.com/hackthebox-linkvortex-writeup/)
   - [Sightless](https://samarthdad.com/hackthebox-sightless-writeup/)
   - [Cicada](https://samarthdad.com/hackthebox-cicada-writeup/)
