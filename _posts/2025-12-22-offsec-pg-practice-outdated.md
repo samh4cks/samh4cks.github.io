@@ -2,7 +2,7 @@
 title: OffSec - Proving Grounds - Outdated
 authors: Samarth
 date: 2025-12-22 15:00:00 +0530
-categories: [OffSec, Proving Grounds, Practice]
+categories: [OffSec, Proving Grounds Practice]
 tags: [Linux, Web, LFI, mPDF, SSH, Webmin, Tunneling]
 math: true
 mermaid: true
