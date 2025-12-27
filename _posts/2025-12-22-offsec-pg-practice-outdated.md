@@ -1,5 +1,5 @@
 ---
-title: OffSec PG Practice - Outdated Writeup
+title: OffSec - Proving Grounds - Outdated
 authors: Samarth
 date: 2025-12-22 15:00:00 +0530
 categories: [OffSec, Proving Grounds Practice]
