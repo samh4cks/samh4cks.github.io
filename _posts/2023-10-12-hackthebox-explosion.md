@@ -1,5 +1,5 @@
 ---
-title: HackTheBox Explosion Writeup
+title: HackTheBox - Explosion
 authors: Samarth
 categories: [HackTheBox , Starting Point - Tier 0]
 tags: [Windows, Programming, RDP, Reconnaissance, Weak Credentials]

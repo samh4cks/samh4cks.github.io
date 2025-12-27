@@ -1,5 +1,5 @@
 ---
-title: HackTheBox Synced Writeup
+title: HackTheBox - Synced
 authors: Samarth
 categories: [HackTheBox , Starting Point - Tier 0]
 tags: [Linux, Resync, Protocols, Reconnaissance, Anonymous/Guest Access]

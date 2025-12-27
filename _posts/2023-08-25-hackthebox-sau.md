@@ -1,5 +1,5 @@
 ---
-title: HackTheBox Sau Writeup
+title: HackTheBox - Sau
 authors: Samarth
 date: 2023-08-26 10:00:00 +0530
 categories: [HackTheBox, Machines]

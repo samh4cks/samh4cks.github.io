@@ -1,5 +1,5 @@
 ---
-title: HackTheBox Fawn Writeup
+title: HackTheBox - Faw
 authors: Samarth
 date: 2023-09-11 14:00:00 +0530
 categories: [HackTheBox , Starting Point - Tier 0]

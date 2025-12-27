@@ -1,5 +1,5 @@
 ---
-title: HackTheBox Redeemer Writeup
+title: HackTheBox - Redeemer
 authors: Samarth
 categories: [HackTheBox , Starting Point - Tier 0]
 tags: [Linux, Redis, Databases, Vulnerability Assessment, Reconnaissance, Anonymous/Guest Access]

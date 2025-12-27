@@ -1,5 +1,5 @@
 ---
-title: HackTheBox Mongod Writeup
+title: HackTheBox - Mongod
 authors: Samarth
 categories: [HackTheBox , Starting Point - Tier 0]
 tags: [Linux, MongoDB, Databases, Reconnaissance, Misconfiguration, Anonymous/Guest Access]

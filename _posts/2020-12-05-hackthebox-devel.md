@@ -1,5 +1,5 @@
 ---
-title: HackTheBox Devel Writeup
+title: HackTheBox - Devel
 authors: Samarth
 date: 2020-12-05 15:15:00 +0530
 categories: [HackTheBox, Machines]

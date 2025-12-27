@@ -1,5 +1,5 @@
 ---
-title: HackTheBox Dog Writeup
+title: HackTheBox - Dog
 authors: Samarth
 date: 2025-03-12 22:00:00 +0530
 categories: [HackTheBox, Machines]

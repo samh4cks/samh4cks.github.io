@@ -1,5 +1,5 @@
 ---
-title: HackTheBox Dancing Writeup
+title: HackTheBox - Dancing
 authors: Samarth
 categories: [HackTheBox , Starting Point - Tier 0]
 tags: [Linux, SMB, Reconnaissance, Anonymous/Guest Access]

@@ -1,5 +1,5 @@
 ---
-title: HackTheBox Code Writeup
+title: HackTheBox - Code
 authors: Samarth
 date: 2025-03-30 18:00:00 +0530
 categories: [HackTheBox, Machines]

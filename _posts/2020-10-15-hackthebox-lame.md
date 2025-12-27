@@ -1,5 +1,5 @@
 ---
-title: HackTheBox Lame Writeup
+title: HackTheBox - Lame
 authors: Samarth
 date: 2020-10-15 09:00:00 +0530
 categories: [HackTheBox, Machines]

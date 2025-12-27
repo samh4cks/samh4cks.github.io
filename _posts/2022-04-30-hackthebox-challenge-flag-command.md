@@ -1,5 +1,5 @@
 ---
-title: HackTheBox Challenge - Flag Command
+title: HackTheBox - Challenge - Flag Command
 authors: Samarth
 date: 2022-04-30 20:30:00 +0530
 categories: [HackTheBox, Challenges]

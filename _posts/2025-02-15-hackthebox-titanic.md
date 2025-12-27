@@ -1,5 +1,5 @@
 ---
-title: HackTheBox Titanic Writeup
+title: HackTheBox - Titanic
 authors: Samarth
 date: 2025-02-15 14:00:00 +0530
 categories: [HackTheBox, Machines]

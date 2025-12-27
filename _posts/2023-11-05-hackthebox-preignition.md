@@ -1,5 +1,5 @@
 ---
-title: HackTheBox Preignition Writeup
+title: HackTheBox - Preignition
 authors: Samarth
 categories: [HackTheBox , Starting Point - Tier 0]
 tags: [Linux, Custom Applications, Apache, Reconnaissance, Web Site Structure Discovery, Default Credentials]

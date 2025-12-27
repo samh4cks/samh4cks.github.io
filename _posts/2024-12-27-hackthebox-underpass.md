@@ -1,5 +1,5 @@
 ---
-title: HackTheBox UnderPass Writeup
+title: HackTheBox - UnderPass
 authors: Samarth
 date: 2024-12-27 21:00:00 +0530
 categories: [HackTheBox, Machines]

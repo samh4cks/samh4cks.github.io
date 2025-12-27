@@ -1,5 +1,5 @@
 ---
-title: HackTheBox Crocodile Writeup
+title: HackTheBox - Crocodile
 authors: Samarth
 categories: [HackTheBox , Starting Point - Tier 1]
 tags: [Linux, Custom Applications, Protocols, Apache, FTP, Reconnaissance, Web Site Structure Discovery, Clear Text Credentials, Anonymous/Guest Access]

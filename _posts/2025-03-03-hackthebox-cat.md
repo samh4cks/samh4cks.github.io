@@ -1,5 +1,5 @@
 ---
-title: HackTheBox Cat Writeup
+title: HackTheBox - Cat
 authors: Samarth
 date: 2025-03-03 15:00:00 +0530
 categories: [HackTheBox, Machines]

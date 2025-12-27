@@ -1,5 +1,5 @@
 ---
-title: HackTheBox Appointment Writeup
+title: HackTheBox - Appointment
 authors: Samarth
 categories: [HackTheBox , Starting Point - Tier 1]
 tags: [Linux, Databases, Apache, MariaDB, PHP, SQL, Reconnaissance, SQL Injection]

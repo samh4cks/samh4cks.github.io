@@ -1,5 +1,5 @@
 ---
-title: HackTheBox Sightless Writeup
+title: HackTheBox - Sightless
 authors: Samarth
 date: 2024-12-01 16:30:00 +0530
 categories: [HackTheBox, Machines]

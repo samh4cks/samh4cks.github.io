@@ -1,5 +1,5 @@
 ---
-title: HackTheBox Chemistry Writeup
+title: HackTheBox - Chemistry
 authors: Samarth
 date: 2024-11-05 18:00:00 +0530
 categories: [HackTheBox, Machines]

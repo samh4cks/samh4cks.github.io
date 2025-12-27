@@ -1,5 +1,5 @@
 ---
-title: HackTheBox Sequel Writeup
+title: HackTheBox - Sequel
 authors: Samarth
 categories: [HackTheBox , Starting Point - Tier 1]
 tags: [Linux, Reconnaissance, Vulnerability Assessment, Databases, MySQL, SQL, Weak Credentials]
