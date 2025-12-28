@@ -1,5 +1,5 @@
 ---
-title: OffSec - Proving Grounds - ClamAV
+title: "[OSCP-Like] - OffSec - Proving Grounds - ClamAV"
 date: 2025-12-22 19:30:00 +0530
 categories: [OffSec, Proving Grounds Practice]
 tags: [Linux, ClamAV Milter, Sendmail]
