@@ -1,7 +1,7 @@
 ---
 title: "[OSCP-Like] - OffSec - Proving Grounds - Zab"
 authors: Samarth
-date: 2025-12-23 19:30:00 +0530
+date: 2025-12-23 11:30:00 +0530
 categories: [OffSec, Proving Grounds Practice]
 tags: [Linux, Apache, Tornado, Mage AI, ]
 math: true
