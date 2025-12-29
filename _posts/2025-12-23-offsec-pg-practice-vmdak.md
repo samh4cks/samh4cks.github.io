@@ -12,7 +12,7 @@ mermaid: true
 
 ## TL;DR
 
-This writeup is based on the [vmdak](https://portal.offsec.com/machine/vmdak-185278/overview){:target="_blank"} machine, involving a Linux box hosting a Prison Management System. I began with an Nmap scan which revealed FTP, SSH, and a web application on port 9443. Enumeration of FTP leaked a Jenkins configuration hinting at root privileges, while the web app was vulnerable to SQL Injection and File Upload, providing a foothold. I escalated to user vmdak by recovering a password hidden in database comments. Finally, I tunneled to an internal Jenkins instance and exploited CVE-2024-23897 (Arbitrary File Read) to leak the admin password, achieving code execution as root via the Script Console.
+This writeup is based on the [vmdak](https://portal.offsec.com/machine/vmdak-185278/overview){:target="_blank"} machine, involving a Linux box hosting a Prison Management System. I began with an Nmap scan which revealed `FTP(21)`, `SSH(22)`, and a web application on port `80` and `9443`. Enumeration of FTP leaked a Jenkins configuration hinting at root privileges, while the web app was vulnerable to SQL Injection and File Upload, providing a foothold. I escalated to user `vmdak` by recovering a password hidden in database comments. Finally, I tunneled to an internal Jenkins instance and exploited `CVE-2024-23897 (Jenkins Arbitrary File Read)` to leak the admin password, achieving code execution as root via the Script Console.
 
 ## Scanning Network
 
