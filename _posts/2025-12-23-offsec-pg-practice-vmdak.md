@@ -127,7 +127,7 @@ The `config.xml` file appears to be a configuration file for Jenkins. It reveale
 
 ### HTTP Enumeration
 
-I navigated to [http://vmdak.local](http://vmdak.local) to inspect the web server on port 80.
+I navigated to `http://vmdak.local` to inspect the web server on port 80.
 
 ![Web Page](/assets/images/writeups/vmdak-OffSec/1.png)
 
