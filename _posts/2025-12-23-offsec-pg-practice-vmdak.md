@@ -1,7 +1,7 @@
 ---
 title: "[OSCP-Like] - OffSec - Proving Grounds - vmdak"
 authors: Samarth
-date: 2025-12-23 12:00:00 -0530
+date: 2025-12-23 12:00:00 +0530
 categories: [OffSec, Proving Grounds Practice]
 tags: [Linux, FTP, Prison Management System]
 math: true
