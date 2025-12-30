@@ -3,7 +3,7 @@ title: "[OSCP-Like] - OffSec - Proving Grounds - SpiderSociety"
 authors: Samarth
 date: 2025-12-24 11:30:00 +0530
 categories: [OffSec, Proving Grounds Practice]
-tags: [Linux]
+tags: [Linux, Apache, vsftpd, SSH, VHost, Default Credentials, Information Disclosure, Password Reuse, Sudo, Systemd]
 math: true
 mermaid: true
 ---
