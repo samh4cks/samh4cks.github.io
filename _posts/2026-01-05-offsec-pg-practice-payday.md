@@ -195,6 +195,4 @@ I simply switched to the root user.
 
 Payday serves as a classic example of legacy system vulnerabilities. The outdated CS-Cart installation (v1.3.3) provided multiple entry points, from **Local File Inclusion (LFI)** to **Remote Code Execution (RCE)** via the Template Editor. Furthermore, the lack of basic security hardening allowed for trivial lateral movement via weak passwords (`patrick:patrick`) and full privilege escalation due to unrestricted sudo rights.
 
-
-
-
+Thanks for reading this far. If you enjoyed the writeup, do support me [here](https://www.buymeacoffee.com/h4xplo1t){:target="_blank"}.
