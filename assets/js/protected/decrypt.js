@@ -48,7 +48,11 @@ function attemptDecrypt() {
 
     // Show decrypted content
     var contentEl = document.getElementById('writeup-content');
-    contentEl.innerHTML = `<div class="post-content">${plaintext}</div>`;
+    contentEl.innerHTML = `
+  <div class="post-content">
+    ${marked.parse(plaintext)}
+  </div>
+`;
     contentEl.style.display = 'block';
 
     // Re-run syntax highlighting
