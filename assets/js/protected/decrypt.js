@@ -1,3 +1,8 @@
+document.addEventListener('DOMContentLoaded', function() {
+  var gate = document.getElementById('flag-gate');
+  if (gate) gate.style.display = 'block';
+});
+
 function attemptDecrypt() {
   var flag    = document.getElementById('flag-input').value.trim();
   var errorEl = document.getElementById('flag-error');
