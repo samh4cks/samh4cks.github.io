@@ -48,10 +48,16 @@ function attemptDecrypt() {
 
     // Show decrypted content
     var contentEl = document.getElementById('writeup-content');
-    contentEl.innerHTML = plaintext;
+    contentEl.innerHTML = `<div class="post-content">${plaintext}</div>`;
     contentEl.style.display = 'block';
 
-    if (typeof Prism !== 'undefined') Prism.highlightAllUnder(contentEl);
+    // Re-run syntax highlighting
+    if (typeof Prism !== 'undefined') {
+        Prism.highlightAllUnder(contentEl);
+    }
+
+    // Fix layout rendering (VERY IMPORTANT for Chirpy)
+    document.dispatchEvent(new Event('content-ready'));
 
   } catch(e) {
     errorEl.style.display = 'block';
