@@ -8,6 +8,7 @@ categories: [HackTheBox, Machines]
 tags: [Linux, ZoneMinder, CVE-2024-51482, CVE-2025-60787, SQLi, MotionEye]
 math: true
 mermaid: true
+encrypted_js: hackthebox-cctv.js
 ---
 ## Scanning Network
 

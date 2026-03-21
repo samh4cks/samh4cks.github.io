@@ -46,10 +46,9 @@ layout: post
 <!-- CryptoJS loaded first, then our decrypt logic -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/crypto-js.min.js"
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/crypto-js.min.js"
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="/assets/js/protected/decrypt.js"></script>
+        
+<script src="{{ '/assets/js/protected/' | append: page.encrypted_js | relative_url }}"></script>
+<script src="{{ '/assets/js/protected/decrypt.js' | relative_url }}"></script>
 
 <style>
   #flag-gate {
