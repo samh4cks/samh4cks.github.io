@@ -51,7 +51,7 @@ layout: post
   // injected into the post body by encrypt_post.py
 
   function attemptDecrypt() {
-    const flag    = document.getElementById('flag-input').value.trim();
+    const flag = document.getElementById('flag-input').value.trim().replace(/\s+/g, '');
     const errorEl = document.getElementById('flag-error');
     if (!flag) return;
 
