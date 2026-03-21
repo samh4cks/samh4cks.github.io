@@ -43,47 +43,46 @@ layout: post
 
 <div id="writeup-content" style="display:none;"></div>
 
+<!-- CryptoJS loaded first, then our decrypt logic -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/crypto-js.min.js"
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 <script>
-  // ENCRYPTED_BLOB is defined as a global var by the <script> tag
-  // injected into the post body by encrypt_post.py
-
   function attemptDecrypt() {
-    const flag = document.getElementById('flag-input').value.trim().replace(/\s+/g, '');
+    const flag    = document.getElementById('flag-input').value.trim();
     const errorEl = document.getElementById('flag-error');
     if (!flag) return;
 
     try {
+      // ENCRYPTED_BLOB is loaded from /assets/js/protected/SLUG.js
       if (typeof ENCRYPTED_BLOB === 'undefined') {
-        throw new Error('No encrypted blob found');
+        throw new Error('Blob not loaded');
       }
 
       const decrypted = CryptoJS.AES.decrypt(ENCRYPTED_BLOB, flag);
-
-        // Convert WordArray to Uint8Array then decode — more robust than CryptoJS toString
-      const words    = decrypted.words;
-      const sigBytes = decrypted.sigBytes;
+      const words     = decrypted.words;
+      const sigBytes  = decrypted.sigBytes;
 
       if (!sigBytes || sigBytes < 10) throw new Error('wrong flag');
 
-        const u8arr = new Uint8Array(sigBytes);
-        for (let i = 0; i < sigBytes; i++) {
-            u8arr[i] = (words[i >>> 2] >>> (24 - (i % 4) * 8)) & 0xff;
-    }
+      // Use native TextDecoder instead of CryptoJS toString
+      // avoids "Malformed UTF-8" errors on HTML content
+      const u8arr = new Uint8Array(sigBytes);
+      for (let i = 0; i < sigBytes; i++) {
+        u8arr[i] = (words[i >>> 2] >>> (24 - (i % 4) * 8)) & 0xff;
+      }
 
-const plaintext = new TextDecoder('utf-8').decode(u8arr);
+      const plaintext = new TextDecoder('utf-8').decode(u8arr);
 
-if (!plaintext || plaintext.length < 10) throw new Error('wrong flag');
+      if (!plaintext || plaintext.length < 10) throw new Error('wrong flag');
 
-      // Success — hide teaser and gate, show decrypted content
+      // Hide teaser and gate
       const teaser = document.getElementById('public-teaser');
       if (teaser) teaser.style.display = 'none';
-
       document.getElementById('flag-gate').style.display = 'none';
       errorEl.style.display = 'none';
 
+      // Inject decrypted HTML — Jekyll already rendered it perfectly
       const contentEl = document.getElementById('writeup-content');
       contentEl.innerHTML = plaintext;
       contentEl.style.display = 'block';
@@ -257,7 +256,7 @@ if (!plaintext || plaintext.length < 10) throw new Error('wrong flag');
     .unlock-btn { width: 100%; }
   }
 
-  /* Hide tags, categories and post footer while locked */
+  /* Hide tags and footer while locked */
   .post-tail-wrapper,
   .post-tags,
   .post-categories {
