@@ -61,9 +61,21 @@ layout: post
       }
 
       const decrypted = CryptoJS.AES.decrypt(ENCRYPTED_BLOB, flag);
-      const plaintext = decrypted.toString(CryptoJS.enc.Utf8);
 
-      if (!plaintext || plaintext.length < 10) throw new Error('wrong flag');
+        // Convert WordArray to Uint8Array then decode — more robust than CryptoJS toString
+      const words    = decrypted.words;
+      const sigBytes = decrypted.sigBytes;
+
+      if (!sigBytes || sigBytes < 10) throw new Error('wrong flag');
+
+        const u8arr = new Uint8Array(sigBytes);
+        for (let i = 0; i < sigBytes; i++) {
+            u8arr[i] = (words[i >>> 2] >>> (24 - (i % 4) * 8)) & 0xff;
+    }
+
+const plaintext = new TextDecoder('utf-8').decode(u8arr);
+
+if (!plaintext || plaintext.length < 10) throw new Error('wrong flag');
 
       // Success — hide teaser and gate, show decrypted content
       const teaser = document.getElementById('public-teaser');
