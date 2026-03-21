@@ -1,6 +1,19 @@
+// Always force gate visible on page load
+// This overrides any stale cached state from previous JS runs
 document.addEventListener('DOMContentLoaded', function() {
   var gate = document.getElementById('flag-gate');
-  if (gate) gate.style.display = 'block';
+  if (gate) {
+    gate.style.display = 'block';
+    gate.style.removeProperty('display');
+    gate.removeAttribute('style');
+  }
+
+  var input = document.getElementById('flag-input');
+  if (input) {
+    input.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') attemptDecrypt();
+    });
+  }
 });
 
 function attemptDecrypt() {
@@ -27,12 +40,13 @@ function attemptDecrypt() {
     var plaintext = new TextDecoder('utf-8').decode(u8arr);
     if (!plaintext || plaintext.length < 10) throw new Error('wrong flag');
 
+    // Hide teaser and gate
     var teaser = document.getElementById('public-teaser');
     if (teaser) teaser.style.display = 'none';
-
     document.getElementById('flag-gate').style.display = 'none';
     errorEl.style.display = 'none';
 
+    // Show decrypted content
     var contentEl = document.getElementById('writeup-content');
     contentEl.innerHTML = plaintext;
     contentEl.style.display = 'block';
@@ -44,12 +58,3 @@ function attemptDecrypt() {
     document.getElementById('flag-input').select();
   }
 }
-
-document.addEventListener('DOMContentLoaded', function() {
-  var input = document.getElementById('flag-input');
-  if (input) {
-    input.addEventListener('keydown', function(e) {
-      if (e.key === 'Enter') attemptDecrypt();
-    });
-  }
-});
