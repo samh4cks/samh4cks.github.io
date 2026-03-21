@@ -1,0 +1,254 @@
+---
+layout: post
+---
+
+<div id="public-teaser">{{ content }}</div>
+
+<div id="flag-gate">
+  <div class="gate-top-bar">
+    <span class="gate-dot"></span>
+    writeup locked &middot; machine is live
+  </div>
+  <div class="gate-inner">
+    <div class="lock-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+           fill="none" stroke="currentColor" stroke-width="1.6"
+           stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+      </svg>
+    </div>
+    <h3 class="gate-title">Full Writeup Locked</h3>
+    <p class="gate-sub">
+      This machine is currently <strong>live</strong>. Submit the
+      <code>root.txt</code> flag to unlock the complete walkthrough.
+    </p>
+    <div class="input-row">
+      <input
+        id="flag-input"
+        class="flag-inp"
+        type="text"
+        placeholder="{{ page.flag_hint | default: 'e.g. a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4' }}"
+        autocomplete="off"
+        spellcheck="false"
+      />
+      <button class="unlock-btn" onclick="attemptDecrypt()">Unlock</button>
+    </div>
+    <p id="flag-error" class="gate-error" style="display:none;">
+      &#x2717; Incorrect flag &mdash; try again.
+    </p>
+    <p class="gate-hint">Enter the flag to unlock the writeup</p>
+  </div>
+</div>
+
+<div id="writeup-content" style="display:none;"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/crypto-js.min.js"
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script>
+  // ENCRYPTED_BLOB is defined as a global var by the <script> tag
+  // injected into the post body by encrypt_post.py
+
+  function attemptDecrypt() {
+    const flag    = document.getElementById('flag-input').value.trim();
+    const errorEl = document.getElementById('flag-error');
+    if (!flag) return;
+
+    try {
+      if (typeof ENCRYPTED_BLOB === 'undefined') {
+        throw new Error('No encrypted blob found');
+      }
+
+      const decrypted = CryptoJS.AES.decrypt(ENCRYPTED_BLOB, flag);
+      const plaintext = decrypted.toString(CryptoJS.enc.Utf8);
+
+      if (!plaintext || plaintext.length < 10) throw new Error('wrong flag');
+
+      // Success — hide teaser and gate, show decrypted content
+      const teaser = document.getElementById('public-teaser');
+      if (teaser) teaser.style.display = 'none';
+
+      document.getElementById('flag-gate').style.display = 'none';
+      errorEl.style.display = 'none';
+
+      const contentEl = document.getElementById('writeup-content');
+      contentEl.innerHTML = plaintext;
+      contentEl.style.display = 'block';
+
+      if (typeof Prism !== 'undefined') Prism.highlightAllUnder(contentEl);
+
+    } catch(e) {
+      errorEl.style.display = 'block';
+      document.getElementById('flag-input').select();
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    document.getElementById('flag-input').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') attemptDecrypt();
+    });
+  });
+</script>
+
+<style>
+  #flag-gate {
+    border: 1px solid var(--border-color);
+    border-radius: 7px;
+    overflow: hidden;
+    background: var(--card-bg);
+    margin: 1.8rem 0 1.2rem;
+    width: 100%;
+  }
+
+  .gate-top-bar {
+    background: var(--card-header-bg, var(--main-bg));
+    border-bottom: 1px solid var(--border-color);
+    padding: 6px 16px;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 11px;
+    color: var(--text-muted-color);
+    font-family: var(--code-font, 'JetBrains Mono', monospace);
+    letter-spacing: 0.06em;
+    text-transform: lowercase;
+  }
+
+  .gate-dot {
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--link-color);
+    opacity: 0.75;
+    flex-shrink: 0;
+  }
+
+  .gate-inner {
+    padding: 36px 24px 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .lock-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: transparent;
+    border: 2px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+  }
+
+  .lock-icon svg {
+    width: 24px;
+    height: 24px;
+    stroke: var(--text-muted-color);
+    fill: none;
+  }
+
+  .gate-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--heading-color);
+    margin: 0 0 8px;
+    border: none;
+    padding: 0;
+  }
+
+  .gate-sub {
+    font-size: 0.9rem;
+    color: var(--text-muted-color);
+    margin: 0 0 24px;
+    max-width: 480px;
+    line-height: 1.7;
+  }
+
+  .gate-sub strong { color: var(--text-color); font-weight: 600; }
+
+  .gate-sub code {
+    font-family: var(--code-font, monospace);
+    font-size: 0.85em;
+    background: var(--code-bg, var(--main-bg));
+    color: var(--link-color);
+    padding: 1px 6px;
+    border-radius: 3px;
+    border: 1px solid var(--border-color);
+  }
+
+  .input-row {
+    display: flex;
+    gap: 8px;
+    width: 100%;
+    max-width: 520px;
+  }
+
+  .flag-inp {
+    flex: 1;
+    background: var(--main-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    color: var(--text-color);
+    font-family: var(--code-font, 'JetBrains Mono', monospace);
+    font-size: 13px;
+    padding: 9px 14px;
+    outline: none;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+
+  .flag-inp::placeholder { color: var(--text-muted-color); opacity: 0.5; }
+
+  .flag-inp:focus {
+    border-color: var(--link-color);
+    box-shadow: 0 0 0 3px rgba(255, 61, 98, 0.12);
+  }
+
+  .unlock-btn {
+    background: var(--link-color);
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 13px;
+    font-weight: 700;
+    padding: 9px 22px;
+    cursor: pointer;
+    white-space: nowrap;
+    font-family: inherit;
+    transition: opacity 0.15s;
+  }
+
+  .unlock-btn:hover  { opacity: 0.85; }
+  .unlock-btn:active { transform: scale(0.97); }
+
+  .gate-error {
+    margin-top: 10px;
+    font-size: 0.85rem;
+    color: var(--danger-color, #e74c3c);
+    font-weight: 500;
+  }
+
+  .gate-hint {
+    margin-top: 10px;
+    font-size: 11.5px;
+    color: var(--text-muted-color);
+    font-family: var(--code-font, monospace);
+    opacity: 0.55;
+  }
+
+  @media (max-width: 600px) {
+    .input-row  { flex-direction: column; }
+    .unlock-btn { width: 100%; }
+  }
+
+  /* Hide tags, categories and post footer while locked */
+  .post-tail-wrapper,
+  .post-tags,
+  .post-categories {
+    display: none;
+  }
+</style>

@@ -25,3 +25,6 @@ package-lock.json
 # Misc
 _sass/vendors
 assets/js/dist
+tools/encrypt_post.py
+tools/decrypt_post.py
+_backups/

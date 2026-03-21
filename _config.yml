@@ -184,6 +184,8 @@ exclude:
   - rollup.config.js
   - node_modules
   - package*.json
+  - _backups/
+  - tools/
 
 jekyll-archives:
   enabled: [categories, tags]
