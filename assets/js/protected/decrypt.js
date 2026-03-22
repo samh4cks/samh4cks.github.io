@@ -1,10 +1,7 @@
-// Always force gate visible on page load
-// This overrides any stale cached state from previous JS runs
+// Force gate visible on every page load
 document.addEventListener('DOMContentLoaded', function() {
   var gate = document.getElementById('flag-gate');
   if (gate) {
-    gate.style.display = 'block';
-    gate.style.removeProperty('display');
     gate.removeAttribute('style');
   }
 
@@ -22,9 +19,7 @@ function attemptDecrypt() {
   if (!flag) return;
 
   try {
-    if (typeof ENCRYPTED_BLOB === 'undefined') {
-      throw new Error('Blob not loaded');
-    }
+    if (typeof ENCRYPTED_BLOB === 'undefined') throw new Error('Blob not loaded');
 
     var decrypted = CryptoJS.AES.decrypt(ENCRYPTED_BLOB, flag);
     var words     = decrypted.words;
@@ -46,22 +41,15 @@ function attemptDecrypt() {
     document.getElementById('flag-gate').style.display = 'none';
     errorEl.style.display = 'none';
 
-    // Show decrypted content
+    // Strip <script> tags before injecting — prevents 404 errors from
+    // scripts that reference paths only valid in Jekyll's full page context
+    var clean = plaintext.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
+
     var contentEl = document.getElementById('writeup-content');
-    contentEl.innerHTML = `
-  <div class="post-content">
-    ${marked.parse(plaintext)}
-  </div>
-`;
+    contentEl.innerHTML = clean;
     contentEl.style.display = 'block';
 
-    // Re-run syntax highlighting
-    if (typeof Prism !== 'undefined') {
-        Prism.highlightAllUnder(contentEl);
-    }
-
-    // Fix layout rendering (VERY IMPORTANT for Chirpy)
-    document.dispatchEvent(new Event('content-ready'));
+    if (typeof Prism !== 'undefined') Prism.highlightAllUnder(contentEl);
 
   } catch(e) {
     errorEl.style.display = 'block';
