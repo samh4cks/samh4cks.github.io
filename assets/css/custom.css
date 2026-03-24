@@ -1,0 +1,41 @@
+#lock-wrapper {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(12px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+  }
+  
+  .lock-modal {
+    background: rgba(40, 40, 40, 0.6);
+    backdrop-filter: blur(20px);
+    border-radius: 20px;
+    padding: 2.5rem;
+    width: 380px;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.7);
+  }
+  
+  .lock-modal input {
+    width: 100%;
+    padding: 12px;
+    margin-top: 20px;
+    background: rgba(0,0,0,0.4);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 10px;
+    color: white;
+  }
+  
+  .lock-modal button {
+    width: 100%;
+    margin-top: 15px;
+    padding: 12px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    border: none;
+    color: white;
+    cursor: pointer;
+  }

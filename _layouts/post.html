@@ -1,0 +1,32 @@
+---
+layout: default
+---
+
+<div id="post-content" style="{% if page.protected %}display:none{% endif %}">
+  {{ content }}
+</div>
+
+{% if page.protected %}
+<div id="lock-wrapper">
+  <div class="lock-modal">
+
+    <div style="font-size:40px;">🔒</div>
+
+    <h2>This post is locked</h2>
+    <p>Enter root flag to unlock full writeup</p>
+
+    <input id="password-input" type="password" placeholder="32-char root hash">
+    <button id="unlock-btn">Unlock</button>
+
+    <p id="error-msg" style="display:none;color:red;"></p>
+
+  </div>
+</div>
+{% endif %}
+
+<script>
+  const POST_ID = "{{ page.post_id }}";
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+<script src="{{ '/assets/js/unlock.js' | relative_url }}"></script>
