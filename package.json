@@ -1,7 +1,9 @@
 {
+  "type": "module",
   "dependencies": {
     "crypto-js": "^4.2.0",
-    "jsdom": "^29.0.1",
-    "marked": "^17.0.5"
+    "jsdom": "^20.0.3",
+    "marked": "^17.0.5",
+    "market": "^1.0.0"
   }
 }

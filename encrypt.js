@@ -1,8 +1,8 @@
-const fs = require("fs");
-const path = require("path");
-const CryptoJS = require("crypto-js");
-const { marked } = require("marked");
-const readline = require("readline");
+import { marked } from "marked";
+import fs from "fs";
+import path from "path";
+import CryptoJS from "crypto-js";
+import readline from "readline";
 
 const inputDir = "protected";
 const outputDir = "assets/protected";
@@ -29,14 +29,24 @@ async function encryptAll() {
 
     password = password.trim().toLowerCase();
 
-    // 🔒 enforce format
     if (!/^[a-f0-9]{32}$/.test(password)) {
       console.log(`❌ Invalid hash for ${postId}`);
       continue;
     }
 
-    const md = fs.readFileSync(`${inputDir}/${file}`, "utf-8");
-    const html = marked.parse(md);
+    const mdRaw = fs.readFileSync(`${inputDir}/${file}`, "utf-8");
+
+    // 🔥 remove front matter
+    let md = mdRaw.replace(/^---[\s\S]*?---/, "").trim();
+
+    // 🔥 remove Jekyll link attributes {:...}
+    md = md.replace(/\{\:.*?\}/g, "");
+
+    // 🔥 parse markdown properly
+    const html = marked.parse(md, {
+      gfm: true,
+      breaks: true
+    });
 
     const encrypted = CryptoJS.AES.encrypt(html, password).toString();
 
