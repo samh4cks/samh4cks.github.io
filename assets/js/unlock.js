@@ -50,9 +50,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
       content.style.display = "block";
 
-      // 🔥 apply syntax highlighting
-      document.querySelectorAll('pre code').forEach((block) => {
-        hljs.highlightElement(block);
+      // apply syntax highlighting (robust)
+      document.querySelectorAll('#post-content pre code').forEach((block) => {
+      block.classList.add("hljs");
+      hljs.highlightElement(block);
       });
 
       // smooth remove overlay
