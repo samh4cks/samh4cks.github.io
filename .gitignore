@@ -30,3 +30,4 @@ tools/decrypt_post.py
 _backups/
 protected/
 encrypt.js
+git_auto.sh
