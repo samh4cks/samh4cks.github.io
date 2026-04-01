@@ -3,7 +3,7 @@ layout: post
 title: HackTheBox - Facts
 authors: Samarth
 date: 2026-03-23 09:30:00 +0530
-categories: [HackTheBox, Machines]
+categories: [HackTheBox, Machines, Protected]
 tags: [Linux, Camaleon CMS, CVE-2025-2304, MinIO, S3, facter]
 math: true
 mermaid: true

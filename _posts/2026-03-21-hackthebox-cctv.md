@@ -3,7 +3,7 @@ layout: post
 title: HackTheBox - CCTV
 authors: Samarth
 date: 2026-03-21 09:30:00 +0530
-categories: [HackTheBox, Machines]
+categories: [HackTheBox, Machines, Protected]
 tags: [Linux, ZoneMinder, CVE-2024-51482, CVE-2025-60787, SQLi, MotionEye]
 math: true
 mermaid: true
