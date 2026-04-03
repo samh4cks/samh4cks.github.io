@@ -27,7 +27,7 @@ _sass/vendors
 assets/js/dist
 tools/encrypt_post.py
 tools/decrypt_post.py
-_backups/
+_backup/
 protected/
 encrypt.js
 git_auto.sh
